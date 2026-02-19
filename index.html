@@ -245,9 +245,9 @@
 
 <div id="loginScreen">
     <div class="login-box">
-        <h2>SAdm - 6º BBM</h2>
+        <h2>SAdmC - 6º BBM</h2>
         <select id="usuario">
-            <option value="Chefe Sadm">Chefe Sadm</option>
+            <option value="Chefe SadmC">Chefe SadmC</option>
             <option value="B1">B1 - Pessoal</option>
             <option value="B2">B2 - Inteligência</option>
             <option value="B3">B3 - Operações</option>
@@ -344,12 +344,12 @@
     <div class="footer-main">
         <div class="footer-section">
             <h3>6º BATALHÃO DE BOMBEIRO MILITAR</h3>
-            <p>Seção Administrativa - SAdm</p>
+            <p>Seção Administrativa - SAdmC</p>
         </div>
         <div class="footer-section">
             <h4>Contato</h4>
             <p><i class="fas fa-location-dot"></i> Santa Cruz do Sul/RS</p>
-            <p><i class="fas fa-envelope"></i> 6bbm-sadm@cbm.rs.gov.br</p>
+            <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
         </div>
         <div class="footer-section">
             <h4>Uso Interno</h4>
@@ -362,7 +362,7 @@
 <script>
     // Configurações iniciais
     let senhas = JSON.parse(localStorage.getItem("senhas")) || {
-        "Chefe Sadm":"1234", "B1":"1234", "B2":"1234", "B3":"1234", "B4":"1234"
+        "Chefe SadmC":"1234", "B1":"1234", "B2":"1234", "B3":"1234", "B4":"1234"
     };
 
     // Login com tecla Enter
@@ -381,7 +381,7 @@
 
             const categorias = document.querySelectorAll(".category");
             categorias.forEach(c => {
-                if(user === "Chefe Sadm" || c.dataset.setor === user){
+                if(user === "Chefe SadmC" || c.dataset.setor === user){
                     c.style.display = "block";
                 } else {
                     c.style.display = "none";
