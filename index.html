@@ -78,6 +78,80 @@
             border-color: var(--cor-vermelho-bombeiro); 
         }
 
+        /* ------------------------------------------------------------------ */
+        /* ESTILOS PARA A SEÇÃO DE CONTATO */
+        /* ------------------------------------------------------------------ */
+
+        .link-grid.contact-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 15px; 
+            margin-top: 15px;
+        }
+        @media (min-width: 900px) {
+            .link-grid.optimized-columns.contact-grid {
+                grid-template-columns: repeat(3, 1fr); 
+            }
+        }
+
+        .link-card.contact-card {
+            min-height: auto; 
+            text-align: left; 
+            padding: 15px;
+        }
+        .link-card.contact-card a {
+            flex-direction: row; 
+            align-items: flex-start; 
+            text-align: left;
+            font-size: 0.95em; 
+        }
+        .link-card.contact-card .icon {
+            font-size: 28px;
+            margin-right: 15px;
+            margin-bottom: 0;
+            flex-shrink: 0; 
+        }
+        /* Estilo para o ícone do WhatsApp */
+        .whatsapp-icon {
+            color: #25D366 !important; 
+        }
+
+        .link-card.contact-card:hover .icon {
+            color: var(--cor-vermelho-bombeiro); 
+        }
+
+        .link-card.contact-card:hover .whatsapp-icon {
+            color: #25D366 !important; 
+        }
+
+        .contact-details {
+            display: block; 
+            min-width: 0; 
+        }
+        .contact-details strong {
+            display: block;
+            margin-bottom: 3px;
+            color: #333;
+            white-space: nowrap; 
+        }
+        .contact-details p {
+            margin: 3px 0 5px 0;
+            font-size: 0.85em; 
+            color: #555; 
+            font-weight: 400; 
+            word-wrap: break-word; 
+        }
+        .action-link {
+            display: inline-block;
+            font-size: 0.8em;
+            color: var(--cor-vermelho-bombeiro); 
+            font-weight: bold;
+            border-bottom: 1px solid transparent;
+            transition: border-bottom 0.2s;
+        }
+        .link-card.contact-card:hover .action-link {
+            border-bottom: 1px solid var(--cor-vermelho-bombeiro);
+        }    
+
         .link-card a { text-decoration: none; color: #333; font-weight: 600; width: 100%; }
 
         .icon { font-size: 32px; color: var(--cor-azul-naval); margin-bottom: 10px; display: block; }
@@ -184,7 +258,7 @@
                     <span class="icon whatsapp-icon" aria-hidden="true"><i class="fab fa-whatsapp"></i></span> 
                     <div class="contact-details">
                         <strong>WHATSAPP (Central)</strong>
-                        <p>(51) 98524-8047</p>
+                        <p>(51) xxxxxxxx</p>
                         <span class="action-link">Enviar Mensagem</span>
                     </div>
                 </a>
@@ -194,7 +268,7 @@
                     <span class="icon" aria-hidden="true"><i class="fas fa-envelope"></i></span> 
                     <div class="contact-details">
                         <strong>EMAIL INSTITUCIONAL</strong>
-                        <p>6bbm-dsci@cbm.rs.gov.br</p>
+                        <p>6bbm-sadm@cbm.rs.gov.br</p>
                         <span class="action-link">Enviar Email</span>
                     </div>
                 </a>
