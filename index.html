@@ -4,86 +4,218 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAdmC - 6º BBM | CBMRS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
             --vermelho: #C40000;
+            --vermelho-hover: #A00000;
             --azul: #002B5B;
             --azul-escuro: #001F3F;
-            --cinza-fundo: #F4F6F9;
+            --cinza-fundo: #F8FAFC;
             --amarelo: #FFD700;
+            --white: #ffffff;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
-        * { box-sizing: border-box; }
-        body { margin: 0; font-family: 'Open Sans', sans-serif; background: var(--cinza-fundo); display: flex; flex-direction: column; min-height: 100vh; }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
         
-        /* TELA DE LOGIN */
-        #loginScreen { flex: 1; background: var(--azul-escuro); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        .login-box { background: #fff; padding: 40px; border-radius: 10px; width: 100%; max-width: 350px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-        .login-box h2 { color: var(--azul); margin-bottom: 20px; font-weight: 800; }
-        .login-box select, .login-box input { width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px; }
+        body { 
+            margin: 0; 
+            font-family: 'Open Sans', sans-serif; 
+            background: var(--cinza-fundo); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            color: #334155;
+        }
+
+        /* TELA DE LOGIN COM GRADIENTE */
+        #loginScreen { 
+            flex: 1; 
+            background: radial-gradient(circle at top right, var(--azul), var(--azul-escuro)); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 20px; 
+        }
+
+        .login-box { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 40px; 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 380px; 
+            text-align: center; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-box h2 { color: var(--azul); margin-bottom: 25px; font-weight: 800; font-size: 24px; border-bottom: 3px solid var(--vermelho); display: inline-block; padding-bottom: 5px; }
         
-        .checkbox-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 15px 0; font-size: 14px; color: #666; }
-        .checkbox-row input { width: auto !important; margin: 0 !important; cursor: pointer; }
+        .login-box select, .login-box input { 
+            width: 100%; 
+            padding: 14px; 
+            margin-top: 12px; 
+            border-radius: 8px; 
+            border: 1.5px solid #E2E8F0; 
+            font-size: 15px;
+            background: #F1F5F9;
+        }
+
+        .login-box select:focus, .login-box input:focus {
+            outline: none;
+            border-color: var(--vermelho);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(196, 0, 0, 0.1);
+        }
         
-        .login-box button { width: 100%; padding: 12px; background: var(--vermelho); color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        .checkbox-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 20px 0; font-size: 14px; color: #64748b; font-weight: 600; }
+        .checkbox-row input { width: auto !important; margin: 0 !important; cursor: pointer; transform: scale(1.2); }
         
-        #cbmrs-logo-login { margin-top: 30px; text-align: center; color: #fff; }
-        #cbmrs-logo-login h1 { font-size: 48px; margin: 0; letter-spacing: 8px; font-weight: 800; }
-        #cbmrs-logo-login p { font-size: 16px; letter-spacing: 2px; opacity: 0.9; }
+        .login-box button { 
+            width: 100%; 
+            padding: 14px; 
+            background: var(--vermelho); 
+            color: #fff; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .login-box button:hover { background: var(--vermelho-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(196, 0, 0, 0.3); }
+        
+        #cbmrs-logo-login { margin-top: 40px; text-align: center; color: #fff; }
+        #cbmrs-logo-login h1 { font-size: 52px; margin: 0; letter-spacing: 10px; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        #cbmrs-logo-login p { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-top: 5px; }
 
         /* SISTEMA */
-        #sistema { display: none; flex: 1; }
+        #sistema { display: none; flex: 1; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .header-top { 
             background: var(--azul); 
             color: #fff; 
             text-align: center; 
-            padding: 20px; 
+            padding: 25px; 
             font-weight: 800; 
-            font-size: 24px; 
-            letter-spacing: 1px;
+            font-size: 22px; 
+            letter-spacing: 2px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
         
-        .header-sub { background: var(--vermelho); height: 6px; }
-        .container { max-width: 1000px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        
-        .category { margin-bottom: 30px; display: none; }
-        .category-title { border-left: 6px solid var(--vermelho); padding-left: 15px; color: var(--azul); font-weight: 800; font-size: 20px; margin-bottom: 20px; }
-        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .link-card { border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .link-card:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .link-card i { font-size: 35px; color: var(--azul); margin-bottom: 15px; }
-        
-        .logout-btn { background: var(--azul); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+        .header-sub { background: var(--vermelho); height: 5px; }
 
-        /* BOTÃO VOLTAR AO TOPO */
-        #btnTop {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
+        .container { max-width: 1100px; margin: 40px auto; padding: 20px; }
+        
+        .user-bar {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .category { margin-bottom: 40px; display: none; }
+        .category-title { 
+            padding-left: 15px; 
+            color: var(--azul); 
+            font-weight: 800; 
+            font-size: 22px; 
+            margin-bottom: 20px; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .category-title::before {
+            content: "";
+            width: 6px;
+            height: 28px;
             background: var(--vermelho);
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            display: none; /* Inicia escondido */
-            z-index: 1000;
-            font-size: 20px;
-            transition: 0.3s;
+            border-radius: 10px;
         }
-        #btnTop:hover { background: var(--azul); transform: scale(1.1); }
 
-        /* RODAPÉ */
-        .footer-oficial { background: var(--azul-escuro); color: #fff; font-size: 14px; margin-top: auto; }
-        .footer-top-bar { height: 6px; background: var(--vermelho); }
-        .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
-        .footer-section { flex: 1; min-width: 250px; }
-        .footer-section h4 { color: var(--amarelo); margin-bottom: 15px; font-weight: 800; }
-        .footer-bottom { background: #000E1F; text-align: center; padding: 15px; font-size: 13px; color: #aaa; }
+        .link-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+            gap: 25px; 
+        }
+
+        .link-card { 
+            background: white;
+            border: none;
+            padding: 35px 20px; 
+            text-align: center; 
+            border-radius: 15px; 
+            cursor: pointer; 
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .link-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .link-card i { 
+            font-size: 42px; 
+            color: var(--vermelho); 
+            margin-bottom: 20px; 
+            background: rgba(196, 0, 0, 0.05);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .link-card strong { font-size: 18px; color: var(--azul-escuro); }
+        
+        .logout-btn { 
+            background: #F1F5F9; 
+            color: #64748b; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 700; 
+        }
+        .logout-btn:hover { background: var(--vermelho); color: white; }
+
+        /* RODAPÉ MODERNIZADO */
+        .footer-oficial { background: var(--azul-escuro); color: #fff; margin-top: auto; border-top: 5px solid var(--vermelho); }
+        .footer-main { max-width: 1100px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; padding: 50px 20px; }
+        .footer-section h4 { color: var(--amarelo); margin-bottom: 20px; font-weight: 800; font-size: 16px; text-transform: uppercase; }
+        .footer-section p { font-size: 14px; color: #CBD5E1; line-height: 1.6; margin: 8px 0; }
+        .footer-bottom { background: #000E1F; text-align: center; padding: 20px; font-size: 13px; color: #94A3B8; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        #btnTop {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--vermelho); color: #fff;
+            border: none; border-radius: 12px;
+            width: 45px; height: 45px;
+            cursor: pointer; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            display: none; z-index: 1000; font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -98,14 +230,14 @@
             <option value="B3">B3 - Operações</option>
             <option value="B4">B4 - Logística</option>
         </select>
-        <input type="password" id="senha" placeholder="Senha">
+        <input type="password" id="senha" placeholder="Senha de Acesso">
         
         <div class="checkbox-row">
             <input type="checkbox" id="checkSenha" onclick="mostrarSenha()">
             <label for="checkSenha" style="cursor:pointer">Mostrar senha</label>
         </div>
 
-        <button onclick="login()">Entrar</button>
+        <button onclick="login()">ENTRAR NO SISTEMA</button>
     </div>
 
     <div id="cbmrs-logo-login">
@@ -115,40 +247,61 @@
 </div>
 
 <div id="sistema">
-    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
+    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL</div>
     <div class="header-sub"></div>
+    
     <div class="container">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <span id="usuarioLogado" style="font-weight: 800; color: var(--azul); font-size: 18px;"></span>
-            <button class="logout-btn" onclick="location.reload()">Sair</button>
+        <div class="user-bar">
+            <div>
+                <i class="fas fa-user-circle" style="color: var(--azul); font-size: 20px;"></i>
+                <span id="usuarioLogado" style="font-weight: 800; color: var(--azul); font-size: 18px; margin-left: 8px;"></span>
+            </div>
+            <button class="logout-btn" onclick="location.reload()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
         </div>
         
         <div class="category" id="cat-B1">
-            <div class="category-title">B1 - Pessoal</div>
+            <div class="category-title">B1 - Gestão de Pessoal</div>
             <div class="link-grid">
-                <div class="link-card"><i class="fas fa-calendar-check"></i><br><strong>Escalas</strong></div>
-                <div class="link-card"><i class="fas fa-umbrella-beach"></i><br><strong>Férias</strong></div>
+                <div class="link-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <strong>Escalas de Serviço</strong>
+                </div>
+                <div class="link-card">
+                    <i class="fas fa-umbrella-beach"></i>
+                    <strong>Plano de Férias</strong>
+                </div>
             </div>
         </div>
 
         <div class="category" id="cat-B2">
-            <div class="category-title">B2 - Inteligência</div>
+            <div class="category-title">B2 - Inteligência e Estatística</div>
             <div class="link-grid">
-                <div class="link-card"><i class="fas fa-shield-halved"></i><br><strong>Análise de Dados</strong></div>
+                <div class="link-card">
+                    <i class="fas fa-chart-line"></i>
+                    <strong>Análise de Dados</strong>
+                </div>
             </div>
         </div>
 
         <div class="category" id="cat-B3">
-            <div class="category-title">B3 - Operações</div>
+            <div class="category-title">B3 - Operações e Instrução</div>
             <div class="link-grid">
-                <div class="link-card"><i class="fas fa-fire-extinguisher"></i><br><strong>Planilha Operacional</strong></div>
+                <div class="link-card">
+                    <i class="fas fa-fire-extinguisher"></i>
+                    <strong>Planilha Operacional</strong>
+                </div>
             </div>
         </div>
 
         <div class="category" id="cat-B4">
-            <div class="category-title">B4 - Logística</div>
+            <div class="category-title">B4 - Logística e Patrimônio</div>
             <div class="link-grid">
-                <div class="link-card"><i class="fas fa-boxes-stacked"></i><br><strong>Patrimônio</strong></div>
+                <div class="link-card">
+                    <i class="fas fa-boxes-stacked"></i>
+                    <strong>Controle de Patrimônio</strong>
+                </div>
             </div>
         </div>
     </div>
@@ -159,24 +312,24 @@
 </button>
 
 <footer class="footer-oficial">
-    <div class="footer-top-bar"></div>
     <div class="footer-main">
         <div class="footer-section">
             <h4>6º BATALHÃO DE BOMBEIRO MILITAR</h4>
-            <p>Seção Administrativa - SAdmC</p>
+            <p><strong>SAdmC</strong><br>Seção Administrativa de Comando</p>
+            <p>Santa Cruz do Sul - RS</p>
         </div>
         <div class="footer-section">
-            <h4>Contato Institucional</h4>
-            <p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
-            <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
+            <h4>Contato</h4>
+            <p><i class="fas fa-location-dot" style="color:var(--vermelho)"></i> R. Tenente Coronel Brito, 03</p>
+            <p><i class="fas fa-envelope" style="color:var(--vermelho)"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
         </div>
         <div class="footer-section">
-            <h4>Uso Interno</h4>
-            <p>Sistema exclusivo de gestão administrativa interna.</p>
-            <p>Acesso restrito aos militares do 6º BBM.</p>
+            <h4>Segurança</h4>
+            <p><i class="fas fa-lock" style="color:var(--amarelo)"></i> Sistema Interno Restrito.</p>
+            <p>O acesso não autorizado está sujeito a penalidades conforme regulamento militar.</p>
         </div>
     </div>
-    <div class="footer-bottom">© 2026 - CBMRS | Governo do Estado do RS</div>
+    <div class="footer-bottom">© 2026 - CBMRS | Desenvolvido para o 6º BBM</div>
 </footer>
 
 <script>
@@ -195,7 +348,7 @@
         if (pass === senhas[user]) {
             document.getElementById("loginScreen").style.display = "none";
             document.getElementById("sistema").style.display = "block";
-            document.getElementById("usuarioLogado").innerText = "Acesso: " + user;
+            document.getElementById("usuarioLogado").innerText = user;
 
             document.querySelectorAll(".category").forEach(cat => cat.style.display = "none");
 
@@ -215,11 +368,12 @@
         field.type = field.type === "password" ? "text" : "password";
     }
 
-    // Monitoramento de rolagem para o botão topo
     window.onscroll = function() {
         const btn = document.getElementById("btnTop");
         if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-            btn.style.display = "block";
+            btn.style.display = "flex";
+            btn.style.alignItems = "center";
+            btn.style.justifyContent = "center";
         } else {
             btn.style.display = "none";
         }
