@@ -12,7 +12,7 @@
             --vermelho-hover: #A00000;
             --azul: #002B5B;
             --azul-escuro: #001F3F;
-            --cinza-fundo: #F8FAFC;
+            --cinza-fundo: #F4F6F9;
             --amarelo: #FFD700;
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
@@ -26,91 +26,83 @@
 
         /* LOGIN */
         #loginScreen { 
-            flex: 1; background: radial-gradient(circle at top right, var(--azul), var(--azul-escuro)); 
+            flex: 1; background: var(--azul-escuro); 
             display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; 
         }
 
         .login-box { 
-            background: white; padding: 40px; border-radius: 20px; width: 100%; max-width: 380px; 
-            text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            background: white; padding: 40px; border-radius: 10px; width: 100%; max-width: 350px; 
+            text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
 
-        .login-box h2 { color: var(--azul); margin-bottom: 25px; font-weight: 800; border-bottom: 3px solid var(--vermelho); display: inline-block; }
+        .login-box h2 { color: var(--azul); margin-bottom: 5px; font-weight: 800; }
+        .login-box p.subtitle { color: #666; font-size: 12px; margin-bottom: 20px; font-weight: 600; text-transform: uppercase; }
         
         .login-box select, .login-box input { 
-            width: 100%; padding: 14px; margin-top: 12px; border-radius: 8px; border: 1.5px solid #E2E8F0; background: #F1F5F9; font-size: 15px;
+            width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px;
         }
 
         .login-box button { 
-            width: 100%; padding: 14px; background: var(--vermelho); color: #fff; border: none; 
-            border-radius: 8px; cursor: pointer; font-weight: 700; margin-top: 15px; font-size: 16px;
+            width: 100%; padding: 12px; background: var(--vermelho); color: #fff; border: none; 
+            border-radius: 5px; cursor: pointer; font-weight: 600; margin-top: 15px;
         }
 
-        .login-box button:hover { background: var(--vermelho-hover); transform: translateY(-2px); }
+        .login-box button:hover { background: var(--vermelho-hover); }
 
         /* SISTEMA */
         #sistema { display: none; flex: 1; }
         
         .header-top { 
-            background: var(--azul); color: #fff; text-align: center; padding: 25px; 
-            font-weight: 800; font-size: 22px; letter-spacing: 2px;
+            background: var(--azul); color: #fff; text-align: center; padding: 20px; 
+            font-weight: 800; font-size: 24px; letter-spacing: 1px;
         }
         
-        .header-sub { background: var(--vermelho); height: 5px; }
+        .header-sub { background: var(--vermelho); height: 6px; }
 
-        .container { max-width: 1100px; margin: 40px auto; padding: 20px; }
+        .container { max-width: 1100px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         
         .user-bar {
-            background: white; padding: 15px 25px; border-radius: 12px; display: flex; 
-            justify-content: space-between; align-items: center; margin-bottom: 30px; box-shadow: var(--shadow);
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+            padding-bottom: 15px; border-bottom: 1px solid #eee;
         }
 
-        .info-operacional { text-align: right; color: var(--azul); font-weight: 600; font-size: 14px; }
-
-        .category { margin-bottom: 40px; display: none; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .category { margin-bottom: 30px; display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .category-title { 
-            padding-left: 15px; color: var(--azul); font-weight: 800; font-size: 20px; 
-            margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+            border-left: 6px solid var(--vermelho); padding-left: 15px; color: var(--azul); 
+            font-weight: 800; font-size: 20px; margin-bottom: 20px; 
         }
-        .category-title::before { content: ""; width: 6px; height: 24px; background: var(--vermelho); border-radius: 10px; }
 
-        .link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
+        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
 
-        .card-link { text-decoration: none; color: inherit; display: block; }
+        .card-link { text-decoration: none; color: inherit; }
 
         .link-card { 
-            background: white; padding: 35px 20px; text-align: center; border-radius: 15px; 
-            cursor: pointer; box-shadow: var(--shadow); display: flex; flex-direction: column; 
-            align-items: center; height: 100%; border-bottom: 0 solid var(--vermelho);
+            border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; 
+            cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center;
         }
 
         .link-card:hover { 
-            transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
-            border-bottom: 4px solid var(--vermelho);
+            transform: translateY(-5px); border-top: 4px solid var(--vermelho); box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
         }
 
-        .link-card i { 
-            font-size: 40px; color: var(--vermelho); margin-bottom: 15px; background: rgba(196, 0, 0, 0.05); 
-            width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; border-radius: 50%;
-        }
-
-        .link-card strong { font-size: 16px; color: var(--azul-escuro); }
+        .link-card i { font-size: 35px; color: var(--azul); margin-bottom: 15px; }
+        .link-card strong { font-size: 16px; }
         
-        .logout-btn { background: #F1F5F9; color: #64748b; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 700; }
-        .logout-btn:hover { background: var(--vermelho); color: white; }
+        .logout-btn { background: var(--azul); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
 
-        /* FOOTER */
-        .footer-oficial { background: var(--azul-escuro); color: #fff; margin-top: auto; border-top: 5px solid var(--vermelho); }
-        .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; padding: 40px 20px; }
-        .footer-section h4 { color: var(--amarelo); margin-bottom: 15px; font-weight: 800; font-size: 14px; text-transform: uppercase; }
-        .footer-section p { font-size: 13px; color: #CBD5E1; margin: 5px 0; }
-        .footer-bottom { background: #000E1F; text-align: center; padding: 15px; font-size: 12px; color: #94A3B8; }
+        /* RODAPÉ ORIGINAL RESTAURADO */
+        .footer-oficial { background: var(--azul-escuro); color: #fff; font-size: 14px; margin-top: auto; }
+        .footer-top-bar { height: 6px; background: var(--vermelho); }
+        .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
+        .footer-section { flex: 1; min-width: 250px; }
+        .footer-section h4 { color: var(--amarelo); margin-bottom: 15px; font-weight: 800; }
+        .footer-bottom { background: #000E1F; text-align: center; padding: 15px; font-size: 13px; color: #aaa; }
 
         #btnTop {
             position: fixed; bottom: 30px; right: 30px; background: var(--vermelho); color: #fff; 
-            border: none; border-radius: 12px; width: 45px; height: 45px; cursor: pointer; display: none; z-index: 1000;
+            border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: none; z-index: 1000;
         }
     </style>
 </head>
@@ -119,6 +111,7 @@
 <div id="loginScreen">
     <div class="login-box">
         <h2>SAdmC - 6º BBM</h2>
+        <p class="subtitle">Seção Administrativa e Correição</p>
         <select id="usuario">
             <option value="Chefe SadmC">Chefe SadmC</option>
             <option value="B1">B1 - SEÇÃO PESSOAL</option>
@@ -126,26 +119,23 @@
             <option value="B3">B3 - SEÇÃO DE OPERAÇÕES DE DEFESA CIVIL</option>
             <option value="B4">B4 - SEÇÃO DE LOGISTICA E PATRIMÔNIO</option>
         </select>
-        <input type="password" id="senha" placeholder="Senha de Acesso">
-        <button onclick="login()">ACESSAR SISTEMA</button>
+        <input type="password" id="senha" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
     </div>
     <div style="color: white; margin-top: 30px; text-align: center;">
-        <h1 style="letter-spacing: 8px; margin: 0; font-weight: 800;">CBMRS</h1>
-        <p style="font-size: 12px; opacity: 0.8; letter-spacing: 2px;">CORPO DE BOMBEIROS MILITAR DO RS</p>
+        <h1 style="font-size: 48px; margin: 0; letter-spacing: 8px; font-weight: 800;">CBMRS</h1>
+        <p style="font-size: 16px; letter-spacing: 2px; opacity: 0.9;">Corpo de Bombeiros Militar do RS</p>
     </div>
 </div>
 
 <div id="sistema">
-    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL</div>
+    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
     <div class="header-sub"></div>
     
     <div class="container">
         <div class="user-bar">
-            <div>
-                <i class="fas fa-user-shield" style="color: var(--vermelho);"></i> 
-                <span id="usuarioLogado" style="font-weight: 800; color: var(--azul); margin-left: 5px;"></span>
-            </div>
-            <div class="info-operacional">
+            <span id="usuarioLogado" style="font-weight: 800; color: var(--azul); font-size: 18px;"></span>
+            <div style="font-size: 14px; font-weight: 600; color: #666;">
                 <span id="dataAtual"></span> | <span id="relogio"></span>
             </div>
             <button class="logout-btn" onclick="location.reload()">Sair</button>
@@ -170,7 +160,7 @@
                     <div class="link-card"><i class="fas fa-user-secret"></i><strong>Dados de Inteligência</strong></div>
                 </a>
                 <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-chart-line"></i><strong>Estatísticas e Relatórios</strong></div>
+                    <div class="link-card"><i class="fas fa-chart-line"></i><strong>Estatísticas</strong></div>
                 </a>
             </div>
         </div>
@@ -204,23 +194,27 @@
 <button id="btnTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></button>
 
 <footer class="footer-oficial">
+    <div class="footer-top-bar"></div>
     <div class="footer-main">
         <div class="footer-section">
             <h4>6º BATALHÃO DE BOMBEIRO MILITAR</h4>
-            <p>Seção Administrativa de Comando (SAdmC)</p>
-            <p>Santa Cruz do Sul - RS</p>
+            <p>Seção Administrativa e Correição - SAdmC</p>
         </div>
         <div class="footer-section">
             <h4>Contato Institucional</h4>
-            <p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03</p>
+            <p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
             <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
         </div>
+        <div class="footer-section">
+            <h4>Uso Interno</h4>
+            <p>Sistema exclusivo de gestão administrativa interna.</p>
+            <p>Acesso restrito aos militares do 6º BBM.</p>
+        </div>
     </div>
-    <div class="footer-bottom">© 2026 - CBMRS | Sistema Interno de Gestão</div>
+    <div class="footer-bottom">© 2026 - CBMRS | Governo do Estado do RS</div>
 </footer>
 
 <script>
-    // Lógica de Senhas (conforme solicitado)
     const senhas = { "Chefe SadmC": "1234", "B1": "1234", "B2": "1234", "B3": "1234", "B4": "1234" };
 
     function login() {
@@ -230,7 +224,7 @@
         if (pass === senhas[user]) {
             document.getElementById("loginScreen").style.display = "none";
             document.getElementById("sistema").style.display = "block";
-            document.getElementById("usuarioLogado").innerText = user;
+            document.getElementById("usuarioLogado").innerText = "Acesso: " + user;
             
             document.querySelectorAll(".category").forEach(cat => cat.style.display = "none");
 
@@ -243,28 +237,19 @@
         } else { alert("Senha incorreta!"); }
     }
 
-    // Relógio e Data em tempo real
     function atualizarRelogio() {
         const agora = new Date();
-        const data = agora.toLocaleDateString('pt-BR');
-        const hora = agora.toLocaleTimeString('pt-BR');
-        document.getElementById('dataAtual').innerText = data;
-        document.getElementById('relogio').innerText = hora;
+        document.getElementById('dataAtual').innerText = agora.toLocaleDateString('pt-BR');
+        document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
     }
     setInterval(atualizarRelogio, 1000);
     atualizarRelogio();
 
-    // Botão Topo
     window.onscroll = function() {
         const btn = document.getElementById("btnTop");
         if (document.documentElement.scrollTop > 300) btn.style.display = "block";
         else btn.style.display = "none";
     };
-
-    // Enter no teclado para login
-    document.getElementById("senha").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") login();
-    });
 </script>
 
 </body>
