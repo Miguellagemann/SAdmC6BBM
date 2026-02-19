@@ -1,172 +1,191 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Seção Administrativa - 6º BBM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central 6º BBM - SAdm</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+:root{
+--vermelho:#CC0000;
+--azul:#003366;
+--fundo:#EAF6FF;
+--branco:#ffffff;
 }
+
+*{box-sizing:border-box}
 
 body{
-    font-family: Arial, sans-serif;
-    background:#0b2f4f;
-    display:flex;
-    flex-direction:column;
-    min-height:100vh;
-    position:relative;
+margin:0;
+font-family:'Open Sans',sans-serif;
+background:linear-gradient(135deg,#002244,#003366);
 }
 
-/* ===== MARCA D'ÁGUA ===== */
-body::before{
-    content:"";
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:480px;
-    height:480px;
-    background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') no-repeat center;
-    background-size:contain;
-    opacity:0.05;
-    pointer-events:none;
-    z-index:0;
+/* LOGIN */
+#loginScreen{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-/* ===== CABEÇALHO ===== */
-header{
-    background:#8B0000;
-    color:white;
-    text-align:center;
-    padding:15px;
-    font-weight:bold;
-    font-size:18px;
-    letter-spacing:1px;
-    border-bottom:5px solid #002f6c;
-    position:relative;
-    z-index:1;
+.login-box{
+background:#fff;
+padding:40px;
+border-radius:12px;
+width:340px;
+text-align:center;
+box-shadow:0 15px 30px rgba(0,0,0,0.4);
 }
 
-/* ===== CONTAINER ===== */
+.login-box input, .login-box select{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.login-box button{
+margin-top:15px;
+padding:10px;
+width:100%;
+background:var(--vermelho);
+color:#fff;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+}
+
+/* SISTEMA */
+#sistema{
+display:none;
+padding-top:70px;
+}
+
+.header-bar{
+position:fixed;
+top:0;
+width:100%;
+background:var(--vermelho);
+color:#fff;
+text-align:center;
+padding:15px;
+font-weight:700;
+z-index:1000;
+}
+
 .container{
-    width:380px;
-    margin:auto;
-    background:white;
-    padding:30px;
-    border-radius:8px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.4);
-    text-align:center;
-    position:relative;
-    z-index:1;
-    animation:fadeIn 0.4s ease;
+max-width:1200px;
+margin:auto;
+padding:40px;
+background:var(--fundo);
+border-radius:14px;
+box-shadow:0 20px 40px rgba(0,0,0,0.3);
 }
 
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(15px);}
-    to{opacity:1; transform:translateY(0);}
+.container::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') center/contain no-repeat;
+opacity:0.05;
+pointer-events:none;
 }
 
-h2{
-    margin-bottom:20px;
-    color:#002f6c;
+h1{
+text-align:center;
+color:var(--vermelho);
+font-weight:800;
+margin-bottom:30px;
 }
 
-/* INPUTS */
-input, select{
-    width:100%;
-    padding:10px;
-    margin-top:12px;
-    border-radius:4px;
-    border:1px solid #ccc;
-    transition:0.3s;
+#search-input{
+width:100%;
+padding:15px;
+border-radius:8px;
+border:2px solid var(--azul);
+font-size:16px;
+margin-bottom:35px;
 }
 
-/* HOVER CAMPOS */
-input:hover, select:hover{
-    border-color:#8B0000;
+.category{margin-bottom:35px;}
+.category-title{
+font-weight:800;
+color:var(--vermelho);
+border-left:6px solid var(--vermelho);
+padding-left:10px;
+margin-bottom:15px;
 }
 
-input:focus, select:focus{
-    border-color:#002f6c;
-    outline:none;
-    box-shadow:0 0 5px rgba(0,47,108,0.4);
+.link-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:18px;
 }
 
-/* BOTÕES */
-button{
-    margin-top:18px;
-    padding:10px;
-    width:100%;
-    border:none;
-    border-radius:4px;
-    background:#8B0000;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
+.link-card{
+background:#fff;
+padding:22px;
+border-radius:10px;
+text-align:center;
+transition:0.3s;
+display:flex;
+flex-direction:column;
+align-items:center;
+cursor:pointer;
 }
 
-button:hover{
-    background:#a80000;
+.link-card:hover{
+transform:translateY(-6px);
+border-bottom:4px solid var(--vermelho);
 }
 
-button:active{
-    transform:scale(0.97);
+.link-card a{
+text-decoration:none;
+color:#333;
+font-weight:600;
+width:100%;
 }
 
-.hidden{
-    display:none;
+.icon{
+font-size:30px;
+color:var(--azul);
+margin-bottom:10px;
 }
 
-/* RODAPÉ */
-footer{
-    background:#002f6c;
-    color:white;
-    text-align:center;
-    padding:12px;
-    font-size:13px;
-    margin-top:auto;
-    position:relative;
-    z-index:1;
+.top-bar{
+text-align:right;
+margin-bottom:15px;
 }
 
-/* ERRO LOGIN */
-.erro{
-    animation:shake 0.3s;
+.top-bar button{
+margin-left:10px;
+padding:8px 12px;
+border:none;
+border-radius:5px;
+cursor:pointer;
 }
 
-@keyframes shake{
-    0%{transform:translateX(0);}
-    25%{transform:translateX(-5px);}
-    50%{transform:translateX(5px);}
-    75%{transform:translateX(-5px);}
-    100%{transform:translateX(0);}
-}
+.logout{background:#003366;color:#fff}
+.alterar{background:#cc0000;color:#fff}
 
-label{
-    font-size:13px;
-    margin-top:8px;
-    display:flex;
-    justify-content:center;
-    gap:5px;
-}
+.hidden{display:none}
 
 </style>
 </head>
-
 <body>
 
-<header>
-SEÇÃO ADMINISTRATIVA – 6º BBM
-</header>
-
 <!-- LOGIN -->
-<div class="container" id="loginBox">
-<h2>Acesso ao Sistema</h2>
+<div id="loginScreen">
+<div class="login-box">
+<h2>Login</h2>
 
 <select id="usuario">
 <option value="Chefe Sadm">Chefe Sadm</option>
@@ -176,63 +195,126 @@ SEÇÃO ADMINISTRATIVA – 6º BBM
 <option value="B4">B4</option>
 </select>
 
-<input type="password" id="senha" placeholder="Digite sua senha">
+<input type="password" id="senha" placeholder="Senha">
 
-<label>
+<label style="font-size:14px;display:flex;align-items:center;gap:5px;margin-top:5px;">
 <input type="checkbox" onclick="mostrarSenha()"> Mostrar senha
 </label>
 
 <button onclick="login()">Entrar</button>
 </div>
-
-<!-- PAINEL -->
-<div class="container hidden" id="painel">
-<h2>Painel Administrativo</h2>
-<p id="usuarioLogado" style="margin-bottom:20px; font-weight:bold;"></p>
-<button onclick="logout()" style="background:#555;">Sair</button>
 </div>
 
-<footer>
-Corpo de Bombeiros Militar do RS <br>
-Santa Cruz do Sul - RS
-</footer>
+<!-- SISTEMA -->
+<div id="sistema">
+
+<div class="header-bar">
+SEÇÃO ADMINISTRATIVA - SAdm 6º BBM
+</div>
+
+<div class="container">
+
+<div class="top-bar">
+<span id="usuarioLogado"></span>
+<button class="alterar hidden" id="btnAlterar" onclick="mostrarAlterar()">Alterar Senha</button>
+<button class="logout" onclick="logout()">Sair</button>
+</div>
+
+<div id="areaAlterar" class="hidden">
+<input type="password" id="novaSenha" placeholder="Nova senha">
+<button onclick="alterarSenha()">Salvar</button>
+</div>
+
+<h1>CENTRAL DE ACESSOS RÁPIDOS</h1>
+
+<input type="text" id="search-input" placeholder="Buscar setor, palavra-chave...">
+
+<!-- B1 -->
+<div class="category" data-setor="B1">
+<div class="category-title">B1 - Pessoal</div>
+<div class="link-grid">
+<div class="link-card"><a href="#"><i class="fas fa-calendar-alt icon"></i>Escala de Serviço</a></div>
+<div class="link-card"><a href="#"><i class="fas fa-plane icon"></i>Plano de Férias</a></div>
+</div>
+</div>
+
+<!-- B2 -->
+<div class="category" data-setor="B2">
+<div class="category-title">B2 - Inteligência</div>
+<div class="link-grid">
+<div class="link-card"><a href="#"><i class="fas fa-brain icon"></i>Distribuição Análise</a></div>
+</div>
+</div>
+
+<!-- B3 -->
+<div class="category" data-setor="B3">
+<div class="category-title">B3 - Operações</div>
+<div class="link-grid">
+<div class="link-card"><a href="#"><i class="fas fa-fire-extinguisher icon"></i>Planilha B3</a></div>
+</div>
+</div>
+
+<!-- B4 -->
+<div class="category" data-setor="B4">
+<div class="category-title">B4 - Logística</div>
+<div class="link-grid">
+<div class="link-card"><a href="#"><i class="fas fa-truck-moving icon"></i>Planilha B4</a></div>
+</div>
+</div>
+
+</div>
+</div>
 
 <script>
 
 let senhas = JSON.parse(localStorage.getItem("senhas")) || {
-    "Chefe Sadm":"1234",
-    "B1":"1234",
-    "B2":"1234",
-    "B3":"1234",
-    "B4":"1234"
+"Chefe Sadm":"1234",
+"B1":"1234",
+"B2":"1234",
+"B3":"1234",
+"B4":"1234"
 };
 
-function salvarSenhas(){
-    localStorage.setItem("senhas", JSON.stringify(senhas));
-}
-
 function login(){
-    let user = document.getElementById("usuario").value;
-    let pass = document.getElementById("senha").value;
-    let caixa = document.getElementById("loginBox");
+let user=document.getElementById("usuario").value;
+let pass=document.getElementById("senha").value;
 
-    if(pass === senhas[user]){
-        caixa.classList.add("hidden");
-        document.getElementById("painel").classList.remove("hidden");
-        document.getElementById("usuarioLogado").innerText = "Usuário logado: " + user;
-    }else{
-        caixa.classList.add("erro");
-        setTimeout(()=> caixa.classList.remove("erro"), 300);
-    }
+if(pass===senhas[user]){
+document.getElementById("loginScreen").style.display="none";
+document.getElementById("sistema").style.display="block";
+document.getElementById("usuarioLogado").innerText="Usuário: "+user;
+
+if(user==="Chefe Sadm"){
+document.getElementById("btnAlterar").classList.remove("hidden");
+document.querySelectorAll(".category").forEach(c=>c.style.display="block");
+}else{
+document.querySelectorAll(".category").forEach(c=>{
+c.style.display=c.dataset.setor===user?"block":"none";
+});
+}
+}else{
+alert("Senha incorreta!");
+}
 }
 
-function logout(){
-    location.reload();
-}
+function logout(){location.reload();}
 
 function mostrarSenha(){
-    const campo = document.getElementById("senha");
-    campo.type = campo.type === "password" ? "text" : "password";
+const campo=document.getElementById("senha");
+campo.type=campo.type==="password"?"text":"password";
+}
+
+function mostrarAlterar(){
+document.getElementById("areaAlterar").classList.toggle("hidden");
+}
+
+function alterarSenha(){
+let nova=document.getElementById("novaSenha").value;
+let user=document.getElementById("usuario").value;
+if(nova.trim()===""){alert("Digite uma senha válida");return;}
+senhas[user]=nova;
+localStorage.setItem("senhas",JSON.stringify(senhas));
+alert("Senha alterada com sucesso!");
 }
 
 </script>
