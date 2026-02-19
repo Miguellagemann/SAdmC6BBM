@@ -9,389 +9,325 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-
 :root{
---vermelho:#C40000;
---azul:#002B5B;
---azul-escuro:#001F3F;
---cinza-fundo:#F4F6F9;
+  --vermelho:#C40000;
+  --azul:#002B5B;
+  --azul-escuro:#001F3F;
+  --cinza-fundo:#F4F6F9;
 }
 
 *{box-sizing:border-box}
 
 body{
-margin:0;
-font-family:'Open Sans',sans-serif;
-background:var(--cinza-fundo);
+  margin:0;
+  font-family:'Open Sans',sans-serif;
+  background:var(--cinza-fundo);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* ===== CABEÇALHO INSTITUCIONAL ===== */
-.header-top{
-background:var(--azul);
-color:#fff;
-text-align:center;
-padding:15px;
-font-weight:700;
-letter-spacing:1px;
-}
-
-.header-sub{
-background:var(--vermelho);
-height:6px;
-}
-
-/* LOGIN */
+/* ===== TELA DE LOGIN (GRADIENTE) ===== */
 #loginScreen{
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-background:linear-gradient(135deg,#001f3f,#002b5b);
+  flex: 1;
+  background: linear-gradient(135deg,#001f3f,#002b5b);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .login-box{
-background:#fff;
-padding:40px;
-border-radius:10px;
-width:350px;
-text-align:center;
-box-shadow:0 15px 30px rgba(0,0,0,0.4);
+  background:#fff;
+  padding:40px;
+  border-radius:10px;
+  width:350px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
 }
+
+.login-box:hover{ transform: translateY(-5px); }
 
 .login-box h2{
-color:var(--azul);
-margin-bottom:20px;
+  color:var(--azul);
+  margin-bottom:20px;
+  font-weight:800;
+  font-size:24px;
 }
 
-.login-box input, .login-box select{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:5px;
-border:1px solid #ccc;
+.login-box select, .login-box input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:5px;
+  border:1px solid #ccc;
 }
 
 .login-box button{
-margin-top:15px;
-padding:10px;
-width:100%;
-background:var(--vermelho);
-color:#fff;
-border:none;
-border-radius:5px;
-cursor:pointer;
-font-weight:600;
+  margin-top:15px;
+  padding:12px;
+  width:100%;
+  background:var(--vermelho);
+  color:#fff;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight:600;
 }
 
-/* SISTEMA */
-#sistema{display:none;}
+.checkbox-container{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  font-size:14px;
+  color: #666;
+}
+
+#cbmrs-logo-login{
+  margin-top:30px;
+  font-size:48px;
+  font-weight:800;
+  color:#fff;
+  letter-spacing:10px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+#cbmrs-logo-login span{
+  display:block;
+  font-size:18px;
+  font-weight:600;
+  letter-spacing:3px;
+  margin-top:5px;
+  color:#ddd;
+}
+
+/* ===== SISTEMA (PÓS-LOGIN) ===== */
+#sistema{ display:none; flex: 1; }
+
+.header-top{
+  background:var(--azul);
+  color:#fff;
+  text-align:center;
+  padding:15px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.header-sub{ background:var(--vermelho); height:6px; }
 
 .container{
-max-width:1200px;
-margin:40px auto;
-padding:40px;
-background:#fff;
-border-radius:10px;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
-position:relative;
-overflow:hidden;
+  max-width:1200px;
+  margin:40px auto;
+  padding:40px;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  position:relative;
 }
 
-/* MARCA D'ÁGUA */
 .container::before{
-content:"";
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:60%;
-height:60%;
-background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') center/contain no-repeat;
-opacity:0.05;
-pointer-events:none;
+  content:"";
+  position:absolute;
+  top:50%; left:50%; transform:translate(-50%,-50%);
+  width:60%; height:60%;
+  background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') center/contain no-repeat;
+  opacity:0.05; pointer-events:none;
 }
 
-h1{
-text-align:center;
-color:var(--azul);
-font-weight:800;
-margin-bottom:40px;
-}
-
-.category{margin-bottom:40px;}
+h1{ text-align:center; color:var(--azul); font-weight:800; margin-bottom:40px; }
 
 .category-title{
-font-weight:800;
-color:var(--azul);
-border-left:6px solid var(--vermelho);
-padding-left:12px;
-margin-bottom:18px;
-font-size:18px;
+  font-weight:800; color:var(--azul);
+  border-left:6px solid var(--vermelho);
+  padding-left:12px; margin-bottom:18px; font-size:18px;
 }
 
 .link-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px; margin-bottom: 40px;
 }
 
 .link-card{
-background:#fff;
-border:1px solid #e0e0e0;
-padding:25px;
-border-radius:8px;
-text-align:center;
-transition:0.3s;
-cursor:pointer;
+  background:#fff; border:1px solid #e0e0e0;
+  padding:25px; border-radius:8px; text-align:center; transition:0.3s;
 }
 
 .link-card:hover{
-transform:translateY(-5px);
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
-border-top:4px solid var(--vermelho);
+  transform:translateY(-5px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+  border-top:4px solid var(--vermelho);
 }
 
-.icon{
-font-size:32px;
-color:var(--azul);
-margin-bottom:12px;
-}
+.icon{ font-size:32px; color:var(--azul); margin-bottom:12px; }
 
-.top-bar{
-text-align:right;
-margin-bottom:20px;
-}
-
+.top-bar{ text-align:right; margin-bottom:20px; }
 .top-bar button{
-margin-left:10px;
-padding:8px 14px;
-border:none;
-border-radius:5px;
-cursor:pointer;
-font-weight:600;
+  margin-left:10px; padding:8px 14px; border:none; border-radius:5px; cursor:pointer; font-weight:600;
 }
-
 .logout{background:var(--azul);color:#fff}
 .alterar{background:var(--vermelho);color:#fff}
-
 .hidden{display:none}
 
-a{text-decoration:none;color:inherit}
-
-/* ================= RODAPÉ OFICIAL ================= */
-
+/* ===== RODAPÉ OFICIAL (SEMPRE VISÍVEL) ===== */
 .footer-oficial{
-margin-top:80px;
-background:var(--azul-escuro);
-color:#fff;
-font-size:14px;
+  background:var(--azul-escuro);
+  color:#fff;
+  font-size:14px;
+  width: 100%;
 }
 
-.footer-top-bar{
-height:6px;
-background:var(--vermelho);
-}
+.footer-top-bar{ height:6px; background:var(--vermelho); }
 
 .footer-main{
-max-width:1200px;
-margin:auto;
-display:flex;
-flex-wrap:wrap;
-justify-content:space-between;
-gap:40px;
-padding:40px 20px;
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:40px;
+  padding:40px 20px;
 }
 
-.footer-section{
-flex:1;
-min-width:250px;
-}
+.footer-section{ flex:1; min-width:250px; }
+.footer-section h3{ font-size:16px; margin-top:0; }
+.footer-section h4{ color:var(--vermelho); margin-bottom:10px; }
+.footer-section p{ margin:6px 0; line-height:1.5; }
+.footer-section i{ margin-right:8px; color:var(--vermelho); }
 
-.footer-section h3{
-margin-top:0;
-font-size:16px;
-letter-spacing:1px;
-}
-
-.footer-section h4{
-margin-bottom:10px;
-color:var(--vermelho);
-}
-
-.footer-section p{
-margin:6px 0;
-line-height:1.5;
-}
-
-.footer-section i{
-margin-right:8px;
-color:var(--vermelho);
-}
-
-.footer-bottom{
-background:#000E1F;
-text-align:center;
-padding:12px;
-font-size:13px;
-letter-spacing:0.5px;
-}
+.footer-bottom{ background:#000E1F; text-align:center; padding:12px; font-size:13px; }
 
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="loginScreen">
-<div class="login-box">
-<h2>CBMRS - SAdm 6º BBM</h2>
+  <div class="login-box">
+    <h2>SAdm - 6º BBM</h2>
+    <select id="usuario">
+      <option value="Chefe Sadm">Chefe Sadm</option>
+      <option value="B1">B1</option>
+      <option value="B2">B2</option>
+      <option value="B3">B3</option>
+      <option value="B4">B4</option>
+    </select>
+    <input type="password" id="senha" placeholder="Senha">
+    <label class="checkbox-container">
+      <input type="checkbox" onclick="mostrarSenha()"> Mostrar senha
+    </label>
+    <button onclick="login()">Entrar</button>
+  </div>
 
-<select id="usuario">
-<option value="Chefe Sadm">Chefe Sadm</option>
-<option value="B1">B1</option>
-<option value="B2">B2</option>
-<option value="B3">B3</option>
-<option value="B4">B4</option>
-</select>
-
-<input type="password" id="senha" placeholder="Senha">
-
-<label style="font-size:14px;display:flex;align-items:center;gap:5px;margin-top:5px;">
-<input type="checkbox" onclick="mostrarSenha()"> Mostrar senha
-</label>
-
-<button onclick="login()">Entrar</button>
+  <div id="cbmrs-logo-login">
+    CBMRS
+    <span>Corpo de Bombeiros Militar do RS</span>
+  </div>
 </div>
-</div>
 
-<!-- SISTEMA -->
 <div id="sistema">
+  <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL</div>
+  <div class="header-sub"></div>
 
-<div class="header-top">
-CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL
-</div>
-<div class="header-sub"></div>
+  <div class="container">
+    <div class="top-bar">
+      <span id="usuarioLogado"></span>
+      <button class="alterar hidden" id="btnAlterar">Alterar Senha</button>
+      <button class="logout" onclick="logout()">Sair</button>
+    </div>
 
-<div class="container">
+    <h1>SEÇÃO ADMINISTRATIVA - 6º BBM</h1>
 
-<div class="top-bar">
-<span id="usuarioLogado"></span>
-<button class="alterar hidden" id="btnAlterar" onclick="mostrarAlterar()">Alterar Senha</button>
-<button class="logout" onclick="logout()">Sair</button>
-</div>
+    <div class="category" data-setor="B1">
+      <div class="category-title">B1 - Pessoal</div>
+      <div class="link-grid">
+        <div class="link-card"><i class="fas fa-users icon"></i><br>Escala de Serviço</div>
+        <div class="link-card"><i class="fas fa-plane icon"></i><br>Plano de Férias</div>
+      </div>
+    </div>
 
-<h1>SEÇÃO ADMINISTRATIVA - 6º BBM</h1>
+    <div class="category" data-setor="B2">
+      <div class="category-title">B2 - Inteligência</div>
+      <div class="link-grid">
+        <div class="link-card"><i class="fas fa-brain icon"></i><br>Distribuição Análise</div>
+      </div>
+    </div>
 
-<!-- B1 -->
-<div class="category" data-setor="B1">
-<div class="category-title">B1 - Pessoal</div>
-<div class="link-grid">
-<div class="link-card"><i class="fas fa-users icon"></i>Escala de Serviço</div>
-<div class="link-card"><i class="fas fa-plane icon"></i>Plano de Férias</div>
-</div>
-</div>
+    <div class="category" data-setor="B3">
+      <div class="category-title">B3 - Operações</div>
+      <div class="link-grid">
+        <div class="link-card"><i class="fas fa-fire-extinguisher icon"></i><br>Planilha B3</div>
+      </div>
+    </div>
 
-<!-- B2 -->
-<div class="category" data-setor="B2">
-<div class="category-title">B2 - Inteligência</div>
-<div class="link-grid">
-<div class="link-card"><i class="fas fa-brain icon"></i>Distribuição Análise</div>
-</div>
-</div>
-
-<!-- B3 -->
-<div class="category" data-setor="B3">
-<div class="category-title">B3 - Operações</div>
-<div class="link-grid">
-<div class="link-card"><i class="fas fa-fire-extinguisher icon"></i>Planilha B3</div>
-</div>
-</div>
-
-<!-- B4 -->
-<div class="category" data-setor="B4">
-<div class="category-title">B4 - Logística</div>
-<div class="link-grid">
-<div class="link-card"><i class="fas fa-truck icon"></i>Planilha B4</div>
-</div>
+    <div class="category" data-setor="B4">
+      <div class="category-title">B4 - Logística</div>
+      <div class="link-grid">
+        <div class="link-card"><i class="fas fa-truck icon"></i><br>Planilha B4</div>
+      </div>
+    </div>
+  </div>
 </div>
 
-</div>
-</div>
-
-<!-- ================= RODAPÉ INSTITUCIONAL OFICIAL ================= -->
 <footer class="footer-oficial">
-
-<div class="footer-top-bar"></div>
-
-<div class="footer-main">
-
-<div class="footer-section identidade">
-<h3>CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL</h3>
-<p>6º Batalhão de Bombeiro Militar</p>
-<p>Seção Administrativa - SAdm</p>
-</div>
-
-<div class="footer-section contato">
-<h4>Contato Institucional</h4>
-<p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
-<p><i class="fab fa-whatsapp"></i> (51) 98524-8047</p>
-<p><i class="fas fa-envelope"></i> 6bbm-dsci@cbm.rs.gov.br</p>
-</div>
-
-<div class="footer-section institucional">
-<h4>Uso Interno</h4>
-<p>Sistema destinado exclusivamente à gestão administrativa interna.</p>
-<p>Acesso restrito aos militares do 6º BBM.</p>
-</div>
-
-</div>
-
-<div class="footer-bottom">
-© 2026 - CBMRS | Governo do Estado do Rio Grande do Sul
-</div>
-
+  <div class="footer-top-bar"></div>
+  <div class="footer-main">
+    <div class="footer-section">
+      <h3>CORPO DE BOMBEIROS MILITAR DO RS</h3>
+      <p>6º Batalhão de Bombeiro Militar</p>
+      <p>Seção Administrativa - SAdm</p>
+    </div>
+    <div class="footer-section">
+      <h4>Contato Institucional</h4>
+      <p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
+      <p><i class="fab fa-whatsapp"></i> (51) 98524-8047</p>
+      <p><i class="fas fa-envelope"></i> 6bbm-dsci@cbm.rs.gov.br</p>
+    </div>
+    <div class="footer-section">
+      <h4>Uso Interno</h4>
+      <p>Sistema exclusivo de gestão administrativa interna.</p>
+      <p>Acesso restrito aos militares do 6º BBM.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 - CBMRS | Governo do Estado do Rio Grande do Sul</div>
 </footer>
 
 <script>
-
 let senhas = JSON.parse(localStorage.getItem("senhas")) || {
-"Chefe Sadm":"1234",
-"B1":"1234",
-"B2":"1234",
-"B3":"1234",
-"B4":"1234"
+  "Chefe Sadm":"1234", "B1":"1234", "B2":"1234", "B3":"1234", "B4":"1234"
 };
 
 function login(){
-let user=document.getElementById("usuario").value;
-let pass=document.getElementById("senha").value;
+  let user = document.getElementById("usuario").value;
+  let pass = document.getElementById("senha").value;
 
-if(pass===senhas[user]){
-document.getElementById("loginScreen").style.display="none";
-document.getElementById("sistema").style.display="block";
-document.getElementById("usuarioLogado").innerText="Usuário: "+user;
+  if(pass === senhas[user]){
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("sistema").style.display = "block";
+    document.getElementById("usuarioLogado").innerText = "Usuário: " + user;
 
-if(user==="Chefe Sadm"){
-document.getElementById("btnAlterar").classList.remove("hidden");
-document.querySelectorAll(".category").forEach(c=>c.style.display="block");
-}else{
-document.querySelectorAll(".category").forEach(c=>{
-c.style.display=c.dataset.setor===user?"block":"none";
-});
-}
-}else{
-alert("Senha incorreta!");
-}
+    if(user === "Chefe Sadm"){
+      document.getElementById("btnAlterar").classList.remove("hidden");
+      document.querySelectorAll(".category").forEach(c => c.style.display = "block");
+    } else {
+      document.querySelectorAll(".category").forEach(c => {
+        c.style.display = (c.dataset.setor === user) ? "block" : "none";
+      });
+    }
+  } else {
+    alert("Senha incorreta!");
+  }
 }
 
-function logout(){location.reload();}
+function logout(){ location.reload(); }
+
 function mostrarSenha(){
-const campo=document.getElementById("senha");
-campo.type=campo.type==="password"?"text":"password";
+  const campo = document.getElementById("senha");
+  campo.type = campo.type === "password" ? "text" : "password";
 }
-function mostrarAlterar(){
-document.getElementById("areaAlterar").classList.toggle("hidden");
-}
-
 </script>
 
 </body>
