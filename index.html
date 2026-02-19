@@ -3,15 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema 6º BBM - SAdm</title>
+<title>Sistema 6º BBM</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
+
+:root{
+--vermelho:#CC0000;
+--azul:#003366;
+--fundo:#EAF6FF;
+}
 
 body{
 margin:0;
 font-family:'Open Sans',sans-serif;
 background:linear-gradient(135deg,#002244,#003366);
+}
+
+/* HEADER */
+.header-bar{
+position:fixed;
+top:0;
+width:100%;
+background:var(--vermelho);
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:12px;
+font-weight:800;
+letter-spacing:1px;
+box-shadow:0 4px 12px rgba(0,0,0,0.4);
+z-index:1000;
+}
+
+.header-bar img{
+position:absolute;
+left:15px;
+height:40px;
 }
 
 /* LOGIN */
@@ -42,7 +71,7 @@ border:1px solid #ccc;
 button{
 width:100%;
 padding:10px;
-background:#CC0000;
+background:var(--vermelho);
 color:white;
 border:none;
 border-radius:5px;
@@ -57,31 +86,46 @@ background:#a80000;
 /* SISTEMA */
 #sistema{
 display:none;
-padding:30px;
-background:#EAF6FF;
+padding:100px 30px 40px 30px;
+background:var(--fundo);
 min-height:100vh;
+position:relative;
+overflow:hidden;
 }
 
+/* MARCA D'ÁGUA */
+#sistema::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') center/contain no-repeat;
+opacity:0.05;
+pointer-events:none;
+}
+
+/* TOPO INTERNO */
 .top-bar{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:20px;
+margin-bottom:25px;
 }
 
 .logout{
-background:#003366;
+background:var(--azul);
 width:auto;
 padding:8px 15px;
 }
 
+/* CATEGORIAS */
 .category{
 margin-bottom:30px;
 }
 
 .category-title{
 font-weight:800;
-color:#CC0000;
+color:var(--vermelho);
 margin-bottom:10px;
 }
 
@@ -90,11 +134,44 @@ background:white;
 padding:15px;
 border-radius:8px;
 margin-bottom:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* CONTATOS */
+.footer-contact{
+margin-top:40px;
+padding-top:20px;
+border-top:1px solid #ccc;
+}
+
+.footer-title{
+font-weight:800;
+color:var(--vermelho);
+margin-bottom:10px;
+}
+
+.footer-item{
+margin-bottom:8px;
+}
+
+.footer-item a{
+text-decoration:none;
+color:#003366;
+font-weight:600;
+}
+
+.footer-item a:hover{
+color:#CC0000;
 }
 
 </style>
 </head>
 <body>
+
+<div class="header-bar">
+<img src="https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png">
+SEÇÃO ADMINISTRATIVA - 6º BBM
+</div>
 
 <!-- LOGIN -->
 <div id="loginScreen">
@@ -115,90 +192,106 @@ margin-bottom:10px;
 <button class="logout" onclick="logout()">Sair</button>
 </div>
 
-<!-- B1 -->
 <div class="category" data-setor="B1">
 <div class="category-title">B1 - Pessoal</div>
 <div class="link-card">Escala de Serviço</div>
 <div class="link-card">Plano de Férias</div>
 </div>
 
-<!-- B2 -->
 <div class="category" data-setor="B2">
 <div class="category-title">B2 - Inteligência</div>
 <div class="link-card">Distribuição Análise</div>
 <div class="link-card">Distribuição Recurso</div>
 </div>
 
-<!-- B3 -->
 <div class="category" data-setor="B3">
 <div class="category-title">B3 - Operações</div>
 <div class="link-card">Planilha B3</div>
 <div class="link-card">Treinamentos</div>
 </div>
 
-<!-- B4 -->
 <div class="category" data-setor="B4">
 <div class="category-title">B4 - Logística e Patrimônio</div>
 <div class="link-card">Controle de Material</div>
 <div class="link-card">Manutenção</div>
 </div>
 
+<!-- CONTATOS -->
+<div class="footer-contact">
+<div class="footer-title">Contatos e Endereço</div>
+
+<div class="footer-item">
+📍 <a href="https://share.google/cd8jwClKb7aJvgxsk" target="_blank">
+Santa Cruz do Sul - RS
+</a>
+</div>
+
+<div class="footer-item">
+📱 <a href="https://wa.me/5551985248047" target="_blank">
+WhatsApp (51) 98524-8047
+</a>
+</div>
+
+<div class="footer-item">
+✉️ <a href="mailto:6bbm-sadm@cbm.rs.gov.br">
+6bbm-sadm@cbm.rs.gov.br
+</a>
+</div>
+
+</div>
+
 </div>
 
 <script>
 
-// USUÁRIOS COM SETOR
 const usuarios = {
-    "b1": {senha:"123", setor:"B1"},
-    "b2": {senha:"123", setor:"B2"},
-    "b3": {senha:"123", setor:"B3"},
-    "b4": {senha:"123", setor:"B4"},
-    "chefe": {senha:"admin", setor:"TODOS"}
+"b1": {senha:"123", setor:"B1"},
+"b2": {senha:"123", setor:"B2"},
+"b3": {senha:"123", setor:"B3"},
+"b4": {senha:"123", setor:"B4"},
+"chefe": {senha:"admin", setor:"TODOS"}
 };
 
 function login(){
+const user=document.getElementById("usuario").value.toLowerCase().trim();
+const pass=document.getElementById("senha").value.trim();
 
-    const user=document.getElementById("usuario").value;
-    const pass=document.getElementById("senha").value;
-
-    if(usuarios[user] && usuarios[user].senha===pass){
-
-        sessionStorage.setItem("usuarioLogado", user);
-        carregarSistema(user);
-
-    }else{
-        document.getElementById("erro").innerText="Usuário ou senha incorretos";
-    }
+if(usuarios[user] && usuarios[user].senha===pass){
+sessionStorage.setItem("usuarioLogado",user);
+carregarSistema(user);
+}else{
+document.getElementById("erro").innerText="Usuário ou senha incorretos";
+}
 }
 
 function carregarSistema(user){
+if(!usuarios[user]){ logout(); return; }
 
-    const setor=usuarios[user].setor;
+const setor=usuarios[user].setor;
 
-    document.getElementById("loginScreen").style.display="none";
-    document.getElementById("sistema").style.display="block";
-    document.getElementById("nomeUsuario").innerText=user;
+document.getElementById("loginScreen").style.display="none";
+document.getElementById("sistema").style.display="block";
+document.getElementById("nomeUsuario").innerText=user.toUpperCase()+" ("+setor+")";
 
-    const categorias=document.querySelectorAll(".category");
-
-    categorias.forEach(cat=>{
-        if(setor==="TODOS"){
-            cat.style.display="block";
-        }else{
-            cat.style.display = cat.getAttribute("data-setor")===setor ? "block":"none";
-        }
-    });
+document.querySelectorAll(".category").forEach(cat=>{
+if(setor==="TODOS"){
+cat.style.display="block";
+}else{
+cat.style.display = cat.getAttribute("data-setor")===setor?"block":"none";
+}
+});
 }
 
 function logout(){
-    sessionStorage.removeItem("usuarioLogado");
-    location.reload();
+sessionStorage.clear();
+location.reload();
 }
 
-// Mantém login se já estiver ativo
+window.onload=function(){
 const usuarioSalvo=sessionStorage.getItem("usuarioLogado");
-if(usuarioSalvo){
-    carregarSistema(usuarioSalvo);
+if(usuarioSalvo && usuarios[usuarioSalvo]){
+carregarSistema(usuarioSalvo);
+}
 }
 
 </script>
