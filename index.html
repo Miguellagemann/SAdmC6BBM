@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Central 6º BBM - SAdm</title>
+<title>SAdm - 6º BBM | CBMRS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -11,9 +11,10 @@
 <style>
 
 :root{
---vermelho:#CC0000;
---azul:#003366;
---fundo:#EAF6FF;
+--vermelho:#C40000;
+--azul:#002B5B;
+--azul-claro:#003D7A;
+--cinza-fundo:#F4F6F9;
 --branco:#ffffff;
 }
 
@@ -22,7 +23,22 @@
 body{
 margin:0;
 font-family:'Open Sans',sans-serif;
-background:linear-gradient(135deg,#002244,#003366);
+background:var(--cinza-fundo);
+}
+
+/* ===== BARRA SUPERIOR PADRÃO CBMRS ===== */
+.header-top{
+background:var(--azul);
+color:#fff;
+text-align:center;
+padding:15px;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.header-sub{
+background:var(--vermelho);
+height:6px;
 }
 
 /* LOGIN */
@@ -31,22 +47,28 @@ display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
+background:linear-gradient(135deg,#001f3f,#002b5b);
 }
 
 .login-box{
 background:#fff;
 padding:40px;
-border-radius:12px;
-width:340px;
+border-radius:10px;
+width:350px;
 text-align:center;
 box-shadow:0 15px 30px rgba(0,0,0,0.4);
+}
+
+.login-box h2{
+color:var(--azul);
+margin-bottom:20px;
 }
 
 .login-box input, .login-box select{
 width:100%;
 padding:12px;
 margin-top:10px;
-border-radius:6px;
+border-radius:5px;
 border:1px solid #ccc;
 }
 
@@ -57,43 +79,34 @@ width:100%;
 background:var(--vermelho);
 color:#fff;
 border:none;
-border-radius:6px;
+border-radius:5px;
 cursor:pointer;
 font-weight:600;
 }
 
 /* SISTEMA */
-#sistema{
-display:none;
-padding-top:70px;
-}
-
-.header-bar{
-position:fixed;
-top:0;
-width:100%;
-background:var(--vermelho);
-color:#fff;
-text-align:center;
-padding:15px;
-font-weight:700;
-z-index:1000;
-}
+#sistema{display:none;}
 
 .container{
 max-width:1200px;
-margin:auto;
+margin:40px auto;
 padding:40px;
-background:var(--fundo);
-border-radius:14px;
-box-shadow:0 20px 40px rgba(0,0,0,0.3);
+background:#fff;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+position:relative;
+overflow:hidden;
 }
 
+/* MARCA D'ÁGUA */
 .container::before{
 content:"";
 position:absolute;
-width:100%;
-height:100%;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:60%;
+height:60%;
 background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') center/contain no-repeat;
 opacity:0.05;
 pointer-events:none;
@@ -101,82 +114,77 @@ pointer-events:none;
 
 h1{
 text-align:center;
-color:var(--vermelho);
+color:var(--azul);
 font-weight:800;
-margin-bottom:30px;
+margin-bottom:40px;
 }
 
-#search-input{
-width:100%;
-padding:15px;
-border-radius:8px;
-border:2px solid var(--azul);
-font-size:16px;
-margin-bottom:35px;
-}
+.category{margin-bottom:40px;}
 
-.category{margin-bottom:35px;}
 .category-title{
 font-weight:800;
-color:var(--vermelho);
+color:var(--azul);
 border-left:6px solid var(--vermelho);
-padding-left:10px;
-margin-bottom:15px;
+padding-left:12px;
+margin-bottom:18px;
+font-size:18px;
 }
 
 .link-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:18px;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
 }
 
 .link-card{
 background:#fff;
-padding:22px;
-border-radius:10px;
+border:1px solid #e0e0e0;
+padding:25px;
+border-radius:8px;
 text-align:center;
 transition:0.3s;
-display:flex;
-flex-direction:column;
-align-items:center;
 cursor:pointer;
 }
 
 .link-card:hover{
-transform:translateY(-6px);
-border-bottom:4px solid var(--vermelho);
-}
-
-.link-card a{
-text-decoration:none;
-color:#333;
-font-weight:600;
-width:100%;
+transform:translateY(-5px);
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+border-top:4px solid var(--vermelho);
 }
 
 .icon{
-font-size:30px;
+font-size:32px;
 color:var(--azul);
-margin-bottom:10px;
+margin-bottom:12px;
 }
 
 .top-bar{
 text-align:right;
-margin-bottom:15px;
+margin-bottom:20px;
 }
 
 .top-bar button{
 margin-left:10px;
-padding:8px 12px;
+padding:8px 14px;
 border:none;
 border-radius:5px;
 cursor:pointer;
+font-weight:600;
 }
 
-.logout{background:#003366;color:#fff}
-.alterar{background:#cc0000;color:#fff}
+.logout{background:var(--azul);color:#fff}
+.alterar{background:var(--vermelho);color:#fff}
 
 .hidden{display:none}
+
+footer{
+margin-top:50px;
+text-align:center;
+color:#777;
+font-size:14px;
+}
+
+a{text-decoration:none;color:inherit}
 
 </style>
 </head>
@@ -185,7 +193,7 @@ cursor:pointer;
 <!-- LOGIN -->
 <div id="loginScreen">
 <div class="login-box">
-<h2>Login</h2>
+<h2>CBMRS - SAdm 6º BBM</h2>
 
 <select id="usuario">
 <option value="Chefe Sadm">Chefe Sadm</option>
@@ -208,9 +216,10 @@ cursor:pointer;
 <!-- SISTEMA -->
 <div id="sistema">
 
-<div class="header-bar">
-SEÇÃO ADMINISTRATIVA - SAdm 6º BBM
+<div class="header-top">
+CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL
 </div>
+<div class="header-sub"></div>
 
 <div class="container">
 
@@ -220,21 +229,14 @@ SEÇÃO ADMINISTRATIVA - SAdm 6º BBM
 <button class="logout" onclick="logout()">Sair</button>
 </div>
 
-<div id="areaAlterar" class="hidden">
-<input type="password" id="novaSenha" placeholder="Nova senha">
-<button onclick="alterarSenha()">Salvar</button>
-</div>
-
-<h1>CENTRAL DE ACESSOS RÁPIDOS</h1>
-
-<input type="text" id="search-input" placeholder="Buscar setor, palavra-chave...">
+<h1>SEÇÃO ADMINISTRATIVA - 6º BBM</h1>
 
 <!-- B1 -->
 <div class="category" data-setor="B1">
 <div class="category-title">B1 - Pessoal</div>
 <div class="link-grid">
-<div class="link-card"><a href="#"><i class="fas fa-calendar-alt icon"></i>Escala de Serviço</a></div>
-<div class="link-card"><a href="#"><i class="fas fa-plane icon"></i>Plano de Férias</a></div>
+<div class="link-card"><i class="fas fa-users icon"></i>Escala de Serviço</div>
+<div class="link-card"><i class="fas fa-plane icon"></i>Plano de Férias</div>
 </div>
 </div>
 
@@ -242,7 +244,7 @@ SEÇÃO ADMINISTRATIVA - SAdm 6º BBM
 <div class="category" data-setor="B2">
 <div class="category-title">B2 - Inteligência</div>
 <div class="link-grid">
-<div class="link-card"><a href="#"><i class="fas fa-brain icon"></i>Distribuição Análise</a></div>
+<div class="link-card"><i class="fas fa-brain icon"></i>Distribuição Análise</div>
 </div>
 </div>
 
@@ -250,7 +252,7 @@ SEÇÃO ADMINISTRATIVA - SAdm 6º BBM
 <div class="category" data-setor="B3">
 <div class="category-title">B3 - Operações</div>
 <div class="link-grid">
-<div class="link-card"><a href="#"><i class="fas fa-fire-extinguisher icon"></i>Planilha B3</a></div>
+<div class="link-card"><i class="fas fa-fire-extinguisher icon"></i>Planilha B3</div>
 </div>
 </div>
 
@@ -258,9 +260,40 @@ SEÇÃO ADMINISTRATIVA - SAdm 6º BBM
 <div class="category" data-setor="B4">
 <div class="category-title">B4 - Logística</div>
 <div class="link-grid">
-<div class="link-card"><a href="#"><i class="fas fa-truck-moving icon"></i>Planilha B4</a></div>
+<div class="link-card"><i class="fas fa-truck icon"></i>Planilha B4</div>
 </div>
 </div>
+
+<!-- CONTATO (VISÍVEL A TODOS) -->
+<div class="category contato-publico">
+<div class="category-title">Contato e Atendimento</div>
+<div class="link-grid">
+
+<div class="link-card">
+<i class="fas fa-location-dot icon"></i>
+<strong>Endereço</strong><br>
+R. Tenente Coronel Brito, 03<br>
+Santa Cruz do Sul - RS
+</div>
+
+<div class="link-card">
+<i class="fab fa-whatsapp icon"></i>
+<strong>WhatsApp</strong><br>
+(51) 98524-8047
+</div>
+
+<div class="link-card">
+<i class="fas fa-envelope icon"></i>
+<strong>Email</strong><br>
+6bbm-dsci@cbm.rs.gov.br
+</div>
+
+</div>
+</div>
+
+<footer>
+Sistema interno - 6º BBM | Desenvolvido para uso administrativo
+</footer>
 
 </div>
 </div>
@@ -289,7 +322,11 @@ document.getElementById("btnAlterar").classList.remove("hidden");
 document.querySelectorAll(".category").forEach(c=>c.style.display="block");
 }else{
 document.querySelectorAll(".category").forEach(c=>{
+if(c.classList.contains("contato-publico")){
+c.style.display="block";
+}else{
 c.style.display=c.dataset.setor===user?"block":"none";
+}
 });
 }
 }else{
@@ -298,24 +335,11 @@ alert("Senha incorreta!");
 }
 
 function logout(){location.reload();}
-
 function mostrarSenha(){
 const campo=document.getElementById("senha");
 campo.type=campo.type==="password"?"text":"password";
 }
-
-function mostrarAlterar(){
-document.getElementById("areaAlterar").classList.toggle("hidden");
-}
-
-function alterarSenha(){
-let nova=document.getElementById("novaSenha").value;
-let user=document.getElementById("usuario").value;
-if(nova.trim()===""){alert("Digite uma senha válida");return;}
-senhas[user]=nova;
-localStorage.setItem("senhas",JSON.stringify(senhas));
-alert("Senha alterada com sucesso!");
-}
+function mostrarAlterar(){}
 
 </script>
 
