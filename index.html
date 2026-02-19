@@ -4,241 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAdmC - 6º BBM | CBMRS</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <style>
         :root {
             --vermelho: #C40000;
             --azul: #002B5B;
             --azul-escuro: #001F3F;
             --cinza-fundo: #F4F6F9;
-            --whatsapp-verde: #25D366;
         }
-
         * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Open Sans', sans-serif; background: var(--cinza-fundo); display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* TELA DE LOGIN */
+        #loginScreen { flex: 1; background: var(--azul-escuro); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        .login-box { background: #fff; padding: 40px; border-radius: 10px; width: 100%; max-width: 350px; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .login-box h2 { color: var(--azul); margin-bottom: 20px; font-weight: 800; }
+        .login-box select, .login-box input { width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px; }
+        
+        .checkbox-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 15px 0; font-size: 14px; color: #666; }
+        .checkbox-row input { width: auto !important; margin: 0 !important; cursor: pointer; }
+        
+        .login-box button { width: 100%; padding: 12px; background: var(--vermelho); color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        
+        #cbmrs-logo-login { margin-top: 30px; text-align: center; color: #fff; }
+        #cbmrs-logo-login h1 { font-size: 48px; margin: 0; letter-spacing: 8px; font-weight: 800; }
+        #cbmrs-logo-login p { font-size: 16px; letter-spacing: 2px; opacity: 0.9; }
 
-        body {
-            margin: 0;
-            font-family: 'Open Sans', sans-serif;
-            background: var(--cinza-fundo);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* ===== TELA DE LOGIN ===== */
-        #loginScreen {
-            flex: 1;
-            background: linear-gradient(135deg, #001f3f, #002b5b);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .login-box {
-            background: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 350px;
-            text-align: center;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-
-        .login-box h2 {
-            color: var(--azul);
-            margin-bottom: 20px;
-            font-weight: 800;
-            font-size: 24px;
-        }
-
-        .login-box select, .login-box input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        .checkbox-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .login-box button {
-            margin-top: 5px;
-            padding: 12px;
-            width: 100%;
-            background: var(--vermelho);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-
-        .login-box button:hover { background: #a00000; }
-
-        #cbmrs-logo-login {
-            margin-top: 30px;
-            font-size: 48px;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: 10px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-
-        #cbmrs-logo-login span {
-            display: block;
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: 3px;
-            margin-top: 5px;
-            color: #ddd;
-        }
-
-        /* ===== SISTEMA ===== */
+        /* SISTEMA */
         #sistema { display: none; flex: 1; }
-
-        .header-top {
-            background: var(--azul);
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
+        .header-top { background: var(--azul); color: #fff; text-align: center; padding: 15px; font-weight: 700; }
         .header-sub { background: var(--vermelho); height: 6px; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 30px; background: #fff; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .category { margin-bottom: 30px; display: none; }
+        .category-title { border-left: 6px solid var(--vermelho); padding-left: 15px; color: var(--azul); font-weight: 800; font-size: 20px; margin-bottom: 20px; }
+        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .link-card { border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .link-card:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .link-card i { font-size: 35px; color: var(--azul); margin-bottom: 15px; }
+        
+        .logout-btn { background: var(--azul); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
 
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .container::before {
-            content: "";
-            position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%,-50%);
-            width: 60%; height: 60%;
-            background: url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') center/contain no-repeat;
-            opacity: 0.05; pointer-events: none;
-        }
-
-        .top-bar { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            margin-bottom: 30px; 
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .logout {
-            background: var(--azul);
-            color: #fff;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .category {
-            margin-bottom: 40px;
-            padding: 15px;
-            border-radius: 8px;
-        }
-
-        .category-title {
-            font-weight: 800; color: var(--azul);
-            border-left: 6px solid var(--vermelho);
-            padding-left: 12px; margin-bottom: 20px; font-size: 20px;
-        }
-
-        .link-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .link-card {
-            background: #fff; 
-            border: 1px solid #e0e0e0;
-            padding: 30px 20px; 
-            border-radius: 8px; 
-            text-align: center; 
-            transition: 0.3s;
-            cursor: pointer;
-            position: relative; 
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .link-card:hover {
-            transform: translateY(-5px);
-            border-top: 4px solid var(--vermelho);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .link-card i {
-            font-size: 40px;
-            color: var(--azul);
-            transition: 0.3s;
-        }
-
-        .link-card:hover i {
-            color: var(--vermelho);
-            transform: scale(1.1);
-        }
-
-        .link-card strong { color: #333; font-size: 16px; }
-
-        /* ===== RODAPÉ ===== */
+        /* RODAPÉ */
         .footer-oficial { background: var(--azul-escuro); color: #fff; font-size: 14px; margin-top: auto; }
         .footer-top-bar { height: 6px; background: var(--vermelho); }
-        .footer-main {
-            max-width: 1100px; margin: auto;
-            display: flex; flex-wrap: wrap; justify-content: space-between;
-            gap: 40px; padding: 40px 20px;
-        }
+        .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
         .footer-section { flex: 1; min-width: 250px; }
         .footer-section h4 { color: var(--vermelho); margin-bottom: 15px; }
         .footer-bottom { background: #000E1F; text-align: center; padding: 15px; font-size: 13px; color: #aaa; }
-
-        /* Botão Topo */
-        #btnTop {
-            position: fixed; bottom: 20px; right: 20px; 
-            background: var(--azul); color: white; border: none; 
-            border-radius: 50%; width: 45px; height: 45px; 
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            display: none; z-index: 100;
-        }
-
-        @media (max-width: 600px) {
-            .container { margin: 10px; padding: 15px; }
-            .login-box { padding: 25px; }
-        }
     </style>
 </head>
 <body>
@@ -264,95 +78,66 @@
     </div>
 
     <div id="cbmrs-logo-login">
-        CBMRS
-        <span>Corpo de Bombeiros Militar do RS</span>
+        <h1>CBMRS</h1>
+        <p>Corpo de Bombeiros Militar do RS</p>
     </div>
 </div>
 
 <div id="sistema">
-    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL</div>
+    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
     <div class="header-sub"></div>
-
     <div class="container">
-        <div class="top-bar">
-            <span id="usuarioLogado" style="font-weight:600; color:var(--azul)"></span>
-            <button class="logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <span id="usuarioLogado" style="font-weight: 800; color: var(--azul); font-size: 18px;"></span>
+            <button class="logout-btn" onclick="location.reload()">Sair</button>
         </div>
-
-        <h1 style="text-align:center; color:var(--azul); margin-bottom:40px;">SEÇÃO ADMINISTRATIVA - 6º BBM</h1>
-
-        <div class="category" data-setor="B1">
+        
+        <div class="category" id="cat-B1">
             <div class="category-title">B1 - Pessoal</div>
             <div class="link-grid">
-                <div class="link-card" onclick="alert('Link em breve')">
-                    <i class="fas fa-calendar-check"></i>
-                    <strong>Escala de Serviço</strong>
-                </div>
-                <div class="link-card" onclick="alert('Link em breve')">
-                    <i class="fas fa-umbrella-beach"></i>
-                    <strong>Plano de Férias</strong>
-                </div>
+                <div class="link-card"><i class="fas fa-calendar-check"></i><br><strong>Escalas</strong></div>
+                <div class="link-card"><i class="fas fa-umbrella-beach"></i><br><strong>Férias</strong></div>
             </div>
         </div>
 
-        <div class="category" data-setor="B2">
+        <div class="category" id="cat-B2">
             <div class="category-title">B2 - Inteligência</div>
             <div class="link-grid">
-                <div class="link-card" onclick="alert('Link em breve')">
-                    <i class="fas fa-shield-halved"></i>
-                    <strong>Distribuição Análise</strong>
-                </div>
+                <div class="link-card"><i class="fas fa-shield-halved"></i><br><strong>Análise de Dados</strong></div>
             </div>
         </div>
 
-        <div class="category" data-setor="B3">
+        <div class="category" id="cat-B3">
             <div class="category-title">B3 - Operações</div>
             <div class="link-grid">
-                <div class="link-card" onclick="alert('Link em breve')">
-                    <i class="fas fa-fire-extinguisher"></i>
-                    <strong>Planilha B3</strong>
-                </div>
-                <div class="link-card" onclick="alert('Link em breve')">
-                    <i class="fas fa-chart-line"></i>
-                    <strong>Estatísticas Op</strong>
-                </div>
+                <div class="link-card"><i class="fas fa-fire-extinguisher"></i><br><strong>Planilha Operacional</strong></div>
             </div>
         </div>
 
-        <div class="category" data-setor="B4">
+        <div class="category" id="cat-B4">
             <div class="category-title">B4 - Logística</div>
             <div class="link-grid">
-                <div class="link-card" onclick="alert('Link em breve')">
-                    <i class="fas fa-boxes-stacked"></i>
-                    <strong>Patrimônio</strong>
-                </div>
-                <div class="link-card" onclick="alert('Link em breve')">
-                    <i class="fas fa-wrench"></i>
-                    <strong>Manutenção</strong>
-                </div>
+                <div class="link-card"><i class="fas fa-boxes-stacked"></i><br><strong>Patrimônio</strong></div>
             </div>
         </div>
     </div>
 </div>
-
-<button id="btnTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-    <i class="fas fa-arrow-up"></i>
-</button>
 
 <footer class="footer-oficial">
     <div class="footer-top-bar"></div>
     <div class="footer-main">
         <div class="footer-section">
-            <h3>6º BATALHÃO DE BOMBEIRO MILITAR</h3>
+            <h4>6º BATALHÃO DE BOMBEIRO MILITAR</h4>
             <p>Seção Administrativa - SAdmC</p>
         </div>
         <div class="footer-section">
-            <h4>Contato</h4>
-            <p><i class="fas fa-location-dot"></i> Santa Cruz do Sul/RS</p>
+            <h4>Contato Institucional</h4>
+            <p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
             <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
         </div>
         <div class="footer-section">
             <h4>Uso Interno</h4>
+            <p>Sistema exclusivo de gestão administrativa interna.</p>
             <p>Acesso restrito aos militares do 6º BBM.</p>
         </div>
     </div>
@@ -360,57 +145,44 @@
 </footer>
 
 <script>
-    // Configurações iniciais
-    let senhas = JSON.parse(localStorage.getItem("senhas")) || {
-        "Chefe SadmC":"1234", "B1":"1234", "B2":"1234", "B3":"1234", "B4":"1234"
+    const senhas = {
+        "Chefe SadmC": "1234",
+        "B1": "1234",
+        "B2": "1234",
+        "B3": "1234",
+        "B4": "1234"
     };
 
-    // Login com tecla Enter
+    function login() {
+        const user = document.getElementById("usuario").value;
+        const pass = document.getElementById("senha").value;
+
+        if (pass === senhas[user]) {
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("sistema").style.display = "block";
+            document.getElementById("usuarioLogado").innerText = "Acesso: " + user;
+
+            document.querySelectorAll(".category").forEach(cat => cat.style.display = "none");
+
+            if (user === "Chefe SadmC") {
+                document.querySelectorAll(".category").forEach(cat => cat.style.display = "block");
+            } else {
+                const minhaCat = document.getElementById("cat-" + user);
+                if(minhaCat) minhaCat.style.display = "block";
+            }
+        } else {
+            alert("Senha incorreta!");
+        }
+    }
+
+    function mostrarSenha() {
+        const field = document.getElementById("senha");
+        field.type = field.type === "password" ? "text" : "password";
+    }
+
     document.getElementById("senha").addEventListener("keypress", function(e) {
         if (e.key === "Enter") login();
     });
-
-    function login(){
-        let user = document.getElementById("usuario").value;
-        let pass = document.getElementById("senha").value;
-
-        if(pass === senhas[user]){
-            document.getElementById("loginScreen").style.display = "none";
-            document.getElementById("sistema").style.display = "block";
-            document.getElementById("usuarioLogado").innerHTML = `<i class="fas fa-user-circle"></i> Usuário: ${user}`;
-
-            const categorias = document.querySelectorAll(".category");
-            categorias.forEach(c => {
-                if(user === "Chefe SadmC" || c.dataset.setor === user){
-                    c.style.display = "block";
-                } else {
-                    c.style.display = "none";
-                }
-            });
-            window.scrollTo(0,0);
-        } else {
-            alert("Senha incorreta!");
-            document.getElementById("senha").value = "";
-            document.getElementById("senha").focus();
-        }
-    }
-
-    function logout(){ location.reload(); }
-
-    function mostrarSenha(){
-        const campo = document.getElementById("senha");
-        campo.type = campo.type === "password" ? "text" : "password";
-    }
-
-    // Mostrar/Esconder botão subir
-    window.onscroll = function() {
-        let btn = document.getElementById("btnTop");
-        if (document.documentElement.scrollTop > 300) {
-            btn.style.display = "block";
-        } else {
-            btn.style.display = "none";
-        }
-    };
 </script>
 
 </body>
