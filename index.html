@@ -14,6 +14,7 @@
   --azul:#002B5B;
   --azul-escuro:#001F3F;
   --cinza-fundo:#F4F6F9;
+  --whatsapp-verde: #25D366;
 }
 
 *{box-sizing:border-box}
@@ -27,7 +28,7 @@ body{
   min-height: 100vh;
 }
 
-/* ===== TELA DE LOGIN (GRADIENTE) ===== */
+/* ===== TELA DE LOGIN ===== */
 #loginScreen{
   flex: 1;
   background: linear-gradient(135deg,#001f3f,#002b5b);
@@ -45,10 +46,7 @@ body{
   width:350px;
   text-align:center;
   box-shadow:0 15px 30px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease;
 }
-
-.login-box:hover{ transform: translateY(-5px); }
 
 .login-box h2{
   color:var(--azul);
@@ -63,10 +61,28 @@ body{
   margin-top:10px;
   border-radius:5px;
   border:1px solid #ccc;
+  font-size: 14px;
+}
+
+/* MOSTRAR SENHA LADO A LADO */
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.checkbox-row input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
 }
 
 .login-box button{
-  margin-top:15px;
+  margin-top:5px;
   padding:12px;
   width:100%;
   background:var(--vermelho);
@@ -75,15 +91,6 @@ body{
   border-radius:5px;
   cursor:pointer;
   font-weight:600;
-}
-
-.checkbox-container{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:10px;
-  font-size:14px;
-  color: #666;
 }
 
 #cbmrs-logo-login{
@@ -105,7 +112,7 @@ body{
   color:#ddd;
 }
 
-/* ===== SISTEMA (PÓS-LOGIN) ===== */
+/* ===== SISTEMA ===== */
 #sistema{ display:none; flex: 1; }
 
 .header-top{
@@ -114,7 +121,6 @@ body{
   text-align:center;
   padding:15px;
   font-weight:700;
-  letter-spacing:1px;
 }
 
 .header-sub{ background:var(--vermelho); height:6px; }
@@ -125,8 +131,8 @@ body{
   padding:40px;
   background:#fff;
   border-radius:10px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
   position:relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .container::before{
@@ -138,7 +144,11 @@ body{
   opacity:0.05; pointer-events:none;
 }
 
-h1{ text-align:center; color:var(--azul); font-weight:800; margin-bottom:40px; }
+.top-bar{ text-align:right; margin-bottom:20px; }
+.top-bar button{
+  margin-left:10px; padding:8px 14px; border:none; border-radius:5px; cursor:pointer; font-weight:600;
+}
+.logout{background:var(--azul);color:#fff}
 
 .category-title{
   font-weight:800; color:var(--azul);
@@ -155,25 +165,19 @@ h1{ text-align:center; color:var(--azul); font-weight:800; margin-bottom:40px; }
 .link-card{
   background:#fff; border:1px solid #e0e0e0;
   padding:25px; border-radius:8px; text-align:center; transition:0.3s;
+  cursor: pointer;
+  position: relative; z-index: 2;
 }
 
 .link-card:hover{
   transform:translateY(-5px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.15);
   border-top:4px solid var(--vermelho);
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
 }
 
 .icon{ font-size:32px; color:var(--azul); margin-bottom:12px; }
 
-.top-bar{ text-align:right; margin-bottom:20px; }
-.top-bar button{
-  margin-left:10px; padding:8px 14px; border:none; border-radius:5px; cursor:pointer; font-weight:600;
-}
-.logout{background:var(--azul);color:#fff}
-.alterar{background:var(--vermelho);color:#fff}
-.hidden{display:none}
-
-/* ===== RODAPÉ OFICIAL (SEMPRE VISÍVEL) ===== */
+/* ===== RODAPÉ INSTITUCIONAL (PADRÃO GOV) ===== */
 .footer-oficial{
   background:var(--azul-escuro);
   color:#fff;
@@ -194,10 +198,12 @@ h1{ text-align:center; color:var(--azul); font-weight:800; margin-bottom:40px; }
 }
 
 .footer-section{ flex:1; min-width:250px; }
-.footer-section h3{ font-size:16px; margin-top:0; }
-.footer-section h4{ color:var(--vermelho); margin-bottom:10px; }
-.footer-section p{ margin:6px 0; line-height:1.5; }
-.footer-section i{ margin-right:8px; color:var(--vermelho); }
+.footer-section h3{ font-size:16px; margin-top:0; font-weight: 800; }
+.footer-section h4{ color:var(--vermelho); margin-bottom:10px; font-weight: 700; }
+
+.footer-section i{ margin-right:10px; width: 18px; text-align: center; }
+.fa-location-dot, .fa-envelope { color: var(--vermelho); }
+.fa-whatsapp { color: var(--whatsapp-verde); }
 
 .footer-bottom{ background:#000E1F; text-align:center; padding:12px; font-size:13px; }
 
@@ -216,9 +222,12 @@ h1{ text-align:center; color:var(--azul); font-weight:800; margin-bottom:40px; }
       <option value="B4">B4</option>
     </select>
     <input type="password" id="senha" placeholder="Senha">
-    <label class="checkbox-container">
-      <input type="checkbox" onclick="mostrarSenha()"> Mostrar senha
-    </label>
+    
+    <div class="checkbox-row">
+      <input type="checkbox" id="checkSenha" onclick="mostrarSenha()">
+      <label for="checkSenha" style="cursor:pointer">Mostrar senha</label>
+    </div>
+
     <button onclick="login()">Entrar</button>
   </div>
 
@@ -234,12 +243,11 @@ h1{ text-align:center; color:var(--azul); font-weight:800; margin-bottom:40px; }
 
   <div class="container">
     <div class="top-bar">
-      <span id="usuarioLogado"></span>
-      <button class="alterar hidden" id="btnAlterar">Alterar Senha</button>
+      <span id="usuarioLogado" style="font-weight:600; color:var(--azul)"></span>
       <button class="logout" onclick="logout()">Sair</button>
     </div>
 
-    <h1>SEÇÃO ADMINISTRATIVA - 6º BBM</h1>
+    <h1 style="text-align:center; color:var(--azul); margin-bottom:40px;">SEÇÃO ADMINISTRATIVA - 6º BBM</h1>
 
     <div class="category" data-setor="B1">
       <div class="category-title">B1 - Pessoal</div>
@@ -296,6 +304,7 @@ h1{ text-align:center; color:var(--azul); font-weight:800; margin-bottom:40px; }
 </footer>
 
 <script>
+// Carrega as senhas do navegador ou usa a padrão
 let senhas = JSON.parse(localStorage.getItem("senhas")) || {
   "Chefe Sadm":"1234", "B1":"1234", "B2":"1234", "B3":"1234", "B4":"1234"
 };
@@ -309,11 +318,12 @@ function login(){
     document.getElementById("sistema").style.display = "block";
     document.getElementById("usuarioLogado").innerText = "Usuário: " + user;
 
+    // Filtra o que cada um vê
+    const categorias = document.querySelectorAll(".category");
     if(user === "Chefe Sadm"){
-      document.getElementById("btnAlterar").classList.remove("hidden");
-      document.querySelectorAll(".category").forEach(c => c.style.display = "block");
+      categorias.forEach(c => c.style.display = "block");
     } else {
-      document.querySelectorAll(".category").forEach(c => {
+      categorias.forEach(c => {
         c.style.display = (c.dataset.setor === user) ? "block" : "none";
       });
     }
