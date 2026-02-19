@@ -13,9 +13,8 @@
 :root{
 --vermelho:#C40000;
 --azul:#002B5B;
---azul-claro:#003D7A;
+--azul-escuro:#001F3F;
 --cinza-fundo:#F4F6F9;
---branco:#ffffff;
 }
 
 *{box-sizing:border-box}
@@ -26,7 +25,7 @@ font-family:'Open Sans',sans-serif;
 background:var(--cinza-fundo);
 }
 
-/* ===== BARRA SUPERIOR PADRÃO CBMRS ===== */
+/* ===== CABEÇALHO INSTITUCIONAL ===== */
 .header-top{
 background:var(--azul);
 color:#fff;
@@ -177,14 +176,65 @@ font-weight:600;
 
 .hidden{display:none}
 
-footer{
-margin-top:50px;
-text-align:center;
-color:#777;
+a{text-decoration:none;color:inherit}
+
+/* ================= RODAPÉ OFICIAL ================= */
+
+.footer-oficial{
+margin-top:80px;
+background:var(--azul-escuro);
+color:#fff;
 font-size:14px;
 }
 
-a{text-decoration:none;color:inherit}
+.footer-top-bar{
+height:6px;
+background:var(--vermelho);
+}
+
+.footer-main{
+max-width:1200px;
+margin:auto;
+display:flex;
+flex-wrap:wrap;
+justify-content:space-between;
+gap:40px;
+padding:40px 20px;
+}
+
+.footer-section{
+flex:1;
+min-width:250px;
+}
+
+.footer-section h3{
+margin-top:0;
+font-size:16px;
+letter-spacing:1px;
+}
+
+.footer-section h4{
+margin-bottom:10px;
+color:var(--vermelho);
+}
+
+.footer-section p{
+margin:6px 0;
+line-height:1.5;
+}
+
+.footer-section i{
+margin-right:8px;
+color:var(--vermelho);
+}
+
+.footer-bottom{
+background:#000E1F;
+text-align:center;
+padding:12px;
+font-size:13px;
+letter-spacing:0.5px;
+}
 
 </style>
 </head>
@@ -264,39 +314,42 @@ CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL
 </div>
 </div>
 
-<!-- CONTATO (VISÍVEL A TODOS) -->
-<div class="category contato-publico">
-<div class="category-title">Contato e Atendimento</div>
-<div class="link-grid">
-
-<div class="link-card">
-<i class="fas fa-location-dot icon"></i>
-<strong>Endereço</strong><br>
-R. Tenente Coronel Brito, 03<br>
-Santa Cruz do Sul - RS
-</div>
-
-<div class="link-card">
-<i class="fab fa-whatsapp icon"></i>
-<strong>WhatsApp</strong><br>
-(51) 98524-8047
-</div>
-
-<div class="link-card">
-<i class="fas fa-envelope icon"></i>
-<strong>Email</strong><br>
-6bbm-dsci@cbm.rs.gov.br
-</div>
-
 </div>
 </div>
 
-<footer>
-Sistema interno - 6º BBM | Desenvolvido para uso administrativo
+<!-- ================= RODAPÉ INSTITUCIONAL OFICIAL ================= -->
+<footer class="footer-oficial">
+
+<div class="footer-top-bar"></div>
+
+<div class="footer-main">
+
+<div class="footer-section identidade">
+<h3>CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL</h3>
+<p>6º Batalhão de Bombeiro Militar</p>
+<p>Seção Administrativa - SAdm</p>
+</div>
+
+<div class="footer-section contato">
+<h4>Contato Institucional</h4>
+<p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
+<p><i class="fab fa-whatsapp"></i> (51) 98524-8047</p>
+<p><i class="fas fa-envelope"></i> 6bbm-dsci@cbm.rs.gov.br</p>
+</div>
+
+<div class="footer-section institucional">
+<h4>Uso Interno</h4>
+<p>Sistema destinado exclusivamente à gestão administrativa interna.</p>
+<p>Acesso restrito aos militares do 6º BBM.</p>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 - CBMRS | Governo do Estado do Rio Grande do Sul
+</div>
+
 </footer>
-
-</div>
-</div>
 
 <script>
 
@@ -322,11 +375,7 @@ document.getElementById("btnAlterar").classList.remove("hidden");
 document.querySelectorAll(".category").forEach(c=>c.style.display="block");
 }else{
 document.querySelectorAll(".category").forEach(c=>{
-if(c.classList.contains("contato-publico")){
-c.style.display="block";
-}else{
 c.style.display=c.dataset.setor===user?"block":"none";
-}
 });
 }
 }else{
@@ -339,7 +388,9 @@ function mostrarSenha(){
 const campo=document.getElementById("senha");
 campo.type=campo.type==="password"?"text":"password";
 }
-function mostrarAlterar(){}
+function mostrarAlterar(){
+document.getElementById("areaAlterar").classList.toggle("hidden");
+}
 
 </script>
 
