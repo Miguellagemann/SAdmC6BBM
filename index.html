@@ -1,71 +1,160 @@
-<div class="header-bar">
-        <p class="header-title">SEÇÃO ADMINISTRATIVA - SAdm 6° BBM</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central 6º BBM - SAdm</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --cor-vermelho-bombeiro: #CC0000;
+            --cor-azul-naval: #003366;
+            --cor-fundo-claro: #E0F4FF;
+            --cor-dourado: #FFC107; 
+        }
+
+        body { 
+            font-family: 'Open Sans', Arial, sans-serif; 
+            background-color: var(--cor-azul-naval); 
+            margin: 0; 
+            padding-top: 60px; 
+            min-height: 100vh; 
+        }
+
+        /* Barra Superior */
+        .header-bar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background-color: var(--cor-vermelho-bombeiro); 
+            color: #fff; padding: 12px 0; text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5); z-index: 1000;
+        }
+
+        /* Container Principal */
+        .container { 
+            max-width: 1000px; margin: 20px auto; padding: 30px; 
+            background-color: var(--cor-fundo-claro); 
+            border-radius: 12px; position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Marca d'água do Brasão */
+        .container::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png');
+            background-repeat: no-repeat; background-position: center; background-size: contain;
+            opacity: 0.1; z-index: 0; pointer-events: none;
+        }
+
+        h1 { 
+            color: var(--cor-vermelho-bombeiro); text-align: center; 
+            font-weight: 800; position: relative; z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Busca */
+        .search-container { margin-bottom: 30px; position: relative; z-index: 1; }
+        #search-input { 
+            width: 100%; padding: 15px; border: 2px solid var(--cor-azul-naval); 
+            border-radius: 8px; font-size: 16px; outline: none;
+        }
+
+        /* Categorias e Grids */
+        .category-title { 
+            border-bottom: 2px solid var(--cor-vermelho-bombeiro);
+            color: var(--cor-vermelho-bombeiro); font-weight: 800;
+            margin: 30px 0 15px; padding-bottom: 5px; position: relative; z-index: 1;
+        }
+
+        .link-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 15px; position: relative; z-index: 1;
+        }
+
+        /* Cartões */
+        .link-card { 
+            background: rgba(255,255,255,0.9); padding: 20px; border-radius: 8px;
+            text-align: center; border: 1px solid #ddd; transition: 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .link-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--cor-vermelho-bombeiro); 
+        }
+
+        .link-card a { text-decoration: none; color: #333; font-weight: 600; width: 100%; }
+
+        .icon { font-size: 32px; color: var(--cor-azul-naval); margin-bottom: 10px; display: block; }
+
+        .link-card:hover .icon { color: var(--cor-vermelho-bombeiro); }
+
+        /* Rodapé interno */
+        .impact-phrase { 
+            text-align: center; margin-top: 40px; padding-top: 20px;
+            color: var(--cor-vermelho-bombeiro); font-style: italic; 
+            border-top: 1px solid #ccc; position: relative; z-index: 1; 
+        }
+
+        .credits { text-align: center; font-size: 12px; color: var(--cor-azul-naval); margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <strong>SEÇÃO ADMINISTRATIVA - SAdm 6° BBM</strong>
     </div>
 
     <div class="container">
         <h1>CENTRAL DE ACESSOS RÁPIDOS</h1>
 
         <div class="search-container">
-            <input type="text" id="search-input" placeholder="Digite para buscar links, sistemas, municípios ou setores..." aria-label="Campo de busca de links">
+            <input type="text" id="search-input" placeholder="Digite para buscar links ou setores...">
         </div>
 
-        <div class="category-title">Chefe do SAdm</div>
-        <div class="link-grid single-line-grid">
-            <div class="link-card" data-search-terms="Planilha 02 cronograma chefe">
-                <a href="#" target="_blank" rel="noopener noreferrer"> 
-                    <span class="icon" aria-hidden="true"><i class="fas fa-clock"></i></span> Planilha 02
+        <div class="category-title">Chefia</div>
+        <div class="link-grid">
+            <div class="link-card" data-terms="planilha 02 chefe">
+                <a href="#" target="_blank">
+                    <i class="fas fa-clock icon"></i> Planilha 02
                 </a>
             </div>
         </div>
 
-        <div class="category-title">B1</div>
-        <div class="link-grid optimized-columns">
-            <div class="link-card" data-search-terms="B1 escala serviço">
-                <a href="https://drive.google.com/drive/u/0/folders/1n31GnynlNjcxk7SATuYd6DBL-yXoyzHo" target="_blank" rel="noopener noreferrer">
-                    <span class="icon" aria-hidden="true"><i class="fas fa-calendar-alt"></i></span> Escala de Serviço
+        <div class="category-title">B1 - Pessoal</div>
+        <div class="link-grid">
+            <div class="link-card" data-terms="escala serviço b1">
+                <a href="https://drive.google.com/drive/u/0/folders/1n31GnynlNjcxk7SATuYd6DBL-yXoyzHo" target="_blank">
+                    <i class="fas fa-calendar-alt icon"></i> Escala de Serviço
                 </a>
             </div>
-            <div class="link-card" data-search-terms="controle numeração documentos sseg">
-                <a href="https://drive.google.com/drive/u/0/folders/1B6YQiTruUaYA4mkqGJtm793qfTRW7SLN" target="_blank" rel="noopener noreferrer">
-                    <span class="icon" aria-hidden="true"><i class="fas fa-hashtag"></i></span> Controle de Numeração
+            <div class="link-card" data-terms="férias recesso">
+                <a href="https://drive.google.com/drive/u/0/folders/1cxrAiC79aJ7DkJEbRfGrj7oShPmKFoLZ" target="_blank">
+                    <i class="fas fa-plane icon"></i> Plano de Férias
                 </a>
             </div>
-            <div class="link-card" data-search-terms="ordem de serviço os diretriz">
-                <a href="https://drive.google.com/drive/u/0/folders/1zwTpU9w69PZiPZZ3B4FO3rgsnoneLFU2" target="_blank" rel="noopener noreferrer">
-                    <span class="icon" aria-hidden="true"><i class="fas fa-clipboard-list"></i></span> Ordem de Serviço
-                </a>
-            </div>
-            <div class="link-card" data-search-terms="plano de férias recesso folga">
-                <a href="https://drive.google.com/drive/u/0/folders/1cxrAiC79aJ7DkJEbRfGrj7oShPmKFoLZ" target="_blank" rel="noopener noreferrer">
-                    <span class="icon" aria-hidden="true"><i class="fas fa-plane"></i></span> Plano de Férias
+            <div class="link-card" data-terms="numeração documentos">
+                <a href="https://drive.google.com/drive/u/0/folders/1B6YQiTruUaYA4mkqGJtm793qfTRW7SLN" target="_blank">
+                    <i class="fas fa-hashtag icon"></i> Controle de Numeração
                 </a>
             </div>
         </div>
 
         <div class="category-title">Secretaria</div>
-        <div class="link-grid optimized-columns">
-            <div class="link-card" data-search-terms="distribuição analise projeto appci ncv civ">
-                <a href="https://docs.google.com/spreadsheets/d/1Ps3SbCXKtc6HxBq7HRRGpc8LdaxOYU2RM5pOQgNyIl0/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">
-                    <span class="icon" aria-hidden="true"><i class="fas fa-magnifying-glass"></i></span> Distribuição Análise
+        <div class="link-grid">
+            <div class="link-card" data-terms="distribuição analise projeto">
+                <a href="https://docs.google.com/spreadsheets/d/1Ps3SbCXKtc6HxBq7HRRGpc8LdaxOYU2RM5pOQgNyIl0/edit" target="_blank">
+                    <i class="fas fa-file-signature icon"></i> Distribuição Análise
                 </a>
             </div>
-            <div class="link-card" data-search-terms="distribuição recurso fact fiscalizacao">
-                <a href="https://docs.google.com/spreadsheets/d/1PiE7zwWCx49a5kYqcgOZdSitjqYWmykmm77w3WFYkgc/edit?gid=785258701#gid=785258701" target="_blank" rel="noopener noreferrer">
-                    <span class="icon" aria-hidden="true"><i class="fas fa-file-signature"></i></span> Distribuição Recurso
-                </a>
-            </div>
-        </div>
-
-        <div class="category-title">Contatos e Suporte</div>
-        <div class="link-grid contact-grid">
-            <div class="link-card contact-card" data-search-terms="whatsapp sadm secretaria suporte">
-                <a href="https://wa.me/5500000000000" target="_blank">
-                    <span class="icon whatsapp-icon"><i class="fab fa-whatsapp"></i></span>
-                    <div class="contact-details">
-                        <strong>WhatsApp SAdm</strong>
-                        <p>Dúvidas administrativas rápidas</p>
-                        <span class="action-link">Iniciar conversa</span>
-                    </div>
+            <div class="link-card" data-terms="recurso fact">
+                <a href="https://docs.google.com/spreadsheets/d/1PiE7zwWCx49a5kYqcgOZdSitjqYWmykmm77w3WFYkgc/edit" target="_blank">
+                    <i class="fas fa-gavel icon"></i> Distribuição Recurso
                 </a>
             </div>
         </div>
@@ -75,20 +164,21 @@
     </div>
 
     <script>
+        // Função de busca em tempo real
         const searchInput = document.getElementById('search-input');
         const cards = document.querySelectorAll('.link-card');
 
         searchInput.addEventListener('input', () => {
-            const filter = searchInput.value.toLowerCase();
+            const term = searchInput.value.toLowerCase();
             cards.forEach(card => {
-                const searchTerms = card.getAttribute('data-search-terms').toLowerCase();
-                const cardText = card.textContent.toLowerCase();
-                
-                if (searchTerms.includes(filter) || cardText.includes(filter)) {
-                    card.style.display = ""; // Mostra o card
+                const content = card.getAttribute('data-terms') + card.textContent.toLowerCase();
+                if (content.includes(term)) {
+                    card.style.display = "flex";
                 } else {
-                    card.style.display = "none"; // Esconde o card
+                    card.style.display = "none";
                 }
             });
         });
     </script>
+</body>
+</html>
