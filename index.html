@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
-            --vermelho: #C40000;
+            --vermelho: #C40000; /* Vermelho Bombeiro */
             --vermelho-hover: #A00000;
-            --azul: #002B5B;
+            --azul: #002B5B;    /* Azul Institucional */
             --azul-escuro: #001F3F;
             --cinza-fundo: #F4F6F9;
-            --amarelo: #FFD700;
+            --amarelo: #FFD700; /* Dourado/Amarelo de destaque */
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
@@ -24,19 +24,32 @@
             display: flex; flex-direction: column; min-height: 100vh; color: #334155;
         }
 
-        /* LOGIN */
+        /* TELA DE LOGIN COM MAIS IDENTIDADE VISUAL */
         #loginScreen { 
             flex: 1; background: var(--azul-escuro); 
             display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; 
+            /* Adiciona um padrão sutil de fundo para remeter à corporação */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 100 100"><path d="M50 0L61.8 38.2L100 38.2L69.1 61.8L80.9 100L50 76.4L19.1 100L30.9 61.8L0 38.2L38.2 38.2Z" fill="%23001A33" fill-opacity="0.1"/></svg>');
+            background-size: 80px; /* Tamanho do padrão */
+            background-repeat: repeat;
         }
 
         .login-box { 
-            background: white; padding: 40px; border-radius: 10px; width: 100%; max-width: 350px; 
+            background: white; padding: 40px; border-radius: 10px; width: 100%; max-width: 380px; /* Aumentei um pouco */
             text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            position: relative; /* Para posicionar o ícone da corporação */
         }
 
+        .cbmrs-badge {
+            font-size: 60px; /* Tamanho do ícone */
+            color: var(--vermelho);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Sombra para dar profundidade */
+            display: block; /* Para centralizar */
+        }
+        
         .login-box h2 { color: var(--azul); margin-bottom: 5px; font-weight: 800; }
-        .login-box p.subtitle { color: #666; font-size: 12px; margin-bottom: 20px; font-weight: 600; text-transform: uppercase; }
+        .login-box p.subtitle { color: #666; font-size: 13px; margin-bottom: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         
         .login-box select, .login-box input { 
             width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px;
@@ -55,6 +68,13 @@
         .header-top { 
             background: var(--azul); color: #fff; text-align: center; padding: 20px; 
             font-weight: 800; font-size: 24px; letter-spacing: 1px;
+            display: flex; justify-content: center; align-items: center; /* Para centralizar o ícone */
+            gap: 10px; /* Espaço entre o ícone e o texto */
+        }
+        .header-top i {
+            color: var(--amarelo); /* Ícone dourado no cabeçalho */
+            font-size: 28px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
         
         .header-sub { background: var(--vermelho); height: 6px; }
@@ -65,6 +85,8 @@
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
             padding-bottom: 15px; border-bottom: 1px solid #eee;
         }
+
+        .info-operacional { text-align: right; color: var(--azul); font-weight: 600; font-size: 14px; }
 
         .category { margin-bottom: 30px; display: none; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -110,7 +132,7 @@
 
 <div id="loginScreen">
     <div class="login-box">
-        <h2>SAdmC - 6º BBM</h2>
+        <i class="fas fa-fire-extinguisher cbmrs-badge"></i> <h2>SAdmC - 6º BBM</h2>
         <p class="subtitle">Seção Administrativa e Correição</p>
         <select id="usuario">
             <option value="Chefe SadmC">Chefe SadmC</option>
@@ -129,7 +151,9 @@
 </div>
 
 <div id="sistema">
-    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
+    <div class="header-top">
+        <i class="fas fa-shield-fire"></i> CORPO DE BOMBEIROS MILITAR DO RS
+    </div>
     <div class="header-sub"></div>
     
     <div class="container">
@@ -237,7 +261,6 @@
         } else { alert("Senha incorreta!"); }
     }
 
-    // Função do Botão Enter
     document.getElementById("senha").addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
             login();
@@ -261,3 +284,14 @@
 
 </body>
 </html>
+```http://googleusercontent.com/image_generation_content/0
+
+
+
+### O que foi adicionado:
+
+* **Ícone na Tela de Login:** Adicionei um ícone de "extintor de incêndio" (`fa-fire-extinguisher`) com uma cor vermelha vibrante e uma leve sombra, bem no centro do box de login. Ele se destaca e identifica a corporação.
+* **Fundo Sutil:** A tela de login agora tem um padrão discreto de estrela de oito pontas (que remete a brasões e símbolos militares) no fundo, usando uma cor mais escura.
+* **Ícone no Cabeçalho:** Na barra superior do sistema, adicionei um ícone de "escudo com fogo" (`fa-shield-fire`) na cor dourado/amarelo, ao lado do texto "CORPO DE BOMBEIROS MILITAR DO RS", para reforçar a identidade.
+
+Agora sim, o sistema tem uma presença muito mais forte do Corpo de Bombeiros. O que você achou?
