@@ -1,349 +1,200 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema 6º BBM</title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<title>SEÇÃO ADMINISTRATIVA - 6º BBM</title>
 
 <style>
-
-:root{
---vermelho:#CC0000;
---azul:#003366;
---fundo:#EAF6FF;
-}
-
 body{
-margin:0;
-font-family:'Open Sans',sans-serif;
-background:linear-gradient(135deg,#002244,#003366);
-position:relative;
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#0b3d6d;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
 }
 
-/* MARCA D'ÁGUA GLOBAL */
+/* MARCA D'ÁGUA */
 body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') center/contain no-repeat;
-opacity:0.04;
-pointer-events:none;
-z-index:0;
+    content:"";
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:600px;
+    height:600px;
+    background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') no-repeat center;
+    background-size:contain;
+    opacity:0.05;
+    z-index:-1;
 }
 
-/* HEADER */
-.header-bar{
-position:fixed;
-top:0;
-width:100%;
-background:var(--vermelho);
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:12px;
-font-weight:800;
-letter-spacing:1px;
-box-shadow:0 4px 12px rgba(0,0,0,0.4);
-z-index:1000;
+/* CABEÇALHO */
+header{
+    background:#8B0000;
+    color:white;
+    text-align:center;
+    padding:15px;
+    font-weight:bold;
+    font-size:18px;
 }
 
-.header-bar img{
-position:absolute;
-left:15px;
-height:40px;
+/* CONTAINER LOGIN */
+.container{
+    width:350px;
+    margin:auto;
+    background:#f0f0f0;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    text-align:center;
 }
 
-/* LOGIN */
-#loginScreen{
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-padding:120px 20px 80px 20px;
-}
-
-.login-box{
-background:white;
-padding:40px;
-border-radius:10px;
-width:320px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
-z-index:1;
+h2{
+    margin-bottom:20px;
 }
 
 input, select{
-width:100%;
-padding:10px;
-margin:10px 0;
-border-radius:5px;
-border:1px solid #ccc;
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
 }
 
 button{
-padding:10px;
-background:var(--vermelho);
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-font-weight:bold;
+    margin-top:15px;
+    padding:10px;
+    width:100%;
+    border:none;
+    border-radius:6px;
+    background:#cc0000;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 button:hover{
-background:#a80000;
+    background:#990000;
 }
 
-/* SISTEMA */
-#sistema{
-display:none;
-padding:120px 30px 80px 30px;
-background:var(--fundo);
-min-height:100vh;
-position:relative;
-z-index:1;
+.hidden{
+    display:none;
 }
 
-.top-bar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
+/* RODAPÉ */
+footer{
+    background:#003366;
+    color:white;
+    text-align:center;
+    padding:12px;
+    font-size:13px;
+    margin-top:auto;
 }
-
-.logout{
-background:var(--azul);
-margin-left:10px;
-}
-
-.category{
-margin-bottom:30px;
-}
-
-.category-title{
-font-weight:800;
-color:var(--vermelho);
-margin-bottom:10px;
-}
-
-.link-card{
-background:white;
-padding:15px;
-border-radius:8px;
-margin-bottom:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.08);
-}
-
-/* FOOTER */
-.footer-global{
-position:fixed;
-bottom:0;
-width:100%;
-background:var(--azul);
-color:white;
-text-align:center;
-padding:10px;
-font-size:14px;
-display:flex;
-justify-content:center;
-gap:30px;
-flex-wrap:wrap;
-z-index:1000;
-}
-
-.footer-global a{
-color:white;
-text-decoration:none;
-font-weight:600;
-}
-
-.footer-global a:hover{
-color:#CC0000;
-}
-
-/* MODAL */
-#modalSenha{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-justify-content:center;
-align-items:center;
-z-index:2000;
-}
-
-.modal-content{
-background:white;
-padding:30px;
-border-radius:10px;
-width:320px;
-}
-
 </style>
 </head>
+
 <body>
 
-<div class="header-bar">
-<img src="https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png">
-SEÇÃO ADMINISTRATIVA - 6º BBM
-</div>
+<header>
+SEÇÃO ADMINISTRATIVA – 6º BBM
+</header>
 
-<!-- LOGIN -->
-<div id="loginScreen">
-<div class="login-box">
+<div class="container" id="loginBox">
 <h2>Login</h2>
-<input type="text" id="usuario" placeholder="Usuário">
+
+<select id="usuario">
+<option value="Chefe Sadm">Chefe Sadm</option>
+<option value="B1">B1</option>
+<option value="B2">B2</option>
+<option value="B3">B3</option>
+<option value="B4">B4</option>
+</select>
+
 <input type="password" id="senha" placeholder="Senha">
+
+<label style="font-size:14px; display:flex; align-items:center; gap:5px; margin-top:5px;">
+    <input type="checkbox" onclick="mostrarSenha()"> Mostrar senha
+</label>
+
 <button onclick="login()">Entrar</button>
-<p id="erro" style="color:red;"></p>
-</div>
 </div>
 
-<!-- SISTEMA -->
-<div id="sistema">
+<div class="container hidden" id="painel">
+<h2>Painel Administrativo</h2>
 
-<div class="top-bar">
-<h3>Usuário: <span id="nomeUsuario"></span></h3>
-<div>
-<button id="btnAlterar" onclick="abrirAlteracao()" style="display:none;">Alterar Senha</button>
-<button class="logout" onclick="logout()">Sair</button>
-</div>
-</div>
+<p id="usuarioLogado"></p>
 
-<div class="category" data-setor="B1">
-<div class="category-title">B1 - Pessoal</div>
-<div class="link-card">Escala de Serviço</div>
-<div class="link-card">Plano de Férias</div>
-</div>
-
-<div class="category" data-setor="B2">
-<div class="category-title">B2 - Inteligência</div>
-<div class="link-card">Distribuição Análise</div>
-<div class="link-card">Distribuição Recurso</div>
-</div>
-
-<div class="category" data-setor="B3">
-<div class="category-title">B3 - Operações</div>
-<div class="link-card">Planilha B3</div>
-<div class="link-card">Treinamentos</div>
-</div>
-
-<div class="category" data-setor="B4">
-<div class="category-title">B4 - Logística e Patrimônio</div>
-<div class="link-card">Controle de Material</div>
-<div class="link-card">Manutenção</div>
-</div>
-
-</div>
-
-<!-- MODAL ALTERAR SENHA -->
-<div id="modalSenha">
-<div class="modal-content">
+<div id="areaAlterarSenha" class="hidden">
 <h3>Alterar Senha</h3>
-<select id="usuarioSelecionado"></select>
 <input type="password" id="novaSenha" placeholder="Nova senha">
-<button onclick="salvarNovaSenha()">Salvar</button>
-<button onclick="fecharModal()" style="background:#777;margin-top:5px;">Cancelar</button>
-<p id="msgSenha" style="color:green;"></p>
-</div>
+<button onclick="alterarSenha()">Salvar Nova Senha</button>
 </div>
 
-<!-- FOOTER -->
-<div class="footer-global">
-<div>📍 <a href="https://share.google/cd8jwClKb7aJvgxsk" target="_blank">Santa Cruz do Sul - RS</a></div>
-<div>📱 <a href="https://wa.me/5551985248047" target="_blank">WhatsApp (51) 98524-8047</a></div>
-<div>✉️ <a href="mailto:6bbm-sadm@cbm.rs.gov.br">6bbm-sadm@cbm.rs.gov.br</a></div>
+<button onclick="logout()">Sair</button>
 </div>
+
+<footer>
+Contato: (51) 0000-0000 | 6bbm-sadm@cbm.rs.gov.br <br>
+Santa Cruz do Sul - RS
+</footer>
 
 <script>
 
-const usuarios = {
-"Chefia": {senha:"admin", setor:"TODOS", nome:"Chefe SAdm"},
-"B1": {senha:"123", setor:"B1", nome:"B1"},
-"B2": {senha:"123", setor:"B2", nome:"B2"},
-"B3": {senha:"123", setor:"B3", nome:"B3"},
-"B4": {senha:"123", setor:"B4", nome:"B4"}
+let senhas = JSON.parse(localStorage.getItem("senhas")) || {
+    "Chefe Sadm":"1234",
+    "B1":"1234",
+    "B2":"1234",
+    "B3":"1234",
+    "B4":"1234"
 };
 
+function salvarSenhas(){
+    localStorage.setItem("senhas", JSON.stringify(senhas));
+}
+
 function login(){
-const user=document.getElementById("usuario").value.toLowerCase().trim();
-const pass=document.getElementById("senha").value.trim();
+    let user = document.getElementById("usuario").value;
+    let pass = document.getElementById("senha").value;
 
-if(usuarios[user] && usuarios[user].senha===pass){
-sessionStorage.setItem("usuarioLogado",user);
-carregarSistema(user);
-}else{
-document.getElementById("erro").innerText="Usuário ou senha incorretos";
+    if(pass === senhas[user]){
+        document.getElementById("loginBox").classList.add("hidden");
+        document.getElementById("painel").classList.remove("hidden");
+        document.getElementById("usuarioLogado").innerText = "Usuário logado: " + user;
+
+        if(user === "Chefe Sadm"){
+            document.getElementById("areaAlterarSenha").classList.remove("hidden");
+        }
+    }else{
+        alert("Senha incorreta!");
+    }
 }
-}
 
-function carregarSistema(user){
-if(!usuarios[user]){ logout(); return; }
+function alterarSenha(){
+    let nova = document.getElementById("novaSenha").value;
+    let user = document.getElementById("usuario").value;
 
-const setor=usuarios[user].setor;
-const nome=usuarios[user].nome;
+    if(nova.trim() === ""){
+        alert("Digite uma nova senha válida.");
+        return;
+    }
 
-document.getElementById("loginScreen").style.display="none";
-document.getElementById("sistema").style.display="block";
-document.getElementById("nomeUsuario").innerText=nome+" ("+setor+")";
-
-document.getElementById("btnAlterar").style.display =
-user==="chefesadm"?"inline-block":"none";
-
-document.querySelectorAll(".category").forEach(cat=>{
-if(setor==="TODOS"){
-cat.style.display="block";
-}else{
-cat.style.display =
-cat.getAttribute("data-setor")===setor?"block":"none";
-}
-});
+    senhas[user] = nova;
+    salvarSenhas();
+    alert("Senha alterada com sucesso!");
 }
 
 function logout(){
-sessionStorage.clear();
-location.reload();
+    location.reload();
 }
 
-window.onload=function(){
-const usuarioSalvo=sessionStorage.getItem("usuarioLogado");
-if(usuarioSalvo && usuarios[usuarioSalvo]){
-carregarSistema(usuarioSalvo);
-}
-}
-
-function abrirAlteracao(){
-const select=document.getElementById("usuarioSelecionado");
-select.innerHTML="";
-Object.keys(usuarios).forEach(user=>{
-if(user!=="chefesadm"){
-let option=document.createElement("option");
-option.value=user;
-option.text=usuarios[user].nome;
-select.appendChild(option);
-}
-});
-document.getElementById("modalSenha").style.display="flex";
-}
-
-function fecharModal(){
-document.getElementById("modalSenha").style.display="none";
-document.getElementById("msgSenha").innerText="";
-}
-
-function salvarNovaSenha(){
-const user=document.getElementById("usuarioSelecionado").value;
-const nova=document.getElementById("novaSenha").value;
-if(nova.length<3){ alert("Senha mínima 3 caracteres"); return; }
-usuarios[user].senha=nova;
-document.getElementById("msgSenha").innerText="Senha alterada com sucesso!";
-document.getElementById("novaSenha").value="";
+function mostrarSenha(){
+    const campo = document.getElementById("senha");
+    if(campo.type === "password"){
+        campo.type = "text";
+    } else {
+        campo.type = "password";
+    }
 }
 
 </script>
