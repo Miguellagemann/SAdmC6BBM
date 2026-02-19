@@ -37,7 +37,7 @@ body::before{
     z-index:0;
 }
 
-/* ===== CABEÇALHO INSTITUCIONAL ===== */
+/* ===== CABEÇALHO ===== */
 header{
     background:#8B0000;
     color:white;
@@ -62,7 +62,7 @@ header{
     text-align:center;
     position:relative;
     z-index:1;
-    animation:fadeIn 0.5s ease;
+    animation:fadeIn 0.4s ease;
 }
 
 @keyframes fadeIn{
@@ -110,7 +110,6 @@ button{
     transition:0.3s;
 }
 
-/* HOVER BOTÃO */
 button:hover{
     background:#a80000;
 }
@@ -135,7 +134,7 @@ footer{
     z-index:1;
 }
 
-/* ERRO */
+/* ERRO LOGIN */
 .erro{
     animation:shake 0.3s;
 }
@@ -165,6 +164,7 @@ label{
 SEÇÃO ADMINISTRATIVA – 6º BBM
 </header>
 
+<!-- LOGIN -->
 <div class="container" id="loginBox">
 <h2>Acesso ao Sistema</h2>
 
@@ -185,17 +185,10 @@ SEÇÃO ADMINISTRATIVA – 6º BBM
 <button onclick="login()">Entrar</button>
 </div>
 
+<!-- PAINEL -->
 <div class="container hidden" id="painel">
 <h2>Painel Administrativo</h2>
-
-<p id="usuarioLogado" style="margin-bottom:15px;"></p>
-
-<div id="areaAlterarSenha" class="hidden">
-<h3 style="margin-bottom:10px; color:#8B0000;">Alterar Senha</h3>
-<input type="password" id="novaSenha" placeholder="Nova senha">
-<button onclick="alterarSenha()">Salvar Nova Senha</button>
-</div>
-
+<p id="usuarioLogado" style="margin-bottom:20px; font-weight:bold;"></p>
 <button onclick="logout()" style="background:#555;">Sair</button>
 </div>
 
@@ -205,8 +198,6 @@ Santa Cruz do Sul - RS
 </footer>
 
 <script>
-
-let usuarioAtual = "";
 
 let senhas = JSON.parse(localStorage.getItem("senhas")) || {
     "Chefe Sadm":"1234",
@@ -226,31 +217,13 @@ function login(){
     let caixa = document.getElementById("loginBox");
 
     if(pass === senhas[user]){
-        usuarioAtual = user;
         caixa.classList.add("hidden");
         document.getElementById("painel").classList.remove("hidden");
         document.getElementById("usuarioLogado").innerText = "Usuário logado: " + user;
-
-        if(user === "Chefe Sadm"){
-            document.getElementById("areaAlterarSenha").classList.remove("hidden");
-        }
     }else{
         caixa.classList.add("erro");
         setTimeout(()=> caixa.classList.remove("erro"), 300);
     }
-}
-
-function alterarSenha(){
-    let nova = document.getElementById("novaSenha").value;
-
-    if(nova.trim() === ""){
-        alert("Digite uma nova senha válida.");
-        return;
-    }
-
-    senhas[usuarioAtual] = nova;
-    salvarSenhas();
-    alert("Senha alterada com sucesso!");
 }
 
 function logout(){
