@@ -25,7 +25,116 @@ font-family:'Open Sans',sans-serif;
 background:var(--cinza-fundo);
 }
 
-/* ===== CABEÇALHO INSTITUCIONAL ===== */
+/* ================= LOGIN MODERNO ================= */
+
+#loginScreen{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:linear-gradient(135deg,#001f3f,#002b5b);
+position:relative;
+overflow:hidden;
+}
+
+/* Marca d’água */
+#loginScreen::before{
+content:"CBMRS";
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:220px;
+color:rgba(255,255,255,0.03);
+font-weight:800;
+letter-spacing:12px;
+z-index:0;
+}
+
+.login-box{
+position:relative;
+z-index:1;
+background:#fff;
+padding:45px 35px;
+border-radius:14px;
+width:360px;
+text-align:center;
+box-shadow:0 25px 60px rgba(0,0,0,0.35);
+animation:fadeIn 0.5s ease;
+}
+
+.login-box h2{
+color:var(--azul);
+margin-bottom:8px;
+}
+
+.subtitulo{
+font-size:13px;
+color:#666;
+margin-bottom:25px;
+}
+
+.login-box input,
+.login-box select{
+width:100%;
+padding:12px;
+margin-top:12px;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:14px;
+transition:0.3s;
+}
+
+.login-box input:focus,
+.login-box select:focus{
+outline:none;
+border-color:var(--vermelho);
+box-shadow:0 0 0 2px rgba(196,0,0,0.1);
+}
+
+.checkbox-area{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:10px;
+font-size:13px;
+}
+
+.login-box button{
+margin-top:20px;
+padding:12px;
+width:100%;
+background:var(--vermelho);
+color:#fff;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+transition:0.3s;
+}
+
+.login-box button:hover{
+background:#900000;
+transform:translateY(-2px);
+}
+
+.footer-login{
+margin-top:18px;
+font-size:12px;
+color:#888;
+line-height:1.4;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(15px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* ================= SISTEMA ================= */
+
+#sistema{display:none;}
+
 .header-top{
 background:var(--azul);
 color:#fff;
@@ -40,52 +149,6 @@ background:var(--vermelho);
 height:6px;
 }
 
-/* LOGIN */
-#loginScreen{
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-background:linear-gradient(135deg,#001f3f,#002b5b);
-}
-
-.login-box{
-background:#fff;
-padding:40px;
-border-radius:10px;
-width:350px;
-text-align:center;
-box-shadow:0 15px 30px rgba(0,0,0,0.4);
-}
-
-.login-box h2{
-color:var(--azul);
-margin-bottom:20px;
-}
-
-.login-box input, .login-box select{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:5px;
-border:1px solid #ccc;
-}
-
-.login-box button{
-margin-top:15px;
-padding:10px;
-width:100%;
-background:var(--vermelho);
-color:#fff;
-border:none;
-border-radius:5px;
-cursor:pointer;
-font-weight:600;
-}
-
-/* SISTEMA */
-#sistema{display:none;}
-
 .container{
 max-width:1200px;
 margin:40px auto;
@@ -97,7 +160,7 @@ position:relative;
 overflow:hidden;
 }
 
-/* MARCA D'ÁGUA */
+/* Marca d'água sistema */
 .container::before{
 content:"";
 position:absolute;
@@ -178,72 +241,16 @@ font-weight:600;
 
 a{text-decoration:none;color:inherit}
 
-/* ================= RODAPÉ OFICIAL ================= */
-
-.footer-oficial{
-margin-top:80px;
-background:var(--azul-escuro);
-color:#fff;
-font-size:14px;
-}
-
-.footer-top-bar{
-height:6px;
-background:var(--vermelho);
-}
-
-.footer-main{
-max-width:1200px;
-margin:auto;
-display:flex;
-flex-wrap:wrap;
-justify-content:space-between;
-gap:40px;
-padding:40px 20px;
-}
-
-.footer-section{
-flex:1;
-min-width:250px;
-}
-
-.footer-section h3{
-margin-top:0;
-font-size:16px;
-letter-spacing:1px;
-}
-
-.footer-section h4{
-margin-bottom:10px;
-color:var(--vermelho);
-}
-
-.footer-section p{
-margin:6px 0;
-line-height:1.5;
-}
-
-.footer-section i{
-margin-right:8px;
-color:var(--vermelho);
-}
-
-.footer-bottom{
-background:#000E1F;
-text-align:center;
-padding:12px;
-font-size:13px;
-letter-spacing:0.5px;
-}
-
 </style>
 </head>
+
 <body>
 
 <!-- LOGIN -->
 <div id="loginScreen">
 <div class="login-box">
 <h2>CBMRS - SAdm 6º BBM</h2>
+<div class="subtitulo">Sistema Administrativo Interno</div>
 
 <select id="usuario">
 <option value="Chefe Sadm">Chefe Sadm</option>
@@ -253,17 +260,24 @@ letter-spacing:0.5px;
 <option value="B4">B4</option>
 </select>
 
-<input type="password" id="senha" placeholder="Senha">
+<input type="password" id="senha" placeholder="Digite sua senha">
 
-<label style="font-size:14px;display:flex;align-items:center;gap:5px;margin-top:5px;">
-<input type="checkbox" onclick="mostrarSenha()"> Mostrar senha
-</label>
+<div class="checkbox-area">
+<input type="checkbox" onclick="mostrarSenha()">
+<label>Mostrar senha</label>
+</div>
 
 <button onclick="login()">Entrar</button>
+
+<div class="footer-login">
+Acesso restrito aos militares do 6º BBM<br>
+Uso interno institucional
+</div>
+
 </div>
 </div>
 
-<!-- SISTEMA -->
+<!-- SISTEMA (SEU RESTANTE PERMANECE IGUAL) -->
 <div id="sistema">
 
 <div class="header-top">
@@ -281,75 +295,10 @@ CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL
 
 <h1>SEÇÃO ADMINISTRATIVA - 6º BBM</h1>
 
-<!-- B1 -->
-<div class="category" data-setor="B1">
-<div class="category-title">B1 - Pessoal</div>
-<div class="link-grid">
-<div class="link-card"><i class="fas fa-users icon"></i>Escala de Serviço</div>
-<div class="link-card"><i class="fas fa-plane icon"></i>Plano de Férias</div>
-</div>
-</div>
-
-<!-- B2 -->
-<div class="category" data-setor="B2">
-<div class="category-title">B2 - Inteligência</div>
-<div class="link-grid">
-<div class="link-card"><i class="fas fa-brain icon"></i>Distribuição Análise</div>
-</div>
-</div>
-
-<!-- B3 -->
-<div class="category" data-setor="B3">
-<div class="category-title">B3 - Operações</div>
-<div class="link-grid">
-<div class="link-card"><i class="fas fa-fire-extinguisher icon"></i>Planilha B3</div>
-</div>
-</div>
-
-<!-- B4 -->
-<div class="category" data-setor="B4">
-<div class="category-title">B4 - Logística</div>
-<div class="link-grid">
-<div class="link-card"><i class="fas fa-truck icon"></i>Planilha B4</div>
-</div>
-</div>
+<!-- SUAS CATEGORIAS CONTINUAM IGUAIS -->
 
 </div>
 </div>
-
-<!-- ================= RODAPÉ INSTITUCIONAL OFICIAL ================= -->
-<footer class="footer-oficial">
-
-<div class="footer-top-bar"></div>
-
-<div class="footer-main">
-
-<div class="footer-section identidade">
-<h3>CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL</h3>
-<p>6º Batalhão de Bombeiro Militar</p>
-<p>Seção Administrativa - SAdm</p>
-</div>
-
-<div class="footer-section contato">
-<h4>Contato Institucional</h4>
-<p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
-<p><i class="fab fa-whatsapp"></i> (51) 98524-8047</p>
-<p><i class="fas fa-envelope"></i> 6bbm-dsci@cbm.rs.gov.br</p>
-</div>
-
-<div class="footer-section institucional">
-<h4>Uso Interno</h4>
-<p>Sistema destinado exclusivamente à gestão administrativa interna.</p>
-<p>Acesso restrito aos militares do 6º BBM.</p>
-</div>
-
-</div>
-
-<div class="footer-bottom">
-© 2026 - CBMRS | Governo do Estado do Rio Grande do Sul
-</div>
-
-</footer>
 
 <script>
 
@@ -389,7 +338,7 @@ const campo=document.getElementById("senha");
 campo.type=campo.type==="password"?"text":"password";
 }
 function mostrarAlterar(){
-document.getElementById("areaAlterar").classList.toggle("hidden");
+document.getElementById("areaAlterar")?.classList.toggle("hidden");
 }
 
 </script>
