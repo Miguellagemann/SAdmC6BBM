@@ -2,34 +2,42 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>SEÇÃO ADMINISTRATIVA - 6º BBM</title>
+<title>Seção Administrativa - 6º BBM</title>
 
 <style>
-body{
+
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
     font-family: Arial, sans-serif;
-    background:#0b3d6d;
+    background:#0b2f4f;
     display:flex;
     flex-direction:column;
     min-height:100vh;
+    position:relative;
 }
 
-/* MARCA D'ÁGUA */
+/* ===== MARCA D'ÁGUA ===== */
 body::before{
     content:"";
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:600px;
-    height:600px;
+    width:480px;
+    height:480px;
     background:url('https://www.bombeiros.rs.gov.br/upload/recortes/201703/27142721_3149_GD.png') no-repeat center;
     background-size:contain;
     opacity:0.05;
-    z-index:-1;
+    pointer-events:none;
+    z-index:0;
 }
 
-/* CABEÇALHO */
+/* ===== CABEÇALHO INSTITUCIONAL ===== */
 header{
     background:#8B0000;
     color:white;
@@ -37,45 +45,78 @@ header{
     padding:15px;
     font-weight:bold;
     font-size:18px;
+    letter-spacing:1px;
+    border-bottom:5px solid #002f6c;
+    position:relative;
+    z-index:1;
 }
 
-/* CONTAINER LOGIN */
+/* ===== CONTAINER ===== */
 .container{
-    width:350px;
+    width:380px;
     margin:auto;
-    background:#f0f0f0;
+    background:white;
     padding:30px;
-    border-radius:12px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    border-radius:8px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
     text-align:center;
+    position:relative;
+    z-index:1;
+    animation:fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(15px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 h2{
     margin-bottom:20px;
+    color:#002f6c;
 }
 
+/* INPUTS */
 input, select{
     width:100%;
     padding:10px;
-    margin-top:10px;
-    border-radius:6px;
+    margin-top:12px;
+    border-radius:4px;
     border:1px solid #ccc;
+    transition:0.3s;
 }
 
+/* HOVER CAMPOS */
+input:hover, select:hover{
+    border-color:#8B0000;
+}
+
+input:focus, select:focus{
+    border-color:#002f6c;
+    outline:none;
+    box-shadow:0 0 5px rgba(0,47,108,0.4);
+}
+
+/* BOTÕES */
 button{
-    margin-top:15px;
+    margin-top:18px;
     padding:10px;
     width:100%;
     border:none;
-    border-radius:6px;
-    background:#cc0000;
+    border-radius:4px;
+    background:#8B0000;
     color:white;
     font-weight:bold;
     cursor:pointer;
+    transition:0.3s;
 }
 
+/* HOVER BOTÃO */
 button:hover{
-    background:#990000;
+    background:#a80000;
+}
+
+button:active{
+    transform:scale(0.97);
 }
 
 .hidden{
@@ -84,13 +125,37 @@ button:hover{
 
 /* RODAPÉ */
 footer{
-    background:#003366;
+    background:#002f6c;
     color:white;
     text-align:center;
     padding:12px;
     font-size:13px;
     margin-top:auto;
+    position:relative;
+    z-index:1;
 }
+
+/* ERRO */
+.erro{
+    animation:shake 0.3s;
+}
+
+@keyframes shake{
+    0%{transform:translateX(0);}
+    25%{transform:translateX(-5px);}
+    50%{transform:translateX(5px);}
+    75%{transform:translateX(-5px);}
+    100%{transform:translateX(0);}
+}
+
+label{
+    font-size:13px;
+    margin-top:8px;
+    display:flex;
+    justify-content:center;
+    gap:5px;
+}
+
 </style>
 </head>
 
@@ -101,7 +166,7 @@ SEÇÃO ADMINISTRATIVA – 6º BBM
 </header>
 
 <div class="container" id="loginBox">
-<h2>Login</h2>
+<h2>Acesso ao Sistema</h2>
 
 <select id="usuario">
 <option value="Chefe Sadm">Chefe Sadm</option>
@@ -111,10 +176,10 @@ SEÇÃO ADMINISTRATIVA – 6º BBM
 <option value="B4">B4</option>
 </select>
 
-<input type="password" id="senha" placeholder="Senha">
+<input type="password" id="senha" placeholder="Digite sua senha">
 
-<label style="font-size:14px; display:flex; align-items:center; gap:5px; margin-top:5px;">
-    <input type="checkbox" onclick="mostrarSenha()"> Mostrar senha
+<label>
+<input type="checkbox" onclick="mostrarSenha()"> Mostrar senha
 </label>
 
 <button onclick="login()">Entrar</button>
@@ -123,23 +188,25 @@ SEÇÃO ADMINISTRATIVA – 6º BBM
 <div class="container hidden" id="painel">
 <h2>Painel Administrativo</h2>
 
-<p id="usuarioLogado"></p>
+<p id="usuarioLogado" style="margin-bottom:15px;"></p>
 
 <div id="areaAlterarSenha" class="hidden">
-<h3>Alterar Senha</h3>
+<h3 style="margin-bottom:10px; color:#8B0000;">Alterar Senha</h3>
 <input type="password" id="novaSenha" placeholder="Nova senha">
 <button onclick="alterarSenha()">Salvar Nova Senha</button>
 </div>
 
-<button onclick="logout()">Sair</button>
+<button onclick="logout()" style="background:#555;">Sair</button>
 </div>
 
 <footer>
-Contato: (51) 0000-0000 | 6bbm-sadm@cbm.rs.gov.br <br>
+Corpo de Bombeiros Militar do RS <br>
 Santa Cruz do Sul - RS
 </footer>
 
 <script>
+
+let usuarioAtual = "";
 
 let senhas = JSON.parse(localStorage.getItem("senhas")) || {
     "Chefe Sadm":"1234",
@@ -156,9 +223,11 @@ function salvarSenhas(){
 function login(){
     let user = document.getElementById("usuario").value;
     let pass = document.getElementById("senha").value;
+    let caixa = document.getElementById("loginBox");
 
     if(pass === senhas[user]){
-        document.getElementById("loginBox").classList.add("hidden");
+        usuarioAtual = user;
+        caixa.classList.add("hidden");
         document.getElementById("painel").classList.remove("hidden");
         document.getElementById("usuarioLogado").innerText = "Usuário logado: " + user;
 
@@ -166,20 +235,20 @@ function login(){
             document.getElementById("areaAlterarSenha").classList.remove("hidden");
         }
     }else{
-        alert("Senha incorreta!");
+        caixa.classList.add("erro");
+        setTimeout(()=> caixa.classList.remove("erro"), 300);
     }
 }
 
 function alterarSenha(){
     let nova = document.getElementById("novaSenha").value;
-    let user = document.getElementById("usuario").value;
 
     if(nova.trim() === ""){
         alert("Digite uma nova senha válida.");
         return;
     }
 
-    senhas[user] = nova;
+    senhas[usuarioAtual] = nova;
     salvarSenhas();
     alert("Senha alterada com sucesso!");
 }
@@ -190,11 +259,7 @@ function logout(){
 
 function mostrarSenha(){
     const campo = document.getElementById("senha");
-    if(campo.type === "password"){
-        campo.type = "text";
-    } else {
-        campo.type = "password";
-    }
+    campo.type = campo.type === "password" ? "text" : "password";
 }
 
 </script>
