@@ -25,7 +25,7 @@
             display: flex; flex-direction: column; min-height: 100vh; color: #334155;
         }
 
-        /* --- LOGIN ESTILO SOL --- */
+        /* --- LOGIN --- */
         #loginScreen { 
             flex: 1; 
             background: linear-gradient(135deg, #001C4E 0%, #000F2E 100%);
@@ -43,7 +43,6 @@
             color: white; text-align: center;
         }
 
-        /* Gradiente fiel ao sistema SOL */
         .cbmrs-logo-text {
             font-size: 82px; font-weight: 800; margin: 0; line-height: 1;
             background: linear-gradient(to right, #FFEB3B 0%, #FF9800 100%);
@@ -118,7 +117,7 @@
 <div id="loginScreen">
     <div class="login-container">
         <div class="login-left-side">
-            <img src="https://www.cbm.rs.gov.br/themes/modelo-padrao/images/logo-color.png" alt="Logo CBMRS" style="width: 160px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.3));">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="Logo CBMRS" style="width: 170px; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));">
             <h1 class="cbmrs-logo-text">CBMRS</h1>
             <p class="cbmrs-sub-text">Corpo de Bombeiros Militar</p>
         </div>
@@ -195,14 +194,14 @@
         </div>
 
         <div class="category" id="cat-B3">
-            <div class="category-title">B3 - SEÇÃO DE OPERAÇÕES DE DEFESA CIVIL</div>
+            <div class="category-title">B3 - OPERAÇÕES</div>
             <div class="link-grid">
                 <a href="#" target="_blank" class="link-card"><i class="fas fa-person-shelter"></i><strong>Planilha Operacional</strong></a>
             </div>
         </div>
 
         <div class="category" id="cat-B4">
-            <div class="category-title">B4 - SEÇÃO DE LOGISTICA E PATRIMÔNIO</div>
+            <div class="category-title">B4 - LOGÍSTICA</div>
             <div class="link-grid">
                 <a href="#" target="_blank" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></a>
                 <a href="#" target="_blank" class="link-card"><i class="fas fa-boxes-stacked"></i><strong>Carga e Patrimônio</strong></a>
@@ -210,16 +209,14 @@
         </div>
 
         <div class="category" id="cat-SCor">
-            <div class="category-title">SCOR - SEÇÃO DE CORREIÇÃO</div>
+            <div class="category-title">SCOR - CORREIÇÃO</div>
             <div class="link-grid">
-                <a href="#" target="_blank" class="link-card"><i class="fas fa-gavel"></i><strong>Processos e Sindicâncias</strong></a>
-                <a href="#" target="_blank" class="link-card"><i class="fas fa-balance-scale"></i><strong>Legislação e Normas</strong></a>
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-gavel"></i><strong>Processos</strong></a>
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-balance-scale"></i><strong>Legislação</strong></a>
             </div>
         </div>
     </div>
 </div>
-
-<button id="btnTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></button>
 
 <footer class="footer-oficial">
     <div class="footer-main">
@@ -229,14 +226,13 @@
         </div>
         <div class="footer-section">
             <h4>CONTATO</h4>
-            <p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
+            <p><i class="fas fa-location-dot"></i> Santa Cruz do Sul/RS</p>
             <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
         </div>
     </div>
     <div class="acesso-restrito">
-        <i class="fas fa-lock" style="margin-right: 10px;"></i> Acesso restrito aos militares do 6º BBM
+        <i class="fas fa-lock"></i> Acesso restrito aos militares do 6º BBM
     </div>
-    <div class="footer-bottom">© 2026 - CBMRS | Governo do Estado do RS</div>
 </footer>
 
 <script>
@@ -302,30 +298,12 @@
         } else { alert("Senha incorreta!"); }
     }
 
-    function imprimirRelatorio() {
-        let conteudo = "<h2>Relatório de Acessos - SAdmC 6º BBM</h2><table border='1' style='width:100%; border-collapse:collapse;'><tr><th>Militar</th><th>Senha</th><th>Nível</th><th>Seção</th></tr>";
-        for (let u in usuarios) {
-            conteudo += `<tr><td>${u}</td><td>${usuarios[u].senha}</td><td>${usuarios[u].nivel}</td><td>${usuarios[u].secao}</td></tr>`;
-        }
-        conteudo += "</table><p style='font-size:12px; margin-top:20px;'>Gerado em: " + new Date().toLocaleString() + "</p>";
-        const win = window.open('', '', 'height=700,width=900');
-        win.document.write('<html><body style="font-family:sans-serif; padding:20px;">' + conteudo + '</body></html>');
-        win.document.close();
-        win.print();
-    }
-
-    document.getElementById("senha").addEventListener("keypress", (e) => { if (e.key === "Enter") login(); });
-    
-    window.onscroll = function() {
-        const btn = document.getElementById("btnTop");
-        btn.style.display = (document.documentElement.scrollTop > 300) ? "flex" : "none";
-    };
-
     setInterval(() => {
         const agora = new Date();
         document.getElementById('dataAtual').innerText = agora.toLocaleDateString('pt-BR');
         document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
     }, 1000);
+
     atualizarInterfaceUsuarios();
 </script>
 </body>
