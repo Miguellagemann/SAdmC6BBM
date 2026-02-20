@@ -65,6 +65,11 @@
             padding-bottom: 15px; border-bottom: 1px solid #eee;
         }
 
+        /* PAINEL GESTÃO */
+        #painelDev {
+            background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 2px solid var(--azul);
+        }
+
         .category { margin-bottom: 30px; display: none; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -91,7 +96,7 @@
         
         .logout-btn { background: var(--azul); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
 
-        /* RODAPÉ ORIGINAL RESTAURADO */
+        /* RODAPÉ */
         .footer-oficial { background: var(--azul-escuro); color: #fff; font-size: 14px; margin-top: auto; }
         .footer-top-bar { height: 6px; background: var(--vermelho); }
         .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
@@ -112,12 +117,7 @@
         <h2>SAdmC - 6º BBM</h2>
         <p class="subtitle">Seção Administrativa e Correição</p>
         <select id="usuario">
-            <option value="Chefe SadmC">Chefe SadmC</option>
-            <option value="B1">B1 - SEÇÃO PESSOAL</option>
-            <option value="B2">ALI - AGÊNCIA LOCAL DE INTELIGÊNCIA</option>
-            <option value="B3">B3 - SEÇÃO DE OPERAÇÕES DE DEFESA CIVIL</option>
-            <option value="B4">B4 - SEÇÃO DE LOGISTICA E PATRIMÔNIO</option>
-        </select>
+            </select>
         <input type="password" id="senha" placeholder="Senha">
         <button onclick="login()">Entrar</button>
     </div>
@@ -138,6 +138,21 @@
                 <span id="dataAtual"></span> | <span id="relogio"></span>
             </div>
             <button class="logout-btn" onclick="location.reload()">Sair</button>
+        </div>
+
+        <div id="painelDev" style="display:none;">
+            <h3 style="margin-top:0; color: var(--azul);"><i class="fas fa-user-shield"></i> Gestão de Acessos</h3>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                <input type="text" id="novoNome" placeholder="Nome da Seção ou Militar" style="flex:2; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <input type="text" id="novaSenha" placeholder="Senha" style="flex:1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <button onclick="criarNovoUsuario()" style="background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; flex:1;">
+                    <i class="fas fa-plus"></i> CADASTRAR
+                </button>
+                <button onclick="imprimirAcessos()" style="background: #475569; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; flex:1;">
+                    <i class="fas fa-print"></i> IMPRIMIR
+                </button>
+            </div>
+            <div id="listaUsuarios" style="max-height: 200px; overflow-y: auto; background: white; border: 1px solid #ddd; border-radius: 5px;"></div>
         </div>
         
         <div class="category" id="cat-B1">
@@ -214,8 +229,85 @@
 </footer>
 
 <script>
-    const senhas = { "Chefe SadmC": "1234", "B1": "1234", "B2": "1234", "B3": "1234", "B4": "1234" };
+    // 1. DADOS DE ACESSO (Persistentes no Navegador)
+    const senhasPadrao = { 
+        "Desenvolvedor": "admin_6bbm", 
+        "Chefe SadmC": "1234", 
+        "B1": "1234", "B2": "1234", "B3": "1234", "B4": "1234" 
+    };
 
+    let senhas = JSON.parse(localStorage.getItem('usuariosSAdmC')) || senhasPadrao;
+
+    // 2. FUNÇÕES DE GESTÃO DE USUÁRIO
+    function atualizarInterfaceUsuarios() {
+        const select = document.getElementById("usuario");
+        const listaDiv = document.getElementById("listaUsuarios");
+        select.innerHTML = "";
+        
+        let tabelaHtml = `<table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <tr style="background:#eee; text-align:left;">
+                <th style="padding:10px;">Usuário</th>
+                <th style="padding:10px;">Senha</th>
+                <th style="padding:10px; text-align:center;">Ação</th>
+            </tr>`;
+
+        for (let user in senhas) {
+            // Popula Select de Login
+            let opt = document.createElement("option");
+            opt.value = user;
+            opt.innerText = (user === "Desenvolvedor") ? "🛠️ DESENVOLVEDOR" : user;
+            select.add(opt);
+
+            // Popula Tabela de Gestão
+            let btnExc = (user !== "Desenvolvedor" && user !== "Chefe SadmC") 
+                ? `<button onclick="excluirUsuario('${user}')" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button>`
+                : `<i class="fas fa-lock" style="color:#ccc"></i>`;
+
+            tabelaHtml += `<tr>
+                <td style="padding:8px 10px; border-bottom:1px solid #eee;">${user}</td>
+                <td style="padding:8px 10px; border-bottom:1px solid #eee;">${senhas[user]}</td>
+                <td style="padding:8px 10px; border-bottom:1px solid #eee; text-align:center;">${btnExc}</td>
+            </tr>`;
+        }
+        listaDiv.innerHTML = tabelaHtml + "</table>";
+    }
+
+    function criarNovoUsuario() {
+        const nome = document.getElementById("novoNome").value.trim();
+        const senha = document.getElementById("novaSenha").value.trim();
+        if(nome && senha) {
+            senhas[nome] = senha;
+            localStorage.setItem('usuariosSAdmC', JSON.stringify(senhas));
+            atualizarInterfaceUsuarios();
+            document.getElementById("novoNome").value = "";
+            document.getElementById("novaSenha").value = "";
+            alert("Usuário criado!");
+        } else { alert("Preencha todos os campos!"); }
+    }
+
+    function excluirUsuario(nome) {
+        if(confirm(`Excluir acesso de ${nome}?`)) {
+            delete senhas[nome];
+            localStorage.setItem('usuariosSAdmC', JSON.stringify(senhas));
+            atualizarInterfaceUsuarios();
+        }
+    }
+
+    function imprimirAcessos() {
+        const janela = window.open('', '', 'width=800,height=600');
+        let linhas = "";
+        for(let u in senhas) {
+            linhas += `<tr><td style="border:1px solid #000;padding:8px;">${u}</td><td style="border:1px solid #000;padding:8px;">${senhas[u]}</td><td style="border:1px solid #000;padding:8px;">__________________</td></tr>`;
+        }
+        janela.document.write(`<html><head><title>Acessos</title></head><body style="font-family:sans-serif;padding:30px;">
+            <h2 style="text-align:center;">6º BBM - RELATÓRIO DE ACESSOS</h2>
+            <table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#eee;"><th>USUÁRIO</th><th>SENHA</th><th>ASSINATURA</th></tr></thead>
+            <tbody>${linhas}</tbody></table></body></html>`);
+        janela.document.close();
+        janela.print();
+    }
+
+    // 3. LOGICA PRINCIPAL
     function login() {
         const user = document.getElementById("usuario").value;
         const pass = document.getElementById("senha").value;
@@ -225,10 +317,12 @@
             document.getElementById("sistema").style.display = "block";
             document.getElementById("usuarioLogado").innerText = "Acesso: " + user;
             
+            // Controle de Visibilidade de Categorias
             document.querySelectorAll(".category").forEach(cat => cat.style.display = "none");
 
-            if (user === "Chefe SadmC") {
+            if (user === "Chefe SadmC" || user === "Desenvolvedor") {
                 document.querySelectorAll(".category").forEach(cat => cat.style.display = "block");
+                if(user === "Desenvolvedor") document.getElementById("painelDev").style.display = "block";
             } else {
                 const minhaCat = document.getElementById("cat-" + user);
                 if(minhaCat) minhaCat.style.display = "block";
@@ -236,12 +330,8 @@
         } else { alert("Senha incorreta!"); }
     }
 
-    // Função do Botão Enter restaurada
-    document.getElementById("senha").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-            login();
-        }
-    });
+    // Atalhos e Relógio
+    document.getElementById("senha").addEventListener("keypress", (e) => { if (e.key === "Enter") login(); });
 
     function atualizarRelogio() {
         const agora = new Date();
@@ -250,6 +340,7 @@
     }
     setInterval(atualizarRelogio, 1000);
     atualizarRelogio();
+    atualizarInterfaceUsuarios();
 
     window.onscroll = function() {
         const btn = document.getElementById("btnTop");
