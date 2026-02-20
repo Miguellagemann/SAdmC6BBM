@@ -13,6 +13,7 @@
             --laranja-cbm: #FF9E3D; 
             --laranja-hover: #E88D2F;
             --vermelho-cbm: #C40000;
+            --vermelho-hover: #A30000;
             --azul-texto: #002B5B;
             --cinza-fundo: #F4F6F9;
         }
@@ -35,7 +36,7 @@
             display: flex;
             max-width: 850px;
             width: 100%;
-            min-height: 450px;
+            min-height: 480px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -51,6 +52,27 @@
             align-items: center;
             color: white;
             text-align: center;
+        }
+
+        /* Estilo das letras igual à imagem SOL */
+        .cbmrs-logo-text {
+            font-size: 82px;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1;
+            background: linear-gradient(to right, #FFEB3B 0%, #FF9800 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
+
+        .cbmrs-sub-text {
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 5px;
+            color: #FF9800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .login-right-side {
@@ -75,12 +97,13 @@
             position: absolute; right: 15px; top: 22px; cursor: pointer; color: #999;
         }
 
+        /* Botão Entrar em Vermelho */
         .btn-entrar { 
-            width: 100%; padding: 15px; background: var(--laranja-cbm); color: #fff; border: none; 
+            width: 100%; padding: 15px; background: var(--vermelho-cbm); color: #fff; border: none; 
             border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 25px;
             font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn-entrar:hover { background: var(--laranja-hover); transform: translateY(-2px); }
+        .btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); }
 
         /* --- SISTEMA INTERNO --- */
         #sistema { display: none; flex: 1; background: var(--cinza-fundo); }
@@ -119,7 +142,7 @@
         
         .logout-btn { background: var(--azul-texto); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
 
-        /* RODAPÉ */
+        /* RODAPÉ MANTIDO */
         .footer-oficial { background: #000E1F; color: #fff; font-size: 14px; margin-top: auto; border-top: 5px solid var(--vermelho-cbm); }
         .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
         .footer-section h4 { color: var(--laranja-cbm); margin-bottom: 15px; font-weight: 800; }
@@ -137,9 +160,9 @@
 <div id="loginScreen">
     <div class="login-container">
         <div class="login-left-side">
-            <img src="https://www.cbm.rs.gov.br/themes/modelo-padrao/logo.png" alt="Logo CBMRS" style="width: 150px; margin-bottom: 20px;">
-            <h1 style="font-size: 42px; margin: 0; font-weight: 800; letter-spacing: 4px;">CBMRS</h1>
-            <p style="text-transform: uppercase; font-size: 13px; letter-spacing: 2px; opacity: 0.9;">Corpo de Bombeiros Militar</p>
+            <img src="BRASÃO CBMRS.png" alt="Logo CBMRS" style="width: 180px; margin-bottom: 20px;">
+            <h1 class="cbmrs-logo-text">CBMRS</h1>
+            <p class="cbmrs-sub-text">Corpo de Bombeiros Militar</p>
         </div>
         <div class="login-right-side">
             <h2>SAdmC - 6º BBM</h2>
