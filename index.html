@@ -149,13 +149,24 @@
         <div id="painelDev" style="display:none;">
             <h3 style="margin-top:0; color: var(--azul);"><i class="fas fa-user-shield"></i> Gestão de Acessos</h3>
             <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
-                <input type="text" id="novoNome" placeholder="Nome da Seção ou Militar" style="flex:2; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                <input type="text" id="novaSenha" placeholder="Senha (Visível)" style="flex:1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <input type="text" id="novoNome" placeholder="Ex: SGT BOCK" style="flex:2; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <input type="text" id="novaSenha" placeholder="Senha" style="flex:1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                
+                <select id="novoNivel" style="flex:1; padding: 10px;" onchange="document.getElementById('novaSecao').style.visibility = (this.value=='admin'?'hidden':'visible')">
+                    <option value="restrito">Acesso Restrito</option>
+                    <option value="admin">Acesso Total</option>
+                </select>
+
+                <select id="novaSecao" style="flex:1; padding: 10px;">
+                    <option value="B1">Seção B1</option>
+                    <option value="B2">Seção B2</option>
+                    <option value="B3">Seção B3</option>
+                    <option value="B4">Seção B4</option>
+                    <option value="SCor">Seção SCor</option>
+                </select>
+
                 <button onclick="criarNovoUsuario()" style="background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
                     <i class="fas fa-plus"></i> CADASTRAR
-                </button>
-                <button onclick="imprimirAcessos()" style="background: #475569; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                    <i class="fas fa-print"></i> IMPRIMIR
                 </button>
             </div>
             <div id="listaUsuarios" style="max-height: 200px; overflow-y: auto; background: white; border: 1px solid #ddd; border-radius: 5px;"></div>
@@ -164,70 +175,41 @@
         <div class="category" id="cat-B1">
             <div class="category-title">B1 - SEÇÃO PESSOAL</div>
             <div class="link-grid">
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-calendar-check"></i><strong>Escalas de Serviço</strong></div>
-                </a>
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-umbrella-beach"></i><strong>Efetivo e Férias</strong></div>
-                </a>
+                <a href="#" class="card-link"><div class="link-card"><i class="fas fa-calendar-check"></i><strong>Escalas de Serviço</strong></div></a>
+                <a href="#" class="card-link"><div class="link-card"><i class="fas fa-umbrella-beach"></i><strong>Efetivo e Férias</strong></div></a>
             </div>
         </div>
 
         <div class="category" id="cat-B2">
             <div class="category-title">ALI - AGÊNCIA LOCAL DE INTELIGÊNCIA</div>
             <div class="link-grid">
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-user-secret"></i><strong>Dados de Inteligência</strong></div>
-                </a>
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-chart-line"></i><strong>Estatísticas</strong></div>
-                </a>
+                <a href="#" class="card-link"><div class="link-card"><i class="fas fa-user-secret"></i><strong>Dados de Inteligência</strong></div></a>
             </div>
         </div>
 
         <div class="category" id="cat-B3">
             <div class="category-title">B3 - SEÇÃO DE OPERAÇÕES DE DEFESA CIVIL</div>
             <div class="link-grid">
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-person-shelter"></i><strong>Planilha Operacional</strong></div>
-                </a>
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-triangle-exclamation"></i><strong>Alertas e Riscos</strong></div>
-                </a>
+                <a href="#" class="card-link"><div class="link-card"><i class="fas fa-person-shelter"></i><strong>Planilha Operacional</strong></div></a>
             </div>
         </div>
 
         <div class="category" id="cat-B4">
             <div class="category-title">B4 - SEÇÃO DE LOGISTICA E PATRIMÔNIO</div>
             <div class="link-grid">
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></div>
-                </a>
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-boxes-stacked"></i><strong>Carga e Patrimônio</strong></div>
-                </a>
+                <a href="#" class="card-link"><div class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></div></a>
             </div>
         </div>
 
         <div class="category" id="cat-SCor">
             <div class="category-title">SCOR - SEÇÃO DE CORREIÇÃO</div>
             <div class="link-grid">
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-gavel"></i><strong>Processos e Sindicâncias</strong></div>
-                </a>
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-file-signature"></i><strong>Formulários de Correição</strong></div>
-                </a>
-                <a href="#" target="_blank" class="card-link">
-                    <div class="link-card"><i class="fas fa-balance-scale"></i><strong>Legislação e Normas</strong></div>
-                </a>
+                <a href="#" class="card-link"><div class="link-card"><i class="fas fa-gavel"></i><strong>Processos e Sindicâncias</strong></div></a>
             </div>
         </div>
 
     </div>
 </div>
-
-<button id="btnTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></button>
 
 <footer class="footer-oficial">
     <div class="footer-top-bar"></div>
@@ -236,31 +218,20 @@
             <h4>6º BATALHÃO DE BOMBEIRO MILITAR</h4>
             <p>Seção Administrativa e Correição - SAdmC</p>
         </div>
-        <div class="footer-section">
-            <h4>Contato Institucional</h4>
-            <p><i class="fas fa-location-dot"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS</p>
-            <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
-        </div>
-        <div class="footer-section">
-            <h4>Uso Interno</h4>
-            <p>Sistema exclusivo de gestão administrativa interna.</p>
-            <p>Acesso restrito aos militares do 6º BBM.</p>
-        </div>
     </div>
     <div class="footer-bottom">© 2026 - CBMRS | Governo do Estado do RS</div>
 </footer>
 
 <script>
-    // 1. CONFIGURAÇÕES INICIAIS
-    // A SCor agora faz parte do núcleo permanente do sistema
-    const senhasPadrao = { 
-        "Desenvolvedor": "admin_6bbm", 
-        "Chefe SadmC": "1234", 
-        "SCor": "1234",
-        "B1": "1234", "B2": "1234", "B3": "1234", "B4": "1234" 
+    // 1. CONFIGURAÇÕES INICIAIS (A estrutura agora guarda o nível e a seção)
+    const dadosIniciais = { 
+        "Desenvolvedor": { senha: "admin_6bbm", nivel: "admin", secao: "todas" }, 
+        "Chefe SadmC": { senha: "1234", nivel: "admin", secao: "todas" },
+        "B1": { senha: "1234", nivel: "restrito", secao: "B1" },
+        "SCor": { senha: "1234", nivel: "restrito", secao: "SCor" }
     };
 
-    let senhas = JSON.parse(localStorage.getItem('usuariosSAdmC')) || senhasPadrao;
+    let usuarios = JSON.parse(localStorage.getItem('usuariosSAdmC_v4')) || dadosIniciais;
 
     // 2. GESTÃO DE USUÁRIOS
     function atualizarInterfaceUsuarios() {
@@ -270,24 +241,26 @@
         
         let tabelaHtml = `<table style="width:100%; border-collapse:collapse; font-size:13px;">
             <tr style="background:#eee; text-align:left;">
-                <th style="padding:10px;">Usuário</th>
-                <th style="padding:10px;">Senha</th>
-                <th style="padding:10px; text-align:center;">Ação</th>
+                <th style="padding:10px;">Usuário/Militar</th>
+                <th style="padding:10px;">Nível</th>
+                <th style="padding:10px;">Seção</th>
+                <th style="padding:10px; text-align:center;">Excluir</th>
             </tr>`;
 
-        for (let user in senhas) {
+        for (let user in usuarios) {
             let opt = document.createElement("option");
             opt.value = user;
-            opt.innerText = (user === "Desenvolvedor") ? "🛠️ DESENVOLVEDOR" : user;
+            opt.innerText = user;
             select.add(opt);
 
-            let btnExc = (user !== "Desenvolvedor" && user !== "Chefe SadmC" && user !== "SCor") 
+            let btnExc = (user !== "Desenvolvedor" && user !== "Chefe SadmC") 
                 ? `<button onclick="excluirUsuario('${user}')" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button>`
                 : `<i class="fas fa-lock" style="color:#ccc"></i>`;
 
             tabelaHtml += `<tr>
                 <td style="padding:8px 10px; border-bottom:1px solid #eee;">${user}</td>
-                <td style="padding:8px 10px; border-bottom:1px solid #eee;">${senhas[user]}</td>
+                <td style="padding:8px 10px; border-bottom:1px solid #eee;">${usuarios[user].nivel}</td>
+                <td style="padding:8px 10px; border-bottom:1px solid #eee;">${usuarios[user].secao}</td>
                 <td style="padding:8px 10px; border-bottom:1px solid #eee; text-align:center;">${btnExc}</td>
             </tr>`;
         }
@@ -297,20 +270,27 @@
     function criarNovoUsuario() {
         const nome = document.getElementById("novoNome").value.trim();
         const senha = document.getElementById("novaSenha").value.trim();
+        const nivel = document.getElementById("novoNivel").value;
+        const secao = document.getElementById("novaSecao").value;
+
         if(nome && senha) {
-            senhas[nome] = senha;
-            localStorage.setItem('usuariosSAdmC', JSON.stringify(senhas));
+            usuarios[nome] = { 
+                senha: senha, 
+                nivel: nivel, 
+                secao: (nivel === "admin" ? "todas" : secao) 
+            };
+            localStorage.setItem('usuariosSAdmC_v4', JSON.stringify(usuarios));
             atualizarInterfaceUsuarios();
             document.getElementById("novoNome").value = "";
             document.getElementById("novaSenha").value = "";
-            alert("Usuário criado com sucesso!");
+            alert("Usuário " + nome + " criado com sucesso!");
         } else { alert("Preencha nome e senha!"); }
     }
 
     function excluirUsuario(nome) {
-        if(confirm(`Remover permanentemente o acesso de ${nome}?`)) {
-            delete senhas[nome];
-            localStorage.setItem('usuariosSAdmC', JSON.stringify(senhas));
+        if(confirm(`Remover acesso de ${nome}?`)) {
+            delete usuarios[nome];
+            localStorage.setItem('usuariosSAdmC_v4', JSON.stringify(usuarios));
             atualizarInterfaceUsuarios();
         }
     }
@@ -328,45 +308,27 @@
         }
     }
 
-    function imprimirAcessos() {
-        const janela = window.open('', '', 'width=800,height=600');
-        let linhas = "";
-        for(let u in senhas) {
-            linhas += `<tr><td style="border:1px solid #000;padding:8px;">${u}</td><td style="border:1px solid #000;padding:8px;">${senhas[u]}</td><td style="border:1px solid #000;padding:8px;">__________________</td></tr>`;
-        }
-        janela.document.write(`<html><head><title>Relatório de Acessos</title></head><body style="font-family:sans-serif;padding:30px;">
-            <h2 style="text-align:center;margin-bottom:0;">6º BATALHÃO DE BOMBEIRO MILITAR</h2>
-            <p style="text-align:center;margin-top:5px;">SAdmC - Relatório de Credenciais Internas</p>
-            <table style="width:100%;border-collapse:collapse;margin-top:20px;">
-                <thead><tr style="background:#eee;"><th>USUÁRIO / SEÇÃO</th><th>SENHA</th><th>ASSINATURA</th></tr></thead>
-                <tbody>${linhas}</tbody>
-            </table>
-            <p style="margin-top:30px;font-size:12px;text-align:center;">Gerado em: ${new Date().toLocaleString('pt-BR')}</p>
-        </body></html>`);
-        janela.document.close();
-        janela.print();
-    }
-
     // 4. LÓGICA DE LOGIN
     function login() {
         const user = document.getElementById("usuario").value;
         const pass = document.getElementById("senha").value;
 
-        if (pass === senhas[user]) {
+        if (usuarios[user] && pass === usuarios[user].senha) {
             document.getElementById("loginScreen").style.display = "none";
             document.getElementById("sistema").style.display = "block";
-            document.getElementById("usuarioLogado").innerText = "Acesso: " + user;
+            document.getElementById("usuarioLogado").innerText = "Militar: " + user;
             
-            // Esconde todas as categorias primeiro
+            // Esconde todas
             document.querySelectorAll(".category").forEach(cat => cat.style.display = "none");
 
-            // Define visibilidade baseada no usuário
-            if (user === "Chefe SadmC" || user === "Desenvolvedor") {
+            // Lógica de Visibilidade
+            if (usuarios[user].nivel === "admin") {
                 document.querySelectorAll(".category").forEach(cat => cat.style.display = "block");
                 if(user === "Desenvolvedor") document.getElementById("painelDev").style.display = "block";
             } else {
-                const minhaCat = document.getElementById("cat-" + user);
-                if(minhaCat) minhaCat.style.display = "block";
+                // Abre a seção que foi vinculada no cadastro
+                const secaoAlvo = document.getElementById("cat-" + usuarios[user].secao);
+                if(secaoAlvo) secaoAlvo.style.display = "block";
             }
         } else { alert("Senha incorreta!"); }
     }
@@ -382,12 +344,6 @@
     setInterval(atualizarRelogio, 1000);
     atualizarRelogio();
     atualizarInterfaceUsuarios();
-
-    window.onscroll = function() {
-        const btn = document.getElementById("btnTop");
-        if (document.documentElement.scrollTop > 300) btn.style.display = "block";
-        else btn.style.display = "none";
-    };
 </script>
 
 </body>
