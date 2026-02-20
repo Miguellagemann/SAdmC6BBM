@@ -41,7 +41,6 @@
             width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px;
         }
 
-        /* Botão Olhinho no Login */
         .password-wrapper { position: relative; width: 100%; }
         .password-wrapper i {
             position: absolute; right: 12px; top: 22px; cursor: pointer; color: #64748b;
@@ -71,7 +70,6 @@
             padding-bottom: 15px; border-bottom: 1px solid #eee;
         }
 
-        /* PAINEL GESTÃO */
         #painelDev {
             background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 2px solid var(--azul);
         }
@@ -91,6 +89,7 @@
         .link-card { 
             border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; 
             cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center;
+            height: 100%;
         }
 
         .link-card:hover { 
@@ -102,7 +101,6 @@
         
         .logout-btn { background: var(--azul); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
 
-        /* RODAPÉ */
         .footer-oficial { background: var(--azul-escuro); color: #fff; font-size: 14px; margin-top: auto; }
         .footer-top-bar { height: 6px; background: var(--vermelho); }
         .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
@@ -122,8 +120,7 @@
     <div class="login-box">
         <h2>SAdmC - 6º BBM</h2>
         <p class="subtitle">Seção Administrativa e Correição</p>
-        <select id="usuario">
-            </select>
+        <select id="usuario"></select>
         <div class="password-wrapper">
             <input type="password" id="senha" placeholder="Senha">
             <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
@@ -163,7 +160,7 @@
             </div>
             <div id="listaUsuarios" style="max-height: 200px; overflow-y: auto; background: white; border: 1px solid #ddd; border-radius: 5px;"></div>
         </div>
-        
+
         <div class="category" id="cat-B1">
             <div class="category-title">B1 - SEÇÃO PESSOAL</div>
             <div class="link-grid">
@@ -211,6 +208,22 @@
                 </a>
             </div>
         </div>
+
+        <div class="category" id="cat-SCor">
+            <div class="category-title">SCOR - SEÇÃO DE CORREIÇÃO</div>
+            <div class="link-grid">
+                <a href="#" target="_blank" class="card-link">
+                    <div class="link-card"><i class="fas fa-gavel"></i><strong>Processos e Sindicâncias</strong></div>
+                </a>
+                <a href="#" target="_blank" class="card-link">
+                    <div class="link-card"><i class="fas fa-file-signature"></i><strong>Formulários de Correição</strong></div>
+                </a>
+                <a href="#" target="_blank" class="card-link">
+                    <div class="link-card"><i class="fas fa-balance-scale"></i><strong>Legislação e Normas</strong></div>
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -238,10 +251,12 @@
 </footer>
 
 <script>
-    // 1. CONFIGURAÇÕES INICIAIS E PERSISTÊNCIA
+    // 1. CONFIGURAÇÕES INICIAIS
+    // A SCor agora faz parte do núcleo permanente do sistema
     const senhasPadrao = { 
         "Desenvolvedor": "admin_6bbm", 
         "Chefe SadmC": "1234", 
+        "SCor": "1234",
         "B1": "1234", "B2": "1234", "B3": "1234", "B4": "1234" 
     };
 
@@ -266,7 +281,7 @@
             opt.innerText = (user === "Desenvolvedor") ? "🛠️ DESENVOLVEDOR" : user;
             select.add(opt);
 
-            let btnExc = (user !== "Desenvolvedor" && user !== "Chefe SadmC") 
+            let btnExc = (user !== "Desenvolvedor" && user !== "Chefe SadmC" && user !== "SCor") 
                 ? `<button onclick="excluirUsuario('${user}')" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button>`
                 : `<i class="fas fa-lock" style="color:#ccc"></i>`;
 
@@ -342,8 +357,10 @@
             document.getElementById("sistema").style.display = "block";
             document.getElementById("usuarioLogado").innerText = "Acesso: " + user;
             
+            // Esconde todas as categorias primeiro
             document.querySelectorAll(".category").forEach(cat => cat.style.display = "none");
 
+            // Define visibilidade baseada no usuário
             if (user === "Chefe SadmC" || user === "Desenvolvedor") {
                 document.querySelectorAll(".category").forEach(cat => cat.style.display = "block");
                 if(user === "Desenvolvedor") document.getElementById("painelDev").style.display = "block";
