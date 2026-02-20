@@ -41,6 +41,12 @@
             width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px;
         }
 
+        /* Botão Olhinho no Login */
+        .password-wrapper { position: relative; width: 100%; }
+        .password-wrapper i {
+            position: absolute; right: 12px; top: 22px; cursor: pointer; color: #64748b;
+        }
+
         .login-box button { 
             width: 100%; padding: 12px; background: var(--vermelho); color: #fff; border: none; 
             border-radius: 5px; cursor: pointer; font-weight: 600; margin-top: 15px;
@@ -118,7 +124,10 @@
         <p class="subtitle">Seção Administrativa e Correição</p>
         <select id="usuario">
             </select>
-        <input type="password" id="senha" placeholder="Senha">
+        <div class="password-wrapper">
+            <input type="password" id="senha" placeholder="Senha">
+            <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
+        </div>
         <button onclick="login()">Entrar</button>
     </div>
     <div style="color: white; margin-top: 30px; text-align: center;">
@@ -144,11 +153,11 @@
             <h3 style="margin-top:0; color: var(--azul);"><i class="fas fa-user-shield"></i> Gestão de Acessos</h3>
             <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                 <input type="text" id="novoNome" placeholder="Nome da Seção ou Militar" style="flex:2; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                <input type="text" id="novaSenha" placeholder="Senha" style="flex:1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                <button onclick="criarNovoUsuario()" style="background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; flex:1;">
+                <input type="text" id="novaSenha" placeholder="Senha (Visível)" style="flex:1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <button onclick="criarNovoUsuario()" style="background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
                     <i class="fas fa-plus"></i> CADASTRAR
                 </button>
-                <button onclick="imprimirAcessos()" style="background: #475569; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; flex:1;">
+                <button onclick="imprimirAcessos()" style="background: #475569; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
                     <i class="fas fa-print"></i> IMPRIMIR
                 </button>
             </div>
@@ -229,7 +238,7 @@
 </footer>
 
 <script>
-    // 1. DADOS DE ACESSO (Persistentes no Navegador)
+    // 1. CONFIGURAÇÕES INICIAIS E PERSISTÊNCIA
     const senhasPadrao = { 
         "Desenvolvedor": "admin_6bbm", 
         "Chefe SadmC": "1234", 
@@ -238,7 +247,7 @@
 
     let senhas = JSON.parse(localStorage.getItem('usuariosSAdmC')) || senhasPadrao;
 
-    // 2. FUNÇÕES DE GESTÃO DE USUÁRIO
+    // 2. GESTÃO DE USUÁRIOS
     function atualizarInterfaceUsuarios() {
         const select = document.getElementById("usuario");
         const listaDiv = document.getElementById("listaUsuarios");
@@ -252,13 +261,11 @@
             </tr>`;
 
         for (let user in senhas) {
-            // Popula Select de Login
             let opt = document.createElement("option");
             opt.value = user;
             opt.innerText = (user === "Desenvolvedor") ? "🛠️ DESENVOLVEDOR" : user;
             select.add(opt);
 
-            // Popula Tabela de Gestão
             let btnExc = (user !== "Desenvolvedor" && user !== "Chefe SadmC") 
                 ? `<button onclick="excluirUsuario('${user}')" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button>`
                 : `<i class="fas fa-lock" style="color:#ccc"></i>`;
@@ -281,15 +288,28 @@
             atualizarInterfaceUsuarios();
             document.getElementById("novoNome").value = "";
             document.getElementById("novaSenha").value = "";
-            alert("Usuário criado!");
-        } else { alert("Preencha todos os campos!"); }
+            alert("Usuário criado com sucesso!");
+        } else { alert("Preencha nome e senha!"); }
     }
 
     function excluirUsuario(nome) {
-        if(confirm(`Excluir acesso de ${nome}?`)) {
+        if(confirm(`Remover permanentemente o acesso de ${nome}?`)) {
             delete senhas[nome];
             localStorage.setItem('usuariosSAdmC', JSON.stringify(senhas));
             atualizarInterfaceUsuarios();
+        }
+    }
+
+    // 3. FUNÇÕES DE INTERFACE
+    function togglePassword() {
+        const senhaInput = document.getElementById("senha");
+        const icone = document.getElementById("toggleIcon");
+        if (senhaInput.type === "password") {
+            senhaInput.type = "text";
+            icone.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+            senhaInput.type = "password";
+            icone.classList.replace("fa-eye-slash", "fa-eye");
         }
     }
 
@@ -299,15 +319,20 @@
         for(let u in senhas) {
             linhas += `<tr><td style="border:1px solid #000;padding:8px;">${u}</td><td style="border:1px solid #000;padding:8px;">${senhas[u]}</td><td style="border:1px solid #000;padding:8px;">__________________</td></tr>`;
         }
-        janela.document.write(`<html><head><title>Acessos</title></head><body style="font-family:sans-serif;padding:30px;">
-            <h2 style="text-align:center;">6º BBM - RELATÓRIO DE ACESSOS</h2>
-            <table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#eee;"><th>USUÁRIO</th><th>SENHA</th><th>ASSINATURA</th></tr></thead>
-            <tbody>${linhas}</tbody></table></body></html>`);
+        janela.document.write(`<html><head><title>Relatório de Acessos</title></head><body style="font-family:sans-serif;padding:30px;">
+            <h2 style="text-align:center;margin-bottom:0;">6º BATALHÃO DE BOMBEIRO MILITAR</h2>
+            <p style="text-align:center;margin-top:5px;">SAdmC - Relatório de Credenciais Internas</p>
+            <table style="width:100%;border-collapse:collapse;margin-top:20px;">
+                <thead><tr style="background:#eee;"><th>USUÁRIO / SEÇÃO</th><th>SENHA</th><th>ASSINATURA</th></tr></thead>
+                <tbody>${linhas}</tbody>
+            </table>
+            <p style="margin-top:30px;font-size:12px;text-align:center;">Gerado em: ${new Date().toLocaleString('pt-BR')}</p>
+        </body></html>`);
         janela.document.close();
         janela.print();
     }
 
-    // 3. LOGICA PRINCIPAL
+    // 4. LÓGICA DE LOGIN
     function login() {
         const user = document.getElementById("usuario").value;
         const pass = document.getElementById("senha").value;
@@ -317,7 +342,6 @@
             document.getElementById("sistema").style.display = "block";
             document.getElementById("usuarioLogado").innerText = "Acesso: " + user;
             
-            // Controle de Visibilidade de Categorias
             document.querySelectorAll(".category").forEach(cat => cat.style.display = "none");
 
             if (user === "Chefe SadmC" || user === "Desenvolvedor") {
@@ -330,7 +354,7 @@
         } else { alert("Senha incorreta!"); }
     }
 
-    // Atalhos e Relógio
+    // 5. INICIALIZAÇÃO
     document.getElementById("senha").addEventListener("keypress", (e) => { if (e.key === "Enter") login(); });
 
     function atualizarRelogio() {
