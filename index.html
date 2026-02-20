@@ -86,7 +86,6 @@
         }
         .link-card:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .link-card i { font-size: 35px; color: var(--azul); margin-bottom: 15px; }
-        .link-card strong { font-size: 16px; }
         
         .logout-btn { background: var(--azul); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
 
@@ -96,11 +95,6 @@
         .footer-section { flex: 1; min-width: 250px; }
         .footer-section h4 { color: var(--amarelo); margin-bottom: 15px; font-weight: 800; }
         .footer-bottom { background: #000E1F; text-align: center; padding: 15px; font-size: 13px; color: #aaa; }
-
-        #btnTop {
-            position: fixed; bottom: 30px; right: 30px; background: var(--vermelho); color: #fff; 
-            border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: none; z-index: 1000;
-        }
     </style>
 </head>
 <body>
@@ -135,7 +129,12 @@
         </div>
 
         <div id="painelDev" style="display:none;">
-            <h3 style="margin-top:0; color: var(--azul);"><i class="fas fa-user-shield"></i> Gestão de Acessos</h3>
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin:0; color: var(--azul);"><i class="fas fa-user-shield"></i> Gestão de Acessos</h3>
+                <button onclick="imprimirRelatorio()" style="background: var(--azul); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    <i class="fas fa-print"></i> Imprimir Relatório
+                </button>
+            </div>
             <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
                 <input type="text" id="novoNome" placeholder="Nome (Ex: SGT BOCK)" style="flex:2; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
                 <input type="text" id="novaSenha" placeholder="Senha" style="flex:1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
@@ -175,7 +174,6 @@
             <div class="category-title">B3 - SEÇÃO DE OPERAÇÕES DE DEFESA CIVIL</div>
             <div class="link-grid">
                 <a href="#" target="_blank" class="card-link"><div class="link-card"><i class="fas fa-person-shelter"></i><strong>Planilha Operacional</strong></div></a>
-                <a href="#" target="_blank" class="card-link"><div class="link-card"><i class="fas fa-triangle-exclamation"></i><strong>Alertas e Riscos</strong></div></a>
             </div>
         </div>
 
@@ -191,14 +189,11 @@
             <div class="category-title">SCOR - SEÇÃO DE CORREIÇÃO</div>
             <div class="link-grid">
                 <a href="#" target="_blank" class="card-link"><div class="link-card"><i class="fas fa-gavel"></i><strong>Processos e Sindicâncias</strong></div></a>
-                <a href="#" target="_blank" class="card-link"><div class="link-card"><i class="fas fa-file-signature"></i><strong>Formulários de Correição</strong></div></a>
                 <a href="#" target="_blank" class="card-link"><div class="link-card"><i class="fas fa-balance-scale"></i><strong>Legislação e Normas</strong></div></a>
             </div>
         </div>
     </div>
 </div>
-
-<button id="btnTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></button>
 
 <footer class="footer-oficial">
     <div class="footer-top-bar"></div>
@@ -233,10 +228,10 @@
         const listaDiv = document.getElementById("listaUsuarios");
         select.innerHTML = "";
         let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;">
-            <tr style="background:#eee;"><th style="padding:10px;">Militar</th><th style="padding:10px;">Nível</th><th style="padding:10px;">Ação</th></tr>`;
+            <tr style="background:#eee; text-align:left;"><th style="padding:10px;">Militar</th><th style="padding:10px;">Nível</th><th style="padding:10px;">Seção</th><th style="padding:10px;">Ação</th></tr>`;
         for (let u in usuarios) {
             let opt = document.createElement("option"); opt.value = u; opt.innerText = u; select.add(opt);
-            html += `<tr><td style="padding:8px 10px;">${u}</td><td>${usuarios[u].nivel}</td><td><button onclick="excluirUsuario('${u}')" style="color:red;border:none;background:none;cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
+            html += `<tr><td style="padding:8px 10px;">${u}</td><td>${usuarios[u].nivel}</td><td>${usuarios[u].secao}</td><td><button onclick="excluirUsuario('${u}')" style="color:red;border:none;background:none;cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
         }
         listaDiv.innerHTML = html + "</table>";
     }
@@ -284,6 +279,21 @@
         } else { alert("Senha incorreta!"); }
     }
 
+    function imprimirRelatorio() {
+        let conteudo = "<h2>Relatório de Acessos - SAdmC 6º BBM</h2><table border='1' style='width:100%; border-collapse:collapse;'><tr><th>Militar</th><th>Senha</th><th>Nível</th><th>Seção</th></tr>";
+        for (let u in usuarios) {
+            conteudo += `<tr><td>${u}</td><td>${usuarios[u].senha}</td><td>${usuarios[u].nivel}</td><td>${usuarios[u].secao}</td></tr>`;
+        }
+        conteudo += "</table><p style='font-size:12px; margin-top:20px;'>Gerado em: " + new Date().toLocaleString() + "</p>";
+        const win = window.open('', '', 'height=700,width=900');
+        win.document.write('<html><head><title>Impressão SAdmC</title></head><body style="font-family:sans-serif; padding:20px;">');
+        win.document.write(conteudo);
+        win.document.write('</body></html>');
+        win.document.close();
+        win.print();
+    }
+
+    document.getElementById("senha").addEventListener("keypress", (e) => { if (e.key === "Enter") login(); });
     setInterval(() => {
         const agora = new Date();
         document.getElementById('dataAtual').innerText = agora.toLocaleDateString('pt-BR');
