@@ -21,19 +21,17 @@
             --branco: #ffffff;
         }
 
-        /* --- RESET E TRAVA DE ROLAGEM GLOBAL (PARA LOGIN) --- */
+        /* --- RESET E ESTRUTURA --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         html, body { 
-            width: 100%; height: 100%; 
+            width: 100%; min-height: 100vh; 
             font-family: 'Open Sans', sans-serif; 
             background: var(--azul-escuro); 
-            overflow: hidden; 
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
         }
 
-        /* --- INTERFACE DE CARREGAMENTO E ALERTAS --- */
+        /* --- ALERTAS --- */
         #loadingOverlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0, 18, 51, 0.98); z-index: 9999; 
@@ -46,133 +44,109 @@
             display: none; position: fixed; top: 25px; left: 50%; transform: translateX(-50%); 
             background: var(--vermelho-cbm); color: white; padding: 18px 35px; border-radius: 10px; 
             font-weight: 800; z-index: 10000; box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
-            border: 2px solid rgba(255,255,255,0.2);
         }
 
-        /* --- DESIGN DA TELA DE LOGIN --- */
+        /* --- TELA DE LOGIN (image_8af9df.png / image_8b7679.jpg) --- */
         #loginScreen { 
             flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px;
-            background: radial-gradient(circle at center, #003566 0%, #001D3D 100%); 
         }
-
         .login-container { 
             display: flex; max-width: 950px; width: 100%; background: var(--branco);
             border-radius: 25px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-            max-height: 80vh;
         }
-        
         .login-left { 
-            background: linear-gradient(135deg, #778899 0%, #445566 100%); 
-            flex: 1; padding: 50px; 
+            background: #778899; flex: 1; padding: 50px; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            color: white; text-align: center; border-right: 1px solid #eee;
+            color: white; text-align: center;
         }
-        .login-left img { width: 130px; margin-bottom: 20px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3)); }
-        .login-left h1 { font-size: 55px; font-weight: 900; margin: 0; line-height: 1; background: linear-gradient(180deg, #FFD700 0%, #FF8C00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .login-left p { font-weight: 800; font-size: 12px; color: var(--laranja-cbm); letter-spacing: 2px; margin-top: 10px; }
+        .login-left img { width: 130px; margin-bottom: 20px; }
+        .login-left h1 { font-size: 55px; font-weight: 900; margin: 0; color: #FFD700; }
+        .login-left p { font-weight: 800; font-size: 11px; color: var(--laranja-cbm); letter-spacing: 1px; margin-top: 5px; }
         
         .login-right { flex: 1.3; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
-        .login-right h2 { margin: 0; color: var(--azul-medio); font-size: 28px; font-weight: 800; }
-        .sub-sigla { color: #999; font-size: 12px; margin-bottom: 35px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .login-right h2 { color: var(--azul-medio); font-size: 28px; font-weight: 800; margin-bottom: 5px; }
+        .sub-sigla { color: #999; font-size: 12px; margin-bottom: 35px; font-weight: 700; text-transform: uppercase; }
         
         .form-group { margin-bottom: 20px; position: relative; }
-        .form-group label { display: block; font-weight: 800; font-size: 11px; color: #666; text-transform: uppercase; margin-bottom: 8px; }
-        .form-group select, .form-group input { 
-            width: 100%; padding: 15px; border: 2px solid #e1e1e1; border-radius: 12px; 
-            font-size: 15px; outline: none; transition: all 0.3s; font-family: 'Open Sans';
-        }
-        .form-group input:focus { border-color: var(--azul-medio); box-shadow: 0 0 10px rgba(0,53,102,0.1); }
+        .form-group label { display: block; font-weight: 800; font-size: 11px; color: #555; text-transform: uppercase; margin-bottom: 8px; }
+        .form-group select, .form-group input { width: 100%; padding: 15px; border: 1.5px solid #ddd; border-radius: 10px; font-size: 15px; outline: none; }
         
-        /* CAMPO SENHA E OLHINHO */
+        /* CAMPO SENHA COM OLHINHO */
         .password-wrapper { position: relative; display: flex; align-items: center; }
-        .toggle-password {
-            position: absolute; right: 15px; cursor: pointer; color: #aaa; font-size: 18px; 
-            transition: color 0.3s; z-index: 5;
-        }
-        .toggle-password:hover { color: var(--azul-medio); }
+        .toggle-password { position: absolute; right: 15px; cursor: pointer; color: #aaa; font-size: 18px; z-index: 10; }
 
-        .btn-acesso { 
-            width: 100%; padding: 18px; background: var(--vermelho-cbm); color: white; border: none; 
-            border-radius: 12px; font-weight: 800; text-transform: uppercase; cursor: pointer; 
-            font-size: 16px; transition: 0.3s; box-shadow: 0 5px 15px rgba(196,0,0,0.3);
-        }
-        .btn-acesso:hover { background: #a00000; transform: translateY(-2px); }
+        .btn-acesso { width: 100%; padding: 18px; background: var(--vermelho-cbm); color: white; border: none; border-radius: 10px; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        .btn-acesso:hover { background: #a00000; }
 
-        /* --- ÁREA DO SISTEMA --- */
-        #sistema { display: none; background: var(--cinza-fundo); flex: 1; overflow-y: auto; }
-        .header-top { background: var(--azul-texto); color: white; text-align: center; padding: 15px; font-weight: 800; font-size: 14px; letter-spacing: 1px; }
+        /* --- SISTEMA (image_8b769a.png) --- */
+        #sistema { display: none; background: var(--cinza-fundo); flex: 1; }
+        .header-top { background: var(--azul-texto); color: white; text-align: center; padding: 15px; font-weight: 800; font-size: 14px; }
         .header-stripe { background: var(--vermelho-cbm); height: 5px; }
+        .dashboard-container { max-width: 1400px; margin: 0 auto; padding: 30px; }
         
-        .dashboard-container { max-width: 1300px; margin: 30px auto; padding: 0 30px; padding-bottom: 80px; }
-        
+        /* BARRA DO MILITAR */
         .militar-bar { 
-            background: white; padding: 25px; border-radius: 15px; display: flex; 
-            justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-            margin-bottom: 40px; border-bottom: 4px solid var(--azul-medio);
+            background: white; padding: 20px 30px; border-radius: 15px; display: flex; 
+            justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            margin-bottom: 30px; border: 1px solid #e1e1e1;
         }
-        .militar-status { font-size: 20px; font-weight: 800; color: var(--azul-medio); display: flex; align-items: center; gap: 10px; }
+        .militar-info { display: flex; flex-direction: column; }
+        .militar-label { font-size: 11px; color: #999; font-weight: 800; text-transform: uppercase; }
+        .militar-nome { font-size: 22px; font-weight: 800; color: var(--azul-medio); display: flex; align-items: center; gap: 10px; }
         
-        /* PAINEL ADMIN COMPLETO */
-        #painelAdmin { background: #fff; padding: 30px; border-radius: 15px; margin-bottom: 40px; border: 2px dashed var(--azul-medio); display: none; }
-        .admin-controls { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 15px; margin-bottom: 25px; }
-        .admin-controls input, .admin-controls select { padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
-        .admin-table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
-        .admin-table th { background: var(--azul-medio); color: white; padding: 15px; text-align: left; text-transform: uppercase; font-size: 12px; }
-        .admin-table td { padding: 15px; border-bottom: 1px solid #eee; font-weight: 600; font-size: 14px; }
+        .btn-sair { background: var(--azul-medio); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; }
 
-        /* --- SEÇÕES E CARDS --- */
-        .secao-container { display: none; margin-top: 50px; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .secao-header { 
-            border-left: 8px solid var(--vermelho-cbm); padding-left: 20px; margin-bottom: 30px; 
-            font-size: 22px; font-weight: 800; color: var(--azul-texto); text-transform: uppercase;
+        /* PAINEL MASTER (image_8b769a.png) */
+        #painelAdmin { 
+            background: #fff; padding: 30px; border-radius: 15px; margin-bottom: 30px; 
+            border: 2px dashed #003566; box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
+        .painel-titulo { font-size: 18px; font-weight: 800; color: var(--azul-medio); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
         
+        .admin-form { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 15px; margin-bottom: 25px; }
+        .admin-form input, .admin-form select { padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Open Sans'; font-size: 14px; }
+        
+        .btn-cadastrar { background: #27ae60; color: white; border: none; padding: 15px 25px; border-radius: 8px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+        .admin-table-container { border-radius: 12px; overflow: hidden; border: 1px solid #eee; }
+        .admin-table { width: 100%; border-collapse: collapse; background: white; }
+        .admin-table th { background: var(--azul-medio); color: white; padding: 15px; text-align: left; font-size: 12px; text-transform: uppercase; }
+        .admin-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; font-weight: 600; }
+
+        /* SEÇÕES E CARDS */
+        .secao-container { display: none; margin-top: 40px; }
+        .secao-header { border-left: 8px solid var(--vermelho-cbm); padding-left: 20px; margin-bottom: 30px; font-size: 22px; font-weight: 800; color: var(--azul-texto); text-transform: uppercase; }
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .card-item { 
-            background: white; padding: 45px 25px; border-radius: 20px; text-decoration: none; 
-            color: inherit; display: flex; flex-direction: column; align-items: center; 
-            border: 1px solid #eef0f2; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        }
+        .card-item { background: white; padding: 45px 20px; border-radius: 20px; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; border: 1px solid #eee; text-align: center; transition: 0.3s; }
         .card-item i { font-size: 45px; color: var(--azul-medio); margin-bottom: 20px; }
-        .card-item span { font-weight: 800; font-size: 15px; color: var(--azul-texto); text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        .card-item:hover { 
-            transform: translateY(-10px); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
-            border-top: 6px solid var(--vermelho-cbm);
-        }
+        .card-item span { font-weight: 800; font-size: 15px; color: var(--azul-texto); text-transform: uppercase; }
+        .card-item:hover { transform: translateY(-8px); border-top: 6px solid var(--vermelho-cbm); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
 
-        /* --- RODAPÉ INTEGRAL --- */
-        .footer-full { background: #000b14; color: #ffffff; border-top: 5px solid var(--vermelho-cbm); width: 100%; }
+        /* --- RODAPÉ CORRIGIDO (image_8b769a.png) --- */
+        .footer-full { 
+            background: #000b14; color: #ffffff; border-top: 5px solid var(--vermelho-cbm);
+            margin-top: auto; /* EMPURRA O RODAPÉ PARA O FIM */
+        }
         .footer-container { 
-            max-width: 1300px; margin: 0 auto; padding: 40px 30px; 
+            max-width: 1400px; margin: 0 auto; padding: 40px 30px; 
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; 
         }
-        .footer-box h4 { color: var(--laranja-cbm); font-size: 14px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-weight: 800; }
-        .contact-item { text-decoration: none; color: #cbd5e0; font-size: 13px; display: flex; align-items: center; gap: 12px; margin-bottom: 12px; transition: 0.3s; }
-        .contact-item:hover { color: white; }
-        .footer-bottom { padding: 20px; background: rgba(0, 0, 0, 0.5); text-align: center; font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+        .footer-box h4 { color: var(--laranja-cbm); font-size: 14px; text-transform: uppercase; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-weight: 800; }
+        .footer-box .item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px; color: #cbd5e0; }
+        .footer-box i { color: var(--laranja-cbm); width: 20px; text-align: center; }
 
-        @media (max-width: 768px) {
-            .login-container { flex-direction: column; max-height: 95vh; }
-            .login-left, .login-right { padding: 30px; }
-            .admin-controls { grid-template-columns: 1fr; }
-            .footer-container { grid-template-columns: 1fr; text-align: center; }
-            .footer-box h4, .contact-item { justify-content: center; }
+        .footer-bottom { padding: 25px; background: rgba(0, 0, 0, 0.5); text-align: center; font-size: 11px; color: #718096; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+        @media (max-width: 900px) {
+            .login-container { flex-direction: column; }
+            .admin-form { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<div id="loadingOverlay">
-    <div class="spinner"></div>
-    <p style="font-weight: 800; margin-top: 20px; letter-spacing: 2px;">PROCESSANDO ACESSO...</p>
-</div>
-
-<div id="erroSenha">ACESSO NEGADO: SENHA INCORRETA!</div>
+<div id="loadingOverlay"><div class="spinner"></div><p style="font-weight: 800; margin-top: 20px;">AUTENTICANDO...</p></div>
+<div id="erroSenha">SENHA INCORRETA!</div>
 
 <div id="loginScreen">
     <div class="login-container">
@@ -187,16 +161,14 @@
             
             <div class="form-group">
                 <label>Militar Solicitante</label>
-                <select id="selectMilitar">
-                    <option value="">Carregando lista de militares...</option>
-                </select>
+                <select id="selectMilitar"><option value="">Selecione seu nome...</option></select>
             </div>
             
             <div class="form-group">
                 <label>Senha de Segurança</label>
                 <div class="password-wrapper">
                     <input type="password" id="inputSenha" placeholder="Digite sua senha de acesso">
-                    <i class="fas fa-eye toggle-password" id="olhinho" onclick="togglePassword()"></i>
+                    <i class="fas fa-eye toggle-password" id="btnOlhinho" onclick="togglePass()"></i>
                 </div>
             </div>
             
@@ -210,26 +182,18 @@
     <div class="header-stripe"></div>
     
     <div class="dashboard-container">
-        
         <div class="militar-bar">
-            <div>
-                <div style="font-size: 11px; color: #888; font-weight: 800; text-transform: uppercase;">Militar Autenticado no Sistema:</div>
-                <div class="militar-status">
-                    <i class="fas fa-user-shield"></i> 
-                    <span id="labelNome"></span>
-                </div>
+            <div class="militar-info">
+                <span class="militar-label">Militar Autenticado no Sistema:</span>
+                <div class="militar-nome"><i class="fas fa-user-circle"></i> <span id="labelNome"></span></div>
             </div>
-            <button onclick="location.reload()" style="background:var(--azul-medio); color:white; border:none; padding:12px 25px; border-radius:10px; font-weight: 800; cursor:pointer; transition: 0.3s;">
-                <i class="fas fa-sign-out-alt"></i> SAIR DO SISTEMA
-            </button>
+            <button class="btn-sair" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i> SAIR DO SISTEMA</button>
         </div>
 
         <div id="painelAdmin">
-            <h3 style="margin-bottom: 20px; color: var(--azul-escuro); font-weight: 800;">
-                <i class="fas fa-cogs"></i> GESTÃO DE ACESSOS E MILITARES
-            </h3>
-            <div class="admin-controls">
-                <input type="text" id="admNome" placeholder="Nome Completo / Graduação" style="text-transform: uppercase;">
+            <div class="painel-titulo"><i class="fas fa-user-cog"></i> Gestão de Acessos e Militares</div>
+            <div class="admin-form">
+                <input type="text" id="admNome" placeholder="NOME COMPLETO / GRADUAÇÃO" style="text-transform: uppercase;">
                 <input type="password" id="admSenha" placeholder="Senha de Acesso">
                 <select id="admNivel">
                     <option value="PUBLICO">ACERVO (GERAL)</option>
@@ -240,79 +204,47 @@
                     <option value="SCOR">SCOR (CORREIÇÃO)</option>
                     <option value="MASTER">MASTER (ACESSO TOTAL)</option>
                 </select>
-                <button onclick="addMilitar()" style="background:#27ae60; color:white; border:none; padding:12px 25px; border-radius:8px; font-weight:800; cursor:pointer;">
-                    <i class="fas fa-plus-circle"></i> CADASTRAR
-                </button>
+                <button class="btn-cadastrar" onclick="addMilitar()"><i class="fas fa-plus-circle"></i> CADASTRAR</button>
             </div>
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Nome do Militar</th>
-                        <th>Nível de Permissão</th>
-                        <th style="width: 100px;">Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaUsuarios"></tbody>
-            </table>
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nome do Militar</th>
+                            <th>Nível de Permissão</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaUsuarios"></tbody>
+                </table>
+            </div>
         </div>
 
         <div id="secao-ACERVO" class="secao-container">
             <div class="secao-header">Acervo, Modelos e Legislação</div>
             <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-file-invoice"></i><span>Modelos de Requerimentos</span></a>
-                <a href="#" class="card-item"><i class="fas fa-scroll"></i><span>Ordens de Serviço</span></a>
-                <a href="#" class="card-item"><i class="fas fa-book-medical"></i><span>Manuais Técnicos</span></a>
+                <a href="#" class="card-item"><i class="fas fa-file-contract"></i><span>Modelos de Requerimentos</span></a>
+                <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Ordens de Serviço</span></a>
+                <a href="#" class="card-item"><i class="fas fa-book-reader"></i><span>Manuais Técnicos</span></a>
                 <a href="#" class="card-item"><i class="fas fa-balance-scale"></i><span>Legislação Vigente</span></a>
             </div>
         </div>
 
         <div id="secao-B1" class="secao-container">
-            <div class="secao-header">B1 - Recursos Humanos e Efetivo</div>
+            <div class="secao-header">B1 - Recursos Humanos</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-users"></i><span>Controle de Efetivo</span></a>
-                <a href="#" class="card-item"><i class="fas fa-calendar-check"></i><span>Escalas de Serviço</span></a>
-                <a href="#" class="card-item"><i class="fas fa-medal"></i><span>Promoções e Medalhas</span></a>
-                <a href="#" class="card-item"><i class="fas fa-user-edit"></i><span>Alterações de Pessoal</span></a>
-            </div>
-        </div>
-
-        <div id="secao-B2" class="secao-container">
-            <div class="secao-header">B2 - Inteligência e Estatística</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-chart-pie"></i><span>Estatísticas Operacionais</span></a>
-                <a href="#" class="card-item"><i class="fas fa-user-shield"></i><span>Segurança de Dados</span></a>
-                <a href="#" class="card-item"><i class="fas fa-search"></i><span>Levantamentos B2</span></a>
-            </div>
-        </div>
-
-        <div id="secao-B3" class="secao-container">
-            <div class="secao-header">B3 - Operações e Ensino</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-fire-extinguisher"></i><span>Planos de Contingência</span></a>
-                <a href="#" class="card-item"><i class="fas fa-graduation-cap"></i><span>Cursos e Treinamentos</span></a>
-                <a href="#" class="card-item"><i class="fas fa-map-marked-alt"></i><span>Cartografia e GIS</span></a>
-            </div>
-        </div>
-
-        <div id="secao-B4" class="secao-container">
-            <div class="secao-header">B4 - Logística, Patrimônio e Frota</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-bus"></i><span>Gestão de Frota</span></a>
-                <a href="#" class="card-item"><i class="fas fa-boxes"></i><span>Material e Carga</span></a>
-                <a href="#" class="card-item"><i class="fas fa-building"></i><span>Manutenção Predial</span></a>
-                <a href="#" class="card-item"><i class="fas fa-gas-pump"></i><span>Controle de Combustível</span></a>
+                <a href="#" class="card-item"><i class="fas fa-calendar-alt"></i><span>Escalas de Serviço</span></a>
             </div>
         </div>
 
         <div id="secao-SCOR" class="secao-container">
-            <div class="secao-header">SCor - Seção de Correição e Disciplina</div>
+            <div class="secao-header">SCor - Correição</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-gavel"></i><span>IPM / Sindicâncias</span></a>
-                <a href="#" class="card-item"><i class="fas fa-folder-minus"></i><span>FATDs / Processos</span></a>
-                <a href="#" class="card-item"><i class="fas fa-user-check"></i><span>Conselhos Disciplinares</span></a>
+                <a href="#" class="card-item"><i class="fas fa-folder-open"></i><span>Processos Administrativos</span></a>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -320,23 +252,16 @@
     <div class="footer-container">
         <div class="footer-box">
             <h4><i class="fas fa-map-marker-alt"></i> SEDE DO 6º BBM</h4>
-            <div class="contact-item">
-                <i class="fas fa-map-location-dot"></i>
-                <span>Rua Tenente-Coronel Brito, 03<br>Centro, Santa Cruz do Sul - RS</span>
-            </div>
+            <div class="item"><i class="fas fa-location-dot"></i><span>Rua Tenente-Coronel Brito, 03<br>Centro, Santa Cruz do Sul - RS</span></div>
         </div>
         <div class="footer-box">
-            <h4><i class="fas fa-envelope-open-text"></i> COMUNICAÇÃO OFICIAL</h4>
-            <div class="contact-item"><i class="fas fa-envelope"></i><span>6bbm-sadm@cbm.rs.gov.br</span></div>
-            <div class="contact-item"><i class="fas fa-phone-volume"></i><span>(51) 3711-2323 | Voip: 8406-1100</span></div>
+            <h4><i class="fas fa-paper-plane"></i> COMUNICAÇÃO OFICIAL</h4>
+            <div class="item"><i class="fas fa-envelope"></i><span>6bbm-sadm@cbm.rs.gov.br</span></div>
+            <div class="item"><i class="fas fa-phone"></i><span>(51) 3711-2323 | Voip: 8406-1100</span></div>
         </div>
         <div class="footer-box">
-            <h4><i class="fas fa-shield-halved"></i> DESENVOLVIMENTO</h4>
-            <div style="font-size: 11px; color: #cbd5e0; line-height: 1.6;">
-                SAdmC - Versão 4.0.2<br>
-                Plataforma de Gestão Administrativa Interna<br>
-                <span style="color:var(--laranja-cbm); font-weight:800;">● SISTEMA OPERACIONAL</span>
-            </div>
+            <h4><i class="fas fa-shield-alt"></i> DESENVOLVIMENTO</h4>
+            <div class="item"><span>SAdmC - Versão 4.0.2<br>Plataforma de Gestão Administrativa Interna<br><b style="color:var(--laranja-cbm)">● SISTEMA OPERACIONAL</b></span></div>
         </div>
     </div>
     <div class="footer-bottom">
@@ -345,7 +270,6 @@
 </footer>
 
 <script>
-    // CONFIGURAÇÃO FIREBASE - MANTENHA SEUS DADOS ORIGINAIS
     const firebaseConfig = {
         apiKey: "AIzaSyDfHrIaQzylbPaPBH_rAlew1CoINTfIySE",
         authDomain: "sadmc-6bbm.firebaseapp.com",
@@ -360,112 +284,69 @@
     const database = firebase.database();
     let MILITARES = {};
 
-    // SINCRONIZAÇÃO COM O BANCO DE DADOS
     database.ref('militares').on('value', (snapshot) => {
-        MILITARES = snapshot.val() || { "ADMINISTRADOR": { senha: "123", nivel: "MASTER" } };
+        MILITARES = snapshot.val() || { "DESENVOLVEDOR": { senha: "123", nivel: "MASTER" } };
         renderUI();
     });
 
     function renderUI() {
         const select = document.getElementById("selectMilitar");
         const tabela = document.getElementById("tabelaUsuarios");
-        if(!select) return;
-
         select.innerHTML = '<option value="">Selecione seu nome...</option>';
         tabela.innerHTML = "";
-
-        for (let nome in MILITARES) {
-            // Popula o select de login
-            let opt = document.createElement("option");
-            opt.value = nome;
-            opt.innerText = nome;
-            select.add(opt);
-
-            // Popula a tabela de admin
+        for (let m in MILITARES) {
+            let o = document.createElement("option"); o.value = m; o.innerText = m; select.add(o);
             let row = tabela.insertRow();
-            row.innerHTML = `
-                <td>${nome}</td>
-                <td><span style="background:#eee; padding:4px 10px; border-radius:15px; font-size:11px;">${MILITARES[nome].nivel}</span></td>
-                <td><button onclick="deleteMilitar('${nome}')" style="color:red; background:none; border:none; cursor:pointer;"><i class="fas fa-trash-alt"></i></button></td>
-            `;
+            row.innerHTML = `<td>${m}</td><td><span style="background:#eee;padding:4px 10px;border-radius:15px;font-size:11px;">${MILITARES[m].nivel}</span></td><td style="text-align:center;"><button onclick="deleteMil('${m}')" style="color:red;border:none;background:none;cursor:pointer;"><i class="fas fa-trash-alt"></i></button></td>`;
         }
     }
 
-    // FUNÇÃO DO OLHINHO (MOSTRAR/OCULTAR SENHA)
-    function togglePassword() {
-        const passwordField = document.getElementById("inputSenha");
-        const eyeIcon = document.getElementById("olhinho");
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            eyeIcon.classList.remove("fa-eye");
-            eyeIcon.classList.add("fa-eye-slash");
+    function togglePass() {
+        const input = document.getElementById("inputSenha");
+        const eye = document.getElementById("btnOlhinho");
+        if(input.type === "password") {
+            input.type = "text"; eye.className = "fas fa-eye-slash toggle-password";
         } else {
-            passwordField.type = "password";
-            eyeIcon.classList.remove("fa-eye-slash");
-            eyeIcon.classList.add("fa-eye");
+            input.type = "password"; eye.className = "fas fa-eye toggle-password";
         }
     }
 
-    // LÓGICA DE LOGIN
     function acaoLogin() {
-        const nome = document.getElementById("selectMilitar").value;
-        const senha = document.getElementById("inputSenha").value;
-
-        if (!nome) { alert("Por favor, selecione um militar."); return; }
-
-        if (MILITARES[nome] && senha === MILITARES[nome].senha) {
+        const n = document.getElementById("selectMilitar").value;
+        const p = document.getElementById("inputSenha").value;
+        if (MILITARES[n] && p === MILITARES[n].senha) {
             document.getElementById("loadingOverlay").style.display = "flex";
-            
             setTimeout(() => {
                 document.getElementById("loadingOverlay").style.display = "none";
                 document.getElementById("loginScreen").style.display = "none";
                 document.getElementById("sistema").style.display = "block";
-                document.getElementById("labelNome").innerText = nome;
-                
-                // LIBERA ROLAGEM APENAS NO SISTEMA
-                document.documentElement.style.overflow = "auto";
+                document.getElementById("labelNome").innerText = n;
                 document.body.style.overflow = "auto";
-                document.body.style.height = "auto";
-
-                const nivel = MILITARES[nome].nivel;
+                const nivel = MILITARES[n].nivel;
                 document.querySelectorAll(".secao-container").forEach(s => s.style.display = "none");
-                
                 if(nivel === "MASTER") {
                     document.querySelectorAll(".secao-container").forEach(s => s.style.display = "block");
                     document.getElementById("painelAdmin").style.display = "block";
                 } else {
                     document.getElementById("secao-ACERVO").style.display = "block";
-                    const secaoAlvo = document.getElementById("secao-" + nivel);
-                    if(secaoAlvo) secaoAlvo.style.display = "block";
+                    if(document.getElementById("secao-"+nivel)) document.getElementById("secao-"+nivel).style.display = "block";
                     document.getElementById("painelAdmin").style.display = "none";
                 }
             }, 1000);
         } else {
-            const erro = document.getElementById("erroSenha");
-            erro.style.display = "block";
-            setTimeout(() => erro.style.display = "none", 3000);
+            document.getElementById("erroSenha").style.display = "block";
+            setTimeout(() => document.getElementById("erroSenha").style.display = "none", 2500);
         }
     }
 
-    // GESTÃO DE MILITARES
     function addMilitar() {
         const n = document.getElementById("admNome").value.toUpperCase();
         const s = document.getElementById("admSenha").value;
         const l = document.getElementById("admNivel").value;
-        if(n && s) {
-            database.ref('militares/' + n).set({ senha: s, nivel: l });
-            document.getElementById("admNome").value = "";
-            document.getElementById("admSenha").value = "";
-        } else {
-            alert("Preencha nome e senha!");
-        }
+        if(n && s) { database.ref('militares/' + n).set({ senha: s, nivel: l }); }
     }
 
-    function deleteMilitar(nome) {
-        if(confirm("Deseja realmente remover o acesso de " + nome + "?")) {
-            database.ref('militares/' + nome).remove();
-        }
-    }
+    function deleteMil(n) { if(confirm("Remover " + n + "?")) database.ref('militares/' + n).remove(); }
 </script>
 </body>
 </html>
