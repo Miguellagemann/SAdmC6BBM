@@ -28,22 +28,10 @@
             min-height: 100vh; 
         }
 
-        /* --- ANIMAÇÕES DE LOGIN --- */
-        @keyframes entradaPainel {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes sweep {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
-        }
-
-        @keyframes brilhoLogo {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0)); }
-            50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)); }
-        }
+        /* --- ANIMAÇÕES --- */
+        @keyframes entradaPainel { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes sweep { 0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; } }
+        @keyframes brilhoLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0)); } 50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)); } }
 
         /* --- COMPONENTES GLOBAIS --- */
         #loadingOverlay { 
@@ -51,10 +39,7 @@
             background: rgba(0, 18, 51, 0.95); z-index: 9999; 
             flex-direction: column; justify-content: center; align-items: center; color: white; 
         }
-        .spinner { 
-            width: 60px; height: 60px; border: 6px solid rgba(255, 255, 255, 0.1); 
-            border-top-color: var(--laranja-cbm); border-radius: 50%; animation: spin 1s infinite linear; 
-        }
+        .spinner { width: 60px; height: 60px; border: 6px solid rgba(255, 255, 255, 0.1); border-top-color: var(--laranja-cbm); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
         #erroSenha { 
@@ -64,42 +49,20 @@
         }
 
         /* --- TELA DE LOGIN --- */
-        #loginScreen { 
-            flex: 1; display: flex; justify-content: center; align-items: center; 
-            padding: 20px; background: radial-gradient(circle, #003566 0%, #001D3D 100%); 
-        }
-        
-        .login-container { 
-            display: flex; max-width: 900px; width: 100%; min-height: 500px; 
-            border-radius: 15px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); 
-            background: #fff; animation: entradaPainel 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .login-left { 
-            background: var(--azul-medio); flex: 1; padding: 50px; 
-            display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; color: white; position: relative; overflow: hidden; 
-        }
+        #loginScreen { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; background: radial-gradient(circle, #003566 0%, #001D3D 100%); }
+        .login-container { display: flex; max-width: 900px; width: 100%; min-height: 500px; border-radius: 15px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); background: #fff; animation: entradaPainel 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .login-left { background: var(--azul-medio); flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; position: relative; overflow: hidden; }
         .login-left img { width: 140px; z-index: 2; animation: brilhoLogo 3s infinite ease-in-out; }
         .login-left h1 { font-size: 70px; margin: 10px 0; color: #FFD700; letter-spacing: -3px; z-index: 2; }
         .login-left p { font-weight: 700; text-transform: uppercase; font-size: 13px; color: var(--laranja-cbm); z-index: 2; text-align: center; }
-        .login-left::before { 
-            content: ""; position: absolute; top: 0; width: 100%; height: 100%; 
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.05), transparent); 
-            animation: sweep 4s infinite; 
-        }
-
+        .login-left::before { content: ""; position: absolute; top: 0; width: 100%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,0.05), transparent); animation: sweep 4s infinite; }
         .login-right { flex: 1.2; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
         .login-right h2 { margin: 0; color: var(--azul-medio); font-size: 28px; font-weight: 800; }
         .sub-sigla { color: #888; font-size: 11px; margin-bottom: 30px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-
         .form-group { margin-bottom: 20px; position: relative; }
         .form-group label { display: block; font-weight: 800; font-size: 11px; color: #555; text-transform: uppercase; margin-bottom: 8px; }
         .form-group select, .form-group input { width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; outline: none; font-size: 15px; font-weight: 600; }
-        
         .toggle-password { position: absolute; right: 15px; top: 38px; cursor: pointer; color: #999; font-size: 18px; z-index: 10; }
-        .toggle-password:hover { color: var(--azul-medio); }
-
         .btn-acesso { width: 100%; padding: 18px; background: var(--vermelho-cbm); color: white; border: none; border-radius: 8px; font-weight: 800; text-transform: uppercase; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         .btn-acesso:hover { background: #a00000; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(196,0,0,0.3); }
 
@@ -107,28 +70,18 @@
         #sistema { display: none; flex: 1; background: var(--cinza-fundo); padding-bottom: 50px; }
         .header-top { background: var(--azul-texto); color: white; text-align: center; padding: 15px; font-weight: 800; font-size: 18px; letter-spacing: 1px; }
         .header-stripe { background: var(--vermelho-cbm); height: 6px; }
-        
         .dashboard-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-
-        .militar-bar { 
-            background: white; padding: 25px 40px; border-radius: 12px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; 
-        }
+        .militar-bar { background: white; padding: 25px 40px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
         .saudacao-box { text-align: left; }
-        .saudacao-box .txt-bemvindo { font-size: 12px; color: #999; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 2px; }
+        .txt-bemvindo { font-size: 12px; color: #999; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
         .militar-status { font-size: 24px; font-weight: 800; color: var(--azul-medio); }
         .militar-status span { color: var(--vermelho-cbm); }
         .txt-data-hora { text-align: right; font-weight: 700; color: #666; font-size: 14px; line-height: 1.4; border-right: 4px solid var(--laranja-cbm); padding-right: 15px; }
-
         .btn-sair { background: var(--azul-medio); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 800; }
         .btn-sair:hover { background: var(--vermelho-cbm); }
 
-        /* --- PAINEL ADMIN E TABELA --- */
-        #painelAdmin { 
-            background: #fff; padding: 30px; border-radius: 12px; margin-bottom: 40px; 
-            border: 2px dashed var(--azul-medio); display: none;
-        }
+        /* PAINEL ADMIN */
+        #painelAdmin { background: #fff; padding: 30px; border-radius: 12px; margin-bottom: 40px; border: 2px dashed var(--azul-medio); display: none; }
         .admin-table { width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 14px; }
         .admin-table th { background: var(--azul-medio); color: white; padding: 12px; text-align: left; }
         .admin-table td { padding: 12px; border-bottom: 1px solid #eee; }
@@ -136,39 +89,18 @@
 
         /* SEÇÕES E CARDS */
         .secao-container { display: none; margin-top: 50px; animation: fadeIn 0.6s ease; }
-        .secao-header { 
-            border-left: 10px solid var(--vermelho-cbm); padding-left: 20px; 
-            margin-bottom: 30px; font-size: 22px; font-weight: 800; color: var(--azul-texto); 
-            text-transform: uppercase; letter-spacing: 1px;
-        }
+        .secao-header { border-left: 10px solid var(--vermelho-cbm); padding-left: 20px; margin-bottom: 30px; font-size: 22px; font-weight: 800; color: var(--azul-texto); text-transform: uppercase; letter-spacing: 1px; }
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card-item { 
-            background: white; padding: 40px 20px; border-radius: 15px; text-decoration: none; 
-            color: inherit; display: flex; flex-direction: column; align-items: center; 
-            border: 1px solid #eee; transition: 0.4s;
-        }
+        .card-item { background: white; padding: 40px 20px; border-radius: 15px; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; border: 1px solid #eee; transition: 0.4s; text-align: center; }
         .card-item i { font-size: 45px; color: var(--azul-medio); margin-bottom: 20px; }
-        .card-item span { font-weight: 800; font-size: 16px; color: #333; text-align: center; }
-        .card-item:hover { 
-            transform: translateY(-10px); border-top: 6px solid var(--vermelho-cbm); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
-        }
+        .card-item span { font-weight: 800; font-size: 16px; color: #333; }
+        .card-item:hover { transform: translateY(-10px); border-top: 6px solid var(--vermelho-cbm); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
 
-        /* BOTÃO VOLTAR AO TOPO */
-        #btnTopo {
-            display: none; position: fixed; bottom: 40px; right: 40px; z-index: 99;
-            border: none; background: var(--vermelho-cbm); color: white;
-            width: 55px; height: 55px; border-radius: 50%; font-size: 22px; cursor: pointer;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3); transition: 0.3s;
-        }
-        #btnTopo:hover { background: var(--azul-medio); transform: scale(1.1); }
+        #btnTopo { display: none; position: fixed; bottom: 40px; right: 40px; z-index: 99; border: none; background: var(--vermelho-cbm); color: white; width: 55px; height: 55px; border-radius: 50%; font-size: 22px; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
 
-        /* RODAPÉ COMPLETO */
+        /* RODAPÉ */
         .footer-full { background: #000E1F; color: white; border-top: 6px solid var(--vermelho-cbm); margin-top: auto; }
-        .footer-grid { 
-            max-width: 1200px; margin: auto; padding: 50px 20px; 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; 
-        }
+        .footer-grid { max-width: 1200px; margin: auto; padding: 50px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
         .footer-col h4 { color: var(--laranja-cbm); margin-bottom: 20px; font-size: 15px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
         .footer-col p { font-size: 13px; color: #ccc; margin: 8px 0; line-height: 1.6; }
         .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 20px; font-size: 11px; color: var(--laranja-cbm); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
@@ -197,18 +129,15 @@
         <form class="login-right" onsubmit="event.preventDefault(); acaoLogin();">
             <h2>SAdmC - Acesso</h2>
             <div class="sub-sigla">Seção Administrativa e Correição</div>
-            
             <div class="form-group">
                 <label>Militar Solicitante</label>
                 <select id="selectMilitar"></select>
             </div>
-            
             <div class="form-group">
                 <label>Senha de Acesso</label>
                 <input type="password" id="inputSenha" placeholder="Digite sua senha">
                 <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
             </div>
-            
             <button type="submit" class="btn-acesso">Entrar no Sistema</button>
         </form>
     </div>
@@ -229,38 +158,40 @@
         </div>
 
         <div id="painelAdmin">
-            <h3><i class="fas fa-user-cog"></i> Painel de Gerenciamento de Acessos</h3>
-            <div style="display:flex; gap:15px; flex-wrap: wrap; margin-bottom: 25px;">
-                <input type="text" id="admNome" placeholder="Nome Completo / Graduação" style="padding:12px; flex:2; border-radius:5px; border:1px solid #ccc;">
+            <h3><i class="fas fa-user-cog"></i> Gerenciamento de Acessos</h3>
+            <div style="display:flex; gap:10px; flex-wrap: wrap; margin-bottom: 20px;">
+                <input type="text" id="admNome" placeholder="Nome / Graduação" style="padding:12px; flex:2; border-radius:5px; border:1px solid #ccc;">
                 <input type="password" id="admSenha" placeholder="Senha" style="padding:12px; flex:1; border-radius:5px; border:1px solid #ccc;">
                 <select id="admNivel" style="padding:12px; flex:1; border-radius:5px; border:1px solid #ccc;">
-                    <option value="B1">B1 - Seção de Rec. Humanos</option>
-                    <option value="B2">B2 - Agência de Inteligência</option>
-                    <option value="B3">B3 - Seção de Operações</option>
-                    <option value="B4">B4 - Logística e Patrimônio</option>
-                    <option value="SCOR">SCor - Seção de Correição</option>
-                    <option value="CHEFE">Chefe do SAdmC (Ver Tudo)</option>
-                    <option value="MASTER">Desenvolvedor (Acesso Total)</option>
+                    <option value="PUBLICO">Público (Somente Acervo)</option>
+                    <option value="B1">B1 - Recursos Humanos</option>
+                    <option value="B2">B2 - Inteligência</option>
+                    <option value="B3">B3 - Operações</option>
+                    <option value="B4">B4 - Logística</option>
+                    <option value="SCOR">SCor - Correição</option>
+                    <option value="CHEFE">Chefe SAdmC (Ver Tudo)</option>
+                    <option value="MASTER">Desenvolvedor</option>
                 </select>
                 <button onclick="addMilitar()" style="background:#27ae60; color:white; border:none; padding:12px 30px; cursor:pointer; font-weight:800; border-radius:5px;">CADASTRAR</button>
             </div>
+            <table class="admin-table">
+                <thead><tr><th>Militar</th><th>Nível</th><th style="text-align: center;">Ações</th></tr></thead>
+                <tbody id="tabelaUsuarios"></tbody>
+            </table>
+        </div>
 
-            <div style="overflow-x: auto;">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Militar</th>
-                            <th>Nível de Acesso</th>
-                            <th style="text-align: center;">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabelaUsuarios"></tbody>
-                </table>
+        <div id="secao-ACERVO" class="secao-container">
+            <div class="secao-header" style="border-left-color: var(--laranja-cbm);">Acervo Normativo e Modelos</div>
+            <div class="card-grid">
+                <a href="#" class="card-item"><i class="fas fa-file-signature"></i><span>Modelos de Requerimentos</span></a>
+                <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Ordens de Serviço em Vigor</span></a>
+                <a href="#" class="card-item"><i class="fas fa-book"></i><span>Manuais e POPs</span></a>
+                <a href="#" class="card-item"><i class="fas fa-file-pdf"></i><span>Boletins Gerais</span></a>
             </div>
         </div>
 
         <div id="secao-B1" class="secao-container">
-            <div class="secao-header">B1 - Seção de Recursos Humanos</div>
+            <div class="secao-header">B1 - Recursos Humanos</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-users-cog"></i><span>Gestão de Efetivo</span></a>
                 <a href="#" class="card-item"><i class="fas fa-calendar-alt"></i><span>Escalas de Serviço</span></a>
@@ -270,21 +201,19 @@
         </div>
 
         <div id="secao-B2" class="secao-container">
-            <div class="secao-header">B2 - Agência Local de Inteligência (ALI)</div>
+            <div class="secao-header">B2 - Agência Local de Inteligência</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-eye"></i><span>Produção de Conhecimento</span></a>
                 <a href="#" class="card-item"><i class="fas fa-user-secret"></i><span>Contra-Inteligência</span></a>
-                <a href="#" class="card-item"><i class="fas fa-file-shield"></i><span>Relatórios de Inteligência</span></a>
-                <a href="#" class="card-item"><i class="fas fa-fingerprint"></i><span>Operações de Inteligência</span></a>
+                <a href="#" class="card-item"><i class="fas fa-file-shield"></i><span>Relatórios ALI</span></a>
             </div>
         </div>
 
         <div id="secao-B3" class="secao-container">
-            <div class="secao-header">B3 - Seção de Operações e Defesa Civil</div>
+            <div class="secao-header">B3 - Operações e Defesa Civil</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-map-marked-alt"></i><span>Planos de Contingência</span></a>
                 <a href="#" class="card-item"><i class="fas fa-cloud-showers-heavy"></i><span>Monitoramento Climático</span></a>
-                <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Alertas e Defesa Civil</span></a>
                 <a href="#" class="card-item"><i class="fas fa-fire-extinguisher"></i><span>Estatísticas Operacionais</span></a>
             </div>
         </div>
@@ -295,7 +224,6 @@
                 <a href="#" class="card-item"><i class="fas fa-truck-pickup"></i><span>Gestão de Frota</span></a>
                 <a href="#" class="card-item"><i class="fas fa-tools"></i><span>Manutenção e Obras</span></a>
                 <a href="#" class="card-item"><i class="fas fa-boxes-stacked"></i><span>Carga e Almoxarifado</span></a>
-                <a href="#" class="card-item"><i class="fas fa-clipboard-list"></i><span>Inventário de Patrimônio</span></a>
             </div>
         </div>
 
@@ -304,10 +232,10 @@
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-gavel"></i><span>IPM e Sindicâncias</span></a>
                 <a href="#" class="card-item"><i class="fas fa-scale-balanced"></i><span>Processos Administrativos</span></a>
-                <a href="#" class="card-item"><i class="fas fa-book-bookmark"></i><span>Legislação e Normas</span></a>
                 <a href="#" class="card-item"><i class="fas fa-handcuffs"></i><span>Conselhos de Disciplina</span></a>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -315,67 +243,38 @@
     <div class="footer-grid">
         <div class="footer-col">
             <h4><i class="fas fa-map-marker-alt"></i> 6º BBM - Santa Cruz do Sul</h4>
-            <p><strong>Sede Administrativa</strong></p>
             <p>Rua Tenente-Coronel Brito, 03</p>
             <p>Centro - Santa Cruz do Sul/RS</p>
         </div>
         <div class="footer-col">
             <h4><i class="fas fa-phone-alt"></i> Contatos</h4>
-            <p><strong>Emergência: 193</strong></p>
+            <p>Emergência: 193</p>
             <p>Administrativo: (51) 3711-2323</p>
-            <p>Email: 6bbm-sadm@cbm.rs.gov.br</p>
         </div>
         <div class="footer-col">
             <h4><i class="fas fa-info-circle"></i> SAdmC</h4>
-            <p>Seção Administrativa e Correição</p>
             <p>Sistema de Gestão Interna</p>
-            <p>Versão 2.5</p>
+            <p>Versão 3.0 - 2026</p>
         </div>
     </div>
-    <div class="footer-bottom">SISTEMA RESTRITO AOS MILITARES DO 6º BBM</div>
+    <div class="footer-bottom">SISTEMA MONITORADO - USO EXCLUSIVO CBMRS</div>
 </footer>
 
 <script>
     const dbPadrao = { 
-        "Desenvolvedor": { senha: "admin", nivel: "MASTER" }, 
-        "CHEFE DO SADMC": { senha: "123", nivel: "CHEFE" },
-        "SGT BOCK": { senha: "123", nivel: "B1" } 
+        "Desenvolvedor": { senha: "admin", nivel: "MASTER" },
+        "Acesso Publico": { senha: "193", nivel: "PUBLICO" }
     };
-    
     let MILITARES = JSON.parse(localStorage.getItem('sadmc_db')) || dbPadrao;
 
     function render() {
         const s = document.getElementById("selectMilitar"); 
         const tabela = document.getElementById("tabelaUsuarios");
-        s.innerHTML = "";
-        tabela.innerHTML = "";
-
+        s.innerHTML = ""; tabela.innerHTML = "";
         for (let m in MILITARES) {
-            let o = document.createElement("option"); 
-            o.value = m; 
-            o.innerText = m; 
-            s.add(o);
-
+            let o = document.createElement("option"); o.value = m; o.innerText = m; s.add(o);
             let row = tabela.insertRow();
-            row.innerHTML = `
-                <td><strong>${m}</strong></td>
-                <td>${MILITARES[m].nivel}</td>
-                <td style="text-align: center;">
-                    ${m !== 'Desenvolvedor' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash-alt"></i> Excluir</button>` : '<small style="color:#999">Protegido</small>'}
-                </td>
-            `;
-        }
-    }
-
-    function togglePassword() {
-        const input = document.getElementById("inputSenha");
-        const icon = document.querySelector(".toggle-password");
-        if (input.type === "password") {
-            input.type = "text";
-            icon.classList.replace("fa-eye", "fa-eye-slash");
-        } else {
-            input.type = "password";
-            icon.classList.replace("fa-eye-slash", "fa-eye");
+            row.innerHTML = `<td><strong>${m}</strong></td><td>${MILITARES[m].nivel}</td><td style="text-align:center;">${m!=='Desenvolvedor' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash"></i></button>` : '---'}</td>`;
         }
     }
 
@@ -393,30 +292,28 @@
                 document.getElementById("labelNome").innerText = n;
                 
                 const nivel = MILITARES[n].nivel;
-                
-                // LÓGICA DE PERMISSÃO REFINADA
+                document.querySelectorAll(".secao-container").forEach(x => x.style.display = "none");
+                document.getElementById("painelAdmin").style.display = "none";
+
                 if(nivel === "MASTER") {
-                    // DESENVOLVEDOR: Vê tudo + Painel
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
                     document.getElementById("painelAdmin").style.display = "block";
                 } 
                 else if (nivel === "CHEFE") {
-                    // CHEFE: Vê todas as seções, mas o Painel de Acesso fica oculto
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
-                    document.getElementById("painelAdmin").style.display = "none";
+                }
+                else if (nivel === "PUBLICO") {
+                    document.getElementById("secao-ACERVO").style.display = "block";
                 }
                 else {
-                    // SEÇÃO RESTRITA: Vê apenas a sua
+                    document.getElementById("secao-ACERVO").style.display = "block";
                     const alvo = document.getElementById("secao-" + nivel);
                     if(alvo) alvo.style.display = "block";
-                    document.getElementById("painelAdmin").style.display = "none";
                 }
-                
-            }, 1200);
+            }, 1000);
         } else {
-            const e = document.getElementById("erroSenha"); 
-            e.style.display = "block";
-            setTimeout(() => e.style.display = "none", 3000);
+            document.getElementById("erroSenha").style.display = "block";
+            setTimeout(() => document.getElementById("erroSenha").style.display = "none", 2500);
         }
     }
 
@@ -424,42 +321,25 @@
         const n = document.getElementById("admNome").value.toUpperCase();
         const s = document.getElementById("admSenha").value;
         const l = document.getElementById("admNivel").value;
-        if(n && s) {
-            MILITARES[n] = { senha: s, nivel: l };
-            saveDB();
-            document.getElementById("admNome").value = "";
-            document.getElementById("admSenha").value = "";
-            alert("Militar cadastrado com sucesso!");
-        }
+        if(n && s) { MILITARES[n] = { senha: s, nivel: l }; saveDB(); }
     }
 
-    function deletarMilitar(nome) {
-        if(confirm(`Remover acesso de ${nome}?`)) {
-            delete MILITARES[nome];
-            saveDB();
-        }
-    }
-
-    function saveDB() {
-        localStorage.setItem('sadmc_db', JSON.stringify(MILITARES));
-        render();
-    }
-
-    function clock() {
+    function deletarMilitar(m) { if(confirm(`Excluir ${m}?`)) { delete MILITARES[m]; saveDB(); } }
+    function saveDB() { localStorage.setItem('sadmc_db', JSON.stringify(MILITARES)); render(); }
+    function clock() { 
         const d = new Date();
-        document.getElementById('txtDataHora').innerHTML = d.toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'}) + "<br>" + d.toLocaleTimeString('pt-BR');
+        document.getElementById('txtDataHora').innerHTML = d.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'}) + "<br>" + d.toLocaleTimeString(); 
     }
-
-    const btnT = document.getElementById("btnTopo");
-    window.onscroll = function() {
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) btnT.style.display = "block";
-        else btnT.style.display = "none";
-    };
+    function togglePassword() { const i = document.getElementById("inputSenha"); i.type = i.type === "password" ? "text" : "password"; }
     function voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    
+    window.onscroll = function() {
+        if (document.documentElement.scrollTop > 300) document.getElementById("btnTopo").style.display = "block";
+        else document.getElementById("btnTopo").style.display = "none";
+    };
 
     setInterval(clock, 1000);
-    render(); 
-    clock();
+    render();
 </script>
 </body>
 </html>
