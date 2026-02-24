@@ -35,16 +35,16 @@
         /* --- ANIMAÇÕES --- */
         @keyframes entradaPainel { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes sweep { 0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; } }
-        @keyframes brilhoLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0)); } 50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)); } }
+        @keyframes brilhoLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0)); } 50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.4)); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* --- COMPONENTES GLOBAIS --- */
+        /* --- LOADING E ERRO --- */
         #loadingOverlay { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0, 18, 51, 0.95); z-index: 9999; 
             flex-direction: column; justify-content: center; align-items: center; color: white; 
         }
         .spinner { width: 60px; height: 60px; border: 6px solid rgba(255, 255, 255, 0.1); border-top-color: var(--laranja-cbm); border-radius: 50%; animation: spin 1s infinite linear; }
-        
         #erroSenha { 
             display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
             background: var(--vermelho-cbm); color: white; padding: 15px 40px; border-radius: 8px; 
@@ -53,14 +53,34 @@
 
         /* --- TELA DE LOGIN --- */
         #loginScreen { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; background: radial-gradient(circle, #003566 0%, #001D3D 100%); }
-        .login-container { display: flex; max-width: 900px; width: 100%; min-height: 500px; border-radius: 15px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); background: #fff; animation: entradaPainel 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .login-left { background: var(--azul-medio); flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; position: relative; overflow: hidden; }
-        .login-left img { width: 140px; z-index: 2; animation: brilhoLogo 3s infinite ease-in-out; }
-        .login-left h1 { font-size: 70px; margin: 10px 0; color: #FFD700; letter-spacing: -3px; z-index: 2; }
-        .login-left p { font-weight: 700; text-transform: uppercase; font-size: 13px; color: var(--laranja-cbm); z-index: 2; text-align: center; }
-        .login-left::before { content: ""; position: absolute; top: 0; width: 100%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,0.05), transparent); animation: sweep 4s infinite; }
+        .login-container { display: flex; max-width: 950px; width: 100%; min-height: 550px; border-radius: 20px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); background: #fff; animation: entradaPainel 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
         
-        .login-right { flex: 1.2; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .login-left { 
+            background: #778899; 
+            flex: 1; 
+            padding: 40px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .login-left::before { 
+            content: ""; position: absolute; top: 0; width: 100%; height: 100%; 
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent); 
+            animation: sweep 4s infinite; 
+        }
+        .login-left img { width: 200px; z-index: 2; animation: brilhoLogo 3s infinite ease-in-out; }
+        .login-left h1 { 
+            font-size: 80px; font-weight: 900; margin: 10px 0 0 0; z-index: 2;
+            background: linear-gradient(180deg, #FFD700 0%, #FF8C00 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -3px;
+        }
+        .login-left .sub-titulo-logo { font-weight: 800; text-transform: uppercase; font-size: 14px; color: #FF9E3D; z-index: 2; margin-top: -5px; letter-spacing: 1px; }
+        .login-left p { font-weight: 600; font-size: 12px; color: rgba(255,255,255,0.8); z-index: 2; margin-top: 15px; }
+        
+        .login-right { flex: 1.1; padding: 60px; display: flex; flex-direction: column; justify-content: center; background: white; }
         .login-right h2 { margin: 0; color: var(--azul-medio); font-size: 28px; font-weight: 800; }
         .sub-sigla { color: #888; font-size: 11px; margin-bottom: 30px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
         .form-group { margin-bottom: 20px; position: relative; }
@@ -74,17 +94,15 @@
         #sistema { display: none; flex: 1; background: var(--cinza-fundo); padding-bottom: 80px; }
         .header-top { background: var(--azul-texto); color: white; text-align: center; padding: 15px; font-weight: 800; font-size: 18px; letter-spacing: 1px; }
         .header-stripe { background: var(--vermelho-cbm); height: 6px; }
-        
         .dashboard-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
         .militar-bar { background: white; padding: 25px 40px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
-        .txt-bemvindo { font-size: 12px; color: #999; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
         .militar-status { font-size: 24px; font-weight: 800; color: var(--azul-medio); }
         .militar-status span { color: var(--vermelho-cbm); }
         .txt-data-hora { text-align: right; font-weight: 700; color: #666; font-size: 14px; line-height: 1.4; border-right: 4px solid var(--laranja-cbm); padding-right: 15px; }
 
         /* PAINEL ADMIN */
         #painelAdmin { background: #fff; padding: 30px; border-radius: 12px; margin-bottom: 40px; border: 2px dashed var(--azul-medio); display: none; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .admin-table th { background: var(--azul-medio); color: white; padding: 12px; text-align: left; font-size: 12px; text-transform: uppercase; }
         .admin-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
 
@@ -97,7 +115,7 @@
         .card-item span { font-weight: 800; font-size: 16px; color: #333; }
         .card-item:hover { transform: translateY(-10px); border-top: 6px solid var(--vermelho-cbm); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
 
-        /* --- RODAPÉ REESTILIZADO (O QUE VOCÊ GOSTOU) --- */
+        /* --- RODAPÉ --- */
         .footer-full { background: #000E1F; color: white; border-top: 6px solid var(--vermelho-cbm); margin-top: auto; }
         .footer-grid { max-width: 1200px; margin: auto; padding: 60px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; }
         .footer-col h4 { color: #FFFFFF; margin-bottom: 25px; font-size: 16px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; position: relative; }
@@ -105,21 +123,14 @@
         .footer-col p { font-size: 14px; color: #bdc3c7; margin: 10px 0; line-height: 1.6; display: flex; align-items: center; gap: 10px; }
         .footer-col i { color: var(--laranja-cbm); width: 20px; }
         .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 25px; font-size: 11px; color: #95a5a6; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-        .footer-bottom span { color: var(--laranja-cbm); }
-
+        
         #btnTopo { display: none; position: fixed; bottom: 40px; right: 40px; z-index: 99; border: none; background: var(--vermelho-cbm); color: white; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
-
     </style>
 </head>
 <body>
 
-<div id="loadingOverlay">
-    <div class="spinner"></div>
-    <p style="font-weight: 800; margin-top: 20px; letter-spacing: 2px;">AUTENTICANDO MILITAR...</p>
-</div>
-
+<div id="loadingOverlay"><div class="spinner"></div><p style="font-weight: 800; margin-top: 20px; letter-spacing: 2px;">AUTENTICANDO MILITAR...</p></div>
 <div id="erroSenha">SENHA INCORRETA! TENTE NOVAMENTE.</div>
-
 <button id="btnTopo" onclick="voltarAoTopo()"><i class="fas fa-chevron-up"></i></button>
 
 <div id="loginScreen">
@@ -127,6 +138,7 @@
         <div class="login-left">
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="CBMRS">
             <h1>CBMRS</h1>
+            <div class="sub-titulo-logo">Corpo de Bombeiros Militar</div>
             <p>6º Batalhão de Bombeiro Militar</p>
         </div>
         <form class="login-right" onsubmit="event.preventDefault(); acaoLogin();">
@@ -152,8 +164,8 @@
     
     <div class="dashboard-container">
         <div class="militar-bar">
-            <div class="saudacao-box">
-                <div class="txt-bemvindo">Bem-vindo,</div>
+            <div>
+                <div style="font-size: 12px; color: #999; font-weight: 800; text-transform: uppercase;">Bem-vindo,</div>
                 <div class="militar-status">Militar: <span id="labelNome"></span></div>
             </div>
             <div id="txtDataHora" class="txt-data-hora"></div>
@@ -162,10 +174,10 @@
 
         <div id="painelAdmin">
             <h3><i class="fas fa-user-cog"></i> Gerenciamento de Acessos</h3>
-            <div style="display:flex; gap:10px; flex-wrap: wrap;">
-                <input type="text" id="admNome" placeholder="Nome / Graduação" style="padding:12px; flex:2;">
-                <input type="password" id="admSenha" placeholder="Senha" style="padding:12px; flex:1;">
-                <select id="admNivel" style="padding:12px; flex:1;">
+            <div style="display:flex; gap:10px; flex-wrap: wrap; margin-bottom: 20px;">
+                <input type="text" id="admNome" placeholder="Nome / Graduação" style="padding:12px; flex:2; border-radius:5px; border:1px solid #ccc;">
+                <input type="password" id="admSenha" placeholder="Senha" style="padding:12px; flex:1; border-radius:5px; border:1px solid #ccc;">
+                <select id="admNivel" style="padding:12px; flex:1; border-radius:5px; border:1px solid #ccc;">
                     <option value="PUBLICO">Apenas Acervo</option>
                     <option value="B1">B1 - RH</option>
                     <option value="B2">B2 - Inteligência</option>
@@ -196,7 +208,8 @@
             <div class="secao-header">B1 - Recursos Humanos</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-users-cog"></i><span>Gestão de Efetivo</span></a>
-                <a href="#" class="card-item"><i class="fas fa-calendar-alt"></i><span>Escalas</span></a>
+                <a href="#" class="card-item"><i class="fas fa-calendar-alt"></i><span>Escalas de Serviço</span></a>
+                <a href="#" class="card-item"><i class="fas fa-user-graduate"></i><span>Cursos e Estágios</span></a>
             </div>
         </div>
 
@@ -204,6 +217,7 @@
             <div class="secao-header">B2 - Inteligência</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-user-secret"></i><span>Relatórios ALI</span></a>
+                <a href="#" class="card-item"><i class="fas fa-shield-alt"></i><span>Análise de Riscos</span></a>
             </div>
         </div>
 
@@ -211,6 +225,7 @@
             <div class="secao-header">B3 - Operações</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-map-marked-alt"></i><span>Planos de Contingência</span></a>
+                <a href="#" class="card-item"><i class="fas fa-fire-extinguisher"></i><span>Estatísticas Operacionais</span></a>
             </div>
         </div>
 
@@ -218,13 +233,17 @@
             <div class="secao-header">B4 - Logística</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-truck-pickup"></i><span>Gestão de Frota</span></a>
+                <a href="#" class="card-item"><i class="fas fa-tools"></i><span>Manutenção de Materiais</span></a>
+                <a href="#" class="card-item"><i class="fas fa-warehouse"></i><span>Controle de Carga</span></a>
             </div>
         </div>
 
         <div id="secao-SCOR" class="secao-container">
-            <div class="secao-header">SCor - Correição</div>
+            <div class="secao-header">SCor - Correição e Disciplina</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-gavel"></i><span>IPM e Sindicâncias</span></a>
+                <a href="#" class="card-item"><i class="fas fa-balance-scale"></i><span>Processos Administrativos</span></a>
+                <a href="#" class="card-item"><i class="fas fa-clipboard-check"></i><span>Conselhos de Disciplina</span></a>
             </div>
         </div>
     </div>
@@ -251,12 +270,11 @@
             <p><i class="fas fa-check-double"></i> Versão 3.5.2</p>
         </div>
     </div>
-    <div class="footer-bottom">
-        &copy; 2026 <span>CORPO DE BOMBEIROS MILITAR</span> - RS | USO RESTRITO E EXCLUSIVO
-    </div>
+    <div class="footer-bottom">&copy; 2026 <span>CORPO DE BOMBEIROS MILITAR</span> - RS | USO RESTRITO</div>
 </footer>
 
 <script>
+    // CONFIGURAÇÃO FIREBASE
     const firebaseConfig = {
         apiKey: "AIzaSyDfHrIaQzylbPaPBH_rAlew1CoINTfIySE",
         authDomain: "sadmc-6bbm.firebaseapp.com",
@@ -279,11 +297,12 @@
     function render() {
         const s = document.getElementById("selectMilitar"); 
         const tabela = document.getElementById("tabelaUsuarios");
+        if(!s || !tabela) return;
         s.innerHTML = ""; tabela.innerHTML = "";
         for (let m in MILITARES) {
             let o = document.createElement("option"); o.value = m; o.innerText = m; s.add(o);
             let row = tabela.insertRow();
-            row.innerHTML = `<td>${m}</td><td>${MILITARES[m].nivel}</td><td><button onclick="deletarMilitar('${m}')" style="color:red; background:none; border:none; cursor:pointer;"><i class="fas fa-trash"></i></button></td>`;
+            row.innerHTML = `<td>${m}</td><td>${MILITARES[m].nivel}</td><td style="text-align:center;"><button onclick="deletarMilitar('${m}')" style="color:red; background:none; border:none; cursor:pointer;"><i class="fas fa-trash"></i></button></td>`;
         }
     }
 
