@@ -78,7 +78,6 @@
         .militar-status span { color: var(--vermelho-cbm); }
         .txt-data-hora { text-align: right; font-weight: 700; color: #666; font-size: 14px; line-height: 1.4; border-right: 4px solid var(--laranja-cbm); padding-right: 15px; }
         .btn-sair { background: var(--azul-medio); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 800; }
-        .btn-sair:hover { background: var(--vermelho-cbm); }
 
         /* PAINEL ADMIN */
         #painelAdmin { background: #fff; padding: 30px; border-radius: 12px; margin-bottom: 40px; border: 2px dashed var(--azul-medio); display: none; }
@@ -175,7 +174,7 @@
                 <button onclick="addMilitar()" style="background:#27ae60; color:white; border:none; padding:12px 30px; cursor:pointer; font-weight:800; border-radius:5px;">CADASTRAR</button>
             </div>
             <table class="admin-table">
-                <thead><tr><th>Militar</th><th>Nível</th><th style="text-align: center;">Ações</th></tr></thead>
+                <thead><tr><th>Militar</th><th>Nível de Acesso</th><th style="text-align: center;">Ações</th></tr></thead>
                 <tbody id="tabelaUsuarios"></tbody>
             </table>
         </div>
@@ -186,12 +185,12 @@
                 <a href="#" class="card-item"><i class="fas fa-file-signature"></i><span>Modelos de Requerimentos</span></a>
                 <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Ordens de Serviço em Vigor</span></a>
                 <a href="#" class="card-item"><i class="fas fa-book"></i><span>Manuais e POPs</span></a>
-                <a href="#" class="card-item"><i class="fas fa-file-pdf"></i><span>Boletins Gerais</span></a>
+                <a href="#" class="card-item"><i class="fas fa-file-pdf"></i><span>Boletins Gerais CBMRS</span></a>
             </div>
         </div>
 
         <div id="secao-B1" class="secao-container">
-            <div class="secao-header">B1 - Recursos Humanos</div>
+            <div class="secao-header">B1 - Seção de Recursos Humanos</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-users-cog"></i><span>Gestão de Efetivo</span></a>
                 <a href="#" class="card-item"><i class="fas fa-calendar-alt"></i><span>Escalas de Serviço</span></a>
@@ -201,19 +200,21 @@
         </div>
 
         <div id="secao-B2" class="secao-container">
-            <div class="secao-header">B2 - Agência Local de Inteligência</div>
+            <div class="secao-header">B2 - Agência Local de Inteligência (ALI)</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-eye"></i><span>Produção de Conhecimento</span></a>
                 <a href="#" class="card-item"><i class="fas fa-user-secret"></i><span>Contra-Inteligência</span></a>
-                <a href="#" class="card-item"><i class="fas fa-file-shield"></i><span>Relatórios ALI</span></a>
+                <a href="#" class="card-item"><i class="fas fa-file-shield"></i><span>Relatórios de Inteligência</span></a>
+                <a href="#" class="card-item"><i class="fas fa-fingerprint"></i><span>Operações de Inteligência</span></a>
             </div>
         </div>
 
         <div id="secao-B3" class="secao-container">
-            <div class="secao-header">B3 - Operações e Defesa Civil</div>
+            <div class="secao-header">B3 - Seção de Operações e Defesa Civil</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-map-marked-alt"></i><span>Planos de Contingência</span></a>
                 <a href="#" class="card-item"><i class="fas fa-cloud-showers-heavy"></i><span>Monitoramento Climático</span></a>
+                <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Alertas e Defesa Civil</span></a>
                 <a href="#" class="card-item"><i class="fas fa-fire-extinguisher"></i><span>Estatísticas Operacionais</span></a>
             </div>
         </div>
@@ -224,6 +225,7 @@
                 <a href="#" class="card-item"><i class="fas fa-truck-pickup"></i><span>Gestão de Frota</span></a>
                 <a href="#" class="card-item"><i class="fas fa-tools"></i><span>Manutenção e Obras</span></a>
                 <a href="#" class="card-item"><i class="fas fa-boxes-stacked"></i><span>Carga e Almoxarifado</span></a>
+                <a href="#" class="card-item"><i class="fas fa-clipboard-list"></i><span>Inventário de Patrimônio</span></a>
             </div>
         </div>
 
@@ -232,10 +234,10 @@
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-gavel"></i><span>IPM e Sindicâncias</span></a>
                 <a href="#" class="card-item"><i class="fas fa-scale-balanced"></i><span>Processos Administrativos</span></a>
+                <a href="#" class="card-item"><i class="fas fa-book-bookmark"></i><span>Legislação e Normas</span></a>
                 <a href="#" class="card-item"><i class="fas fa-handcuffs"></i><span>Conselhos de Disciplina</span></a>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -243,38 +245,67 @@
     <div class="footer-grid">
         <div class="footer-col">
             <h4><i class="fas fa-map-marker-alt"></i> 6º BBM - Santa Cruz do Sul</h4>
+            <p><strong>Sede Administrativa</strong></p>
             <p>Rua Tenente-Coronel Brito, 03</p>
             <p>Centro - Santa Cruz do Sul/RS</p>
         </div>
         <div class="footer-col">
             <h4><i class="fas fa-phone-alt"></i> Contatos</h4>
-            <p>Emergência: 193</p>
+            <p><strong>Emergência: 193</strong></p>
             <p>Administrativo: (51) 3711-2323</p>
+            <p>Email: 6bbm-sadm@cbm.rs.gov.br</p>
         </div>
         <div class="footer-col">
             <h4><i class="fas fa-info-circle"></i> SAdmC</h4>
+            <p>Seção Administrativa e Correição</p>
             <p>Sistema de Gestão Interna</p>
-            <p>Versão 3.0 - 2026</p>
+            <p>Versão 3.0 (2026)</p>
         </div>
     </div>
-    <div class="footer-bottom">SISTEMA MONITORADO - USO EXCLUSIVO CBMRS</div>
+    <div class="footer-bottom">SISTEMA RESTRITO AOS MILITARES DO 6º BBM</div>
 </footer>
 
 <script>
     const dbPadrao = { 
         "Desenvolvedor": { senha: "admin", nivel: "MASTER" },
-        "Acesso Publico": { senha: "193", nivel: "PUBLICO" }
+        "CHEFE DO SADMC": { senha: "123", nivel: "CHEFE" },
+        "MILITAR PÚBLICO": { senha: "193", nivel: "PUBLICO" }
     };
+    
     let MILITARES = JSON.parse(localStorage.getItem('sadmc_db')) || dbPadrao;
 
     function render() {
         const s = document.getElementById("selectMilitar"); 
         const tabela = document.getElementById("tabelaUsuarios");
-        s.innerHTML = ""; tabela.innerHTML = "";
+        s.innerHTML = "";
+        tabela.innerHTML = "";
+
         for (let m in MILITARES) {
-            let o = document.createElement("option"); o.value = m; o.innerText = m; s.add(o);
+            let o = document.createElement("option"); 
+            o.value = m; 
+            o.innerText = m; 
+            s.add(o);
+
             let row = tabela.insertRow();
-            row.innerHTML = `<td><strong>${m}</strong></td><td>${MILITARES[m].nivel}</td><td style="text-align:center;">${m!=='Desenvolvedor' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash"></i></button>` : '---'}</td>`;
+            row.innerHTML = `
+                <td><strong>${m}</strong></td>
+                <td>${MILITARES[m].nivel}</td>
+                <td style="text-align: center;">
+                    ${m !== 'Desenvolvedor' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash-alt"></i></button>` : '<small style="color:#999">Protegido</small>'}
+                </td>
+            `;
+        }
+    }
+
+    function togglePassword() {
+        const input = document.getElementById("inputSenha");
+        const icon = document.querySelector(".toggle-password");
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.replace("fa-eye-slash", "fa-eye");
         }
     }
 
@@ -292,9 +323,12 @@
                 document.getElementById("labelNome").innerText = n;
                 
                 const nivel = MILITARES[n].nivel;
+                
+                // Esconder tudo primeiro para limpar a sessão anterior
                 document.querySelectorAll(".secao-container").forEach(x => x.style.display = "none");
                 document.getElementById("painelAdmin").style.display = "none";
 
+                // LOGICA DE PERMISSÃO ATUALIZADA
                 if(nivel === "MASTER") {
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
                     document.getElementById("painelAdmin").style.display = "block";
@@ -303,17 +337,21 @@
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
                 }
                 else if (nivel === "PUBLICO") {
+                    // Perfil Público vê apenas o Acervo
                     document.getElementById("secao-ACERVO").style.display = "block";
                 }
                 else {
+                    // Outras seções (B1, B2, etc.) veem o Acervo + Sua Seção
                     document.getElementById("secao-ACERVO").style.display = "block";
                     const alvo = document.getElementById("secao-" + nivel);
                     if(alvo) alvo.style.display = "block";
                 }
-            }, 1000);
+                
+            }, 1200);
         } else {
-            document.getElementById("erroSenha").style.display = "block";
-            setTimeout(() => document.getElementById("erroSenha").style.display = "none", 2500);
+            const e = document.getElementById("erroSenha"); 
+            e.style.display = "block";
+            setTimeout(() => e.style.display = "none", 3000);
         }
     }
 
@@ -321,25 +359,42 @@
         const n = document.getElementById("admNome").value.toUpperCase();
         const s = document.getElementById("admSenha").value;
         const l = document.getElementById("admNivel").value;
-        if(n && s) { MILITARES[n] = { senha: s, nivel: l }; saveDB(); }
+        if(n && s) {
+            MILITARES[n] = { senha: s, nivel: l };
+            saveDB();
+            document.getElementById("admNome").value = "";
+            document.getElementById("admSenha").value = "";
+            alert("Militar cadastrado com sucesso!");
+        }
     }
 
-    function deletarMilitar(m) { if(confirm(`Excluir ${m}?`)) { delete MILITARES[m]; saveDB(); } }
-    function saveDB() { localStorage.setItem('sadmc_db', JSON.stringify(MILITARES)); render(); }
-    function clock() { 
-        const d = new Date();
-        document.getElementById('txtDataHora').innerHTML = d.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'}) + "<br>" + d.toLocaleTimeString(); 
+    function deletarMilitar(nome) {
+        if(confirm(`Remover acesso de ${nome}?`)) {
+            delete MILITARES[nome];
+            saveDB();
+        }
     }
-    function togglePassword() { const i = document.getElementById("inputSenha"); i.type = i.type === "password" ? "text" : "password"; }
-    function voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    
+
+    function saveDB() {
+        localStorage.setItem('sadmc_db', JSON.stringify(MILITARES));
+        render();
+    }
+
+    function clock() {
+        const d = new Date();
+        document.getElementById('txtDataHora').innerHTML = d.toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'}) + "<br>" + d.toLocaleTimeString('pt-BR');
+    }
+
     window.onscroll = function() {
-        if (document.documentElement.scrollTop > 300) document.getElementById("btnTopo").style.display = "block";
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) document.getElementById("btnTopo").style.display = "block";
         else document.getElementById("btnTopo").style.display = "none";
     };
 
+    function voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
     setInterval(clock, 1000);
-    render();
+    render(); 
+    clock();
 </script>
 </body>
 </html>
