@@ -10,12 +10,12 @@
         :root {
             --azul-fundo-dark: #001233;
             --azul-fundo-light: #002855;
-            --azul-painel-glass: rgba(255, 255, 255, 0.1); 
             --laranja-cbm: #FF9E3D; 
             --vermelho-cbm: #C40000;
             --vermelho-hover: #A30000;
             --azul-texto: #002B5B;
             --cinza-fundo: #F4F6F9;
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
         * { box-sizing: border-box; transition: all 0.2s ease; }
@@ -23,238 +23,231 @@
         body { 
             margin: 0; font-family: 'Open Sans', sans-serif; background: var(--azul-fundo-dark); 
             display: flex; flex-direction: column; min-height: 100vh; color: #334155;
-            overflow-x: hidden;
         }
 
-        /* --- ANIMAÇÃO DE LUZ NO FUNDO --- */
-        .light-sweep {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, rgba(255,255,255,0) 45%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 55%);
-            animation: sweep 8s infinite linear;
-            z-index: 1;
-            pointer-events: none;
+        /* --- ANIMAÇÃO DE LUZ NO FUNDO (LOGIN) --- */
+        #loginScreen::before {
+            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
+            animation: sweep 8s infinite linear; pointer-events: none; z-index: 1;
         }
-
         @keyframes sweep {
-            0% { transform: translate(-20%, -20%); }
-            100% { transform: translate(20%, 20%); }
+            0% { transform: translate(-15%, -15%); }
+            100% { transform: translate(15%, 15%); }
         }
 
-        /* --- CARREGAMENTO --- */
+        /* --- COMPONENTES DE ALERTA E CARGA --- */
         #loadingOverlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 18, 51, 0.95);
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 18, 51, 0.95); z-index: 9999;
+            flex-direction: column; justify-content: center; align-items: center; color: white;
         }
-
         .spinner {
-            width: 50px; height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.1);
-            border-top-color: var(--laranja-cbm);
-            border-radius: 50%;
-            animation: spin 1s infinite linear;
+            width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--laranja-cbm); border-radius: 50%; animation: spin 1s infinite linear;
             margin-bottom: 15px;
         }
-
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* --- MENSAGEM DE ERRO --- */
-        #errorMessage {
-            display: none;
-            position: fixed;
-            top: 20px; left: 50%;
-            transform: translateX(-50%);
-            background: #ff4d4d;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-weight: 700;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            z-index: 10000;
-            animation: fadeInUp 0.4s ease-out;
+        #erroSenha {
+            display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: #ff4d4d; color: white; padding: 15px 30px; border-radius: 8px;
+            font-weight: 700; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 10000;
+            animation: fadeInDown 0.4s ease-out;
         }
+        @keyframes fadeInDown { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
         /* --- TELA DE LOGIN --- */
         #loginScreen { 
-            flex: 1; 
-            background: radial-gradient(circle at center, #003566 0%, #001D3D 60%, #000814 100%);
-            display: flex; justify-content: center; align-items: center; padding: 20px; 
-            position: relative; overflow: hidden;
+            flex: 1; background: radial-gradient(circle at center, #003566 0%, #001D3D 60%, #000814 100%);
+            display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; overflow: hidden;
         }
-
         .login-container {
             display: flex; max-width: 850px; width: 100%; min-height: 480px;
-            border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            border-radius: 12px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             z-index: 2; border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeInUp 0.8s ease-out both;
-            background: rgba(255,255,255,0.02);
         }
-
         .login-left-side {
-            background: var(--azul-painel-glass);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            flex: 1; padding: 40px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: var(--glass); backdrop-filter: blur(15px);
+            flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center; border-right: 1px solid rgba(255,255,255,0.1);
         }
-
         .cbmrs-logo-text {
             font-size: 82px; font-weight: 800; margin: 0; line-height: 1;
             background: linear-gradient(to right, #FFEB3B 0%, #FF9800 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px;
         }
-
-        .login-right-side {
-            background: #FFFFFF; flex: 1.2; padding: 50px 40px;
-            display: flex; flex-direction: column; justify-content: center;
-        }
-
-        .login-right-side select, .login-right-side input { 
-            width: 100%; padding: 14px; margin-top: 8px; border-radius: 6px; 
-            border: 1px solid #ddd; font-size: 15px; background: #fafafa; outline: none;
-        }
-
-        .btn-entrar { 
-            width: 100%; padding: 15px; background: var(--vermelho-cbm); color: #fff; border: none; 
-            border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 25px;
-            font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
-        }
-        .btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); }
+        .login-right-side { background: #FFFFFF; flex: 1.2; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; }
+        .login-right-side select, .login-right-side input { width: 100%; padding: 14px; margin-top: 8px; border-radius: 6px; border: 1px solid #ddd; outline: none; font-size: 15px; }
+        .btn-entrar { width: 100%; padding: 15px; background: var(--vermelho-cbm); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 25px; font-size: 16px; text-transform: uppercase; }
+        .btn-entrar:hover { background: var(--vermelho-hover); }
 
         /* --- SISTEMA INTERNO --- */
         #sistema { display: none; flex: 1; background: var(--cinza-fundo); }
         .header-top { background: var(--azul-texto); color: #fff; text-align: center; padding: 15px; font-weight: 800; font-size: 20px; }
         .header-sub { background: var(--vermelho-cbm); height: 5px; }
-        .container { max-width: 1100px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
         
-        .user-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
-        #usuarioLogado { font-weight: 600; color: var(--azul-texto); font-size: 18px; display: flex; align-items: center; gap: 8px; }
-
-        .category { margin-bottom: 30px; display: none; animation: fadeIn 0.5s ease; }
-        .category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 19px; margin-bottom: 20px; }
-        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-        .link-card { border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; }
+        .user-info-card { 
+            background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;
+        }
+        #usuarioLogado { font-weight: 700; color: var(--azul-texto); font-size: 18px; display: flex; align-items: center; gap: 10px; }
+        
+        /* CATEGORIAS */
+        .category { display: none; margin-bottom: 40px; animation: fadeIn 0.5s ease; }
+        .category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 20px; margin-bottom: 20px; text-transform: uppercase; }
+        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .link-card { 
+            background: #fff; border: 1px solid #eee; padding: 30px; text-align: center; border-radius: 10px; 
+            text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
         .link-card:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho-cbm); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .link-card i { font-size: 30px; margin-bottom: 10px; color: var(--azul-texto); }
-        
-        .logout-btn { background: var(--azul-texto); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+        .link-card i { font-size: 40px; color: var(--azul-texto); margin-bottom: 15px; }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* PAINEL ADMIN */
+        #painelDev { 
+            background: #f1f5f9; border: 2px solid var(--azul-texto); padding: 25px; border-radius: 10px; margin-bottom: 30px; display: none;
+        }
 
         /* --- RODAPÉ --- */
         .footer-oficial { background: #000E1F; color: #fff; font-size: 14px; margin-top: auto; border-top: 5px solid var(--vermelho-cbm); }
-        .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
-        .acesso-restrito { text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.05); color: #FF9E3D; font-weight: 700; font-size: 12px; text-transform: uppercase; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .footer-main { max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
+        .footer-section h4 { color: var(--laranja-cbm); margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .footer-section p { margin: 8px 0; color: #cbd5e1; }
+        .acesso-restrito { text-align: center; padding: 15px; background: rgba(0,0,0,0.3); color: #FF9E3D; font-weight: 700; font-size: 12px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div id="loadingOverlay">
-    <div class="spinner"></div>
-    <span style="font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Processando...</span>
-</div>
-
-<div id="errorMessage">SENHA INCORRETA!</div>
+<div id="loadingOverlay"><div class="spinner"></div><span style="font-weight: 800; letter-spacing: 2px;">PROCESSANDO...</span></div>
+<div id="erroSenha"><i class="fas fa-lock"></i> SENHA INCORRETA! TENTE NOVAMENTE.</div>
 
 <div id="loginScreen">
-    <div class="light-sweep"></div> <div class="login-container">
+    <div class="login-container">
         <div class="login-left-side">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="Logo CBMRS" style="width: 170px; margin-bottom: 20px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" style="width: 160px; margin-bottom: 20px;">
             <h1 class="cbmrs-logo-text">CBMRS</h1>
-            <p style="font-weight: 700; color: #FF9E3D; text-transform: uppercase; letter-spacing: 1px;">Corpo de Bombeiros Militar</p>
+            <p style="font-weight: 700; color: #FF9E3D; letter-spacing: 1px;">6º BATALHÃO DE BOMBEIRO MILITAR</p>
         </div>
-        <div class="login-right-side">
-            <h2 style="margin: 0; color: var(--azul-texto);">SAdmC - 6º BBM</h2>
-            <p style="color: #666; font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 30px;">Seção Administrativa e Correição</p>
+        <form class="login-right-side" onsubmit="event.preventDefault(); login();">
+            <h2 style="margin:0; color: var(--azul-texto);">SAdmC - Acesso</h2>
+            <p style="color:#666; font-size:13px; margin-bottom:30px;">SISTEMA ADMINISTRATIVO E CORREIÇÃO</p>
             
-            <label style="font-size: 11px; font-weight: 800; color: #555; text-transform: uppercase;">Militar</label>
+            <label style="font-weight: 600; font-size: 12px;">MILITAR</label>
             <select id="usuario"></select>
             
-            <label style="font-size: 11px; font-weight: 800; color: #555; text-transform: uppercase; margin-top: 20px;">Senha de Acesso</label>
-            <div class="password-wrapper">
-                <input type="password" id="senha" placeholder="••••••••" onkeydown="if(event.key==='Enter') login()">
-                <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
-            </div>
+            <label style="font-weight: 600; font-size: 12px; display:block; margin-top:20px;">SENHA</label>
+            <input type="password" id="senha" placeholder="••••••••">
             
-            <button class="btn-entrar" onclick="login()">Entrar no Sistema</button>
-        </div>
+            <button type="submit" class="btn-entrar">Acessar Sistema</button>
+        </form>
     </div>
 </div>
 
 <div id="sistema">
     <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
     <div class="header-sub"></div>
+    
     <div class="container">
-        <div class="user-bar">
-            <span id="usuarioLogado"></span>
-            <div style="font-size: 14px; font-weight: 600; color: #666;">
-                <span id="dataAtual"></span> | <span id="relogio"></span>
+        <div class="user-info-card">
+            <div id="usuarioLogado"></div>
+            
+            <div style="text-align: right;">
+                <div style="font-weight: 700; color: #444;"><span id="dataAtual"></span></div>
+                <div style="color: var(--vermelho-cbm); font-weight: 800;" id="relogio"></div>
             </div>
-            <button class="logout-btn" onclick="location.reload()">Sair</button>
+            <button onclick="location.reload()" style="background:var(--azul-texto); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:700;">SAIR</button>
         </div>
 
-        <div id="painelDev" style="display:none; background: #f8fafc; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 2px solid var(--azul-texto);">
-             <h3 style="margin:0; color: var(--azul-texto); margin-bottom: 15px;"><i class="fas fa-user-shield"></i> Gestão de Acessos</h3>
-             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="text" id="novoNome" placeholder="Posto/Grad Nome" style="flex:2; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                <input type="text" id="novaSenha" placeholder="Senha" style="flex:1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                <select id="novoNivel" style="flex:1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                    <option value="restrito">Acesso Restrito</option>
+        <div id="painelDev">
+            <h3 style="margin-top:0; color: var(--azul-texto);"><i class="fas fa-user-cog"></i> Gerenciamento de Usuários</h3>
+            <form onsubmit="event.preventDefault(); criarNovoUsuario();" style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap:10px;">
+                <input type="text" id="novoNome" placeholder="Nome Completo do Militar" required style="padding:10px;">
+                <input type="text" id="novaSenha" placeholder="Senha" required style="padding:10px;">
+                <select id="novoNivel" style="padding:10px;">
+                    <option value="B1">Seção B1</option>
+                    <option value="B2">Seção B2</option>
+                    <option value="B3">Seção B3</option>
+                    <option value="B4">Seção B4</option>
+                    <option value="SCor">Seção SCor</option>
                     <option value="admin">Administrador</option>
                 </select>
-                <select id="novaSecao" style="flex:1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                    <option value="B1">B1</option>
-                    <option value="B2">B2</option>
-                    <option value="B3">B3</option>
-                    <option value="B4">B4</option>
-                    <option value="SCor">SCor</option>
-                </select>
-                <button onclick="criarNovoUsuario()" style="background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">CADASTRAR</button>
-             </div>
-             <div id="listaUsuarios" style="margin-top:20px; background: white; border-radius: 5px;"></div>
+                <button type="submit" style="background:#059669; color:white; border:none; border-radius:5px; font-weight:700; cursor:pointer;">CADASTRAR</button>
+            </form>
+            <div id="listaUsuarios" style="margin-top:20px; max-height: 200px; overflow-y: auto; background:white; border-radius:5px; padding:10px;"></div>
         </div>
 
-        <div class="category" id="cat-B1"><div class="category-title">B1 - PESSOAL</div><div class="link-grid"><a href="#" class="link-card"><i class="fas fa-calendar-check"></i><strong>Escalas de Serviço</strong></a><a href="#" class="link-card"><i class="fas fa-file-invoice"></i><strong>Efetivo</strong></a></div></div>
-        <div class="category" id="cat-B2"><div class="category-title">B2 - ALI</div><div class="link-grid"><a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Inteligência</strong></a></div></div>
-        <div class="category" id="cat-B3"><div class="category-title">B3 - OPERAÇÕES</div><div class="link-grid"><a href="#" class="link-card"><i class="fas fa-person-shelter"></i><strong>Planos de Auxílio</strong></a></div></div>
-        <div class="category" id="cat-B4"><div class="category-title">B4 - LOGÍSTICA</div><div class="link-grid"><a href="#" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></a></div></div>
-        <div class="category" id="cat-SCor"><div class="category-title">SCOR - CORREIÇÃO</div><div class="link-grid"><a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>Sindicâncias e Processos</strong></a></div></div>
+        <div class="category" id="cat-B1">
+            <div class="category-title">B1 - Seção de Pessoal</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-calendar-check"></i><strong>Escalas de Serviço</strong></a>
+                <a href="#" class="link-card"><i class="fas fa-users-cog"></i><strong>Gestão de Efetivo</strong></a>
+            </div>
+        </div>
+
+        <div class="category" id="cat-B2">
+            <div class="category-title">B2 - Seção de Inteligência</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Relatórios ALI</strong></a>
+            </div>
+        </div>
+
+        <div class="category" id="cat-B3">
+            <div class="category-title">B3 - Seção de Operações</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-fire-extinguisher"></i><strong>Planos de Auxílio Mutuo</strong></a>
+            </div>
+        </div>
+
+        <div class="category" id="cat-B4">
+            <div class="category-title">B4 - Seção de Logística</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Controle de Frota</strong></a>
+            </div>
+        </div>
+
+        <div class="category" id="cat-SCor">
+            <div class="category-title">SCor - Seção de Correição</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>IPM / Sindicâncias</strong></a>
+            </div>
+        </div>
     </div>
 </div>
 
 <footer class="footer-oficial">
     <div class="footer-main">
         <div class="footer-section">
-            <h4 style="margin-top:0; color: var(--laranja-cbm);">6º BBM</h4>
-            <p>Santa Cruz do Sul - RS</p>
+            <h4><i class="fas fa-map-marked-alt"></i> Localização</h4>
+            <p><strong>6º Batalhão de Bombeiro Militar</strong></p>
+            <p>Rua Tenente-Coronel Brito, 03</p>
+            <p>Centro, Santa Cruz do Sul - RS</p>
+            <p>CEP: 96810-202</p>
         </div>
         <div class="footer-section">
-            <h4 style="margin-top:0; color: var(--laranja-cbm);">CONTATO</h4>
-            <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
+            <h4><i class="fas fa-phone-alt"></i> Contato</h4>
+            <p><strong>Telefone Emergência:</strong> 193</p>
+            <p><strong>Administrativo:</strong> (51) 3711-2323</p>
+            <p><strong>E-mail:</strong> 6bbm-sadmc@cbm.rs.gov.br</p>
+        </div>
+        <div class="footer-section">
+            <h4><i class="fas fa-info-circle"></i> Informações</h4>
+            <p>Corpo de Bombeiros Militar do Rio Grande do Sul</p>
+            <p>Servir e Proteger</p>
         </div>
     </div>
-    <div class="acesso-restrito">
-        <i class="fas fa-shield-alt"></i> Uso Exclusivo e Restrito - 6º Batalhão de Bombeiro Militar
-    </div>
+    <div class="acesso-restrito">CONTEÚDO RESTRITO - MONITORAMENTO ATIVO PELO 6º BBM</div>
 </footer>
 
 <script>
     // Banco de Dados Local
     const inicial = { 
-        "Desenvolvedor": { senha: "admin_6bbm", nivel: "admin", secao: "todas" },
-        "Chefe SadmC": { senha: "1234", nivel: "admin", secao: "todas" }
+        "Desenvolvedor": { senha: "admin", nivel: "admin" },
+        "SGT BOCK": { senha: "123", nivel: "B1" }
     };
     let usuarios = JSON.parse(localStorage.getItem('bdSAdmC_vFinal')) || inicial;
 
@@ -262,49 +255,59 @@
         const select = document.getElementById("usuario");
         const listaDiv = document.getElementById("listaUsuarios");
         if(!select) return;
+        
         select.innerHTML = "";
-        let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;"><tr style="background:#f1f1f1;"><th style="padding:10px; text-align:left;">Militar</th><th style="padding:10px; text-align:left;">Nível</th><th style="padding:10px; text-align:left;">Seção</th><th style="padding:10px;">Ação</th></tr>`;
+        let html = `<table style="width:100%; border-collapse:collapse; text-align:left;">
+                    <thead style="background:#eee;"><tr><th style="padding:8px;">Militar</th><th>Nível</th><th>Ação</th></tr></thead><tbody>`;
+        
         for (let u in usuarios) {
-            let opt = document.createElement("option"); opt.value = u; opt.innerText = u; select.add(opt);
-            html += `<tr style="border-bottom:1px solid #eee"><td style="padding:10px;">${u}</td><td style="padding:10px;">${usuarios[u].nivel}</td><td style="padding:10px;">${usuarios[u].secao}</td><td style="text-align:center;"><button onclick="excluirUsuario('${u}')" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
+            let opt = document.createElement("option"); 
+            opt.value = u; opt.innerText = u; 
+            select.add(opt);
+            
+            html += `<tr style="border-bottom:1px solid #ddd">
+                        <td style="padding:8px;">${u}</td>
+                        <td>${usuarios[u].nivel}</td>
+                        <td><button onclick="excluirUsuario('${u}')" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button></td>
+                    </tr>`;
         }
-        listaDiv.innerHTML = html + "</table>";
-    }
-
-    function togglePassword() {
-        const input = document.getElementById("senha");
-        const icon = document.getElementById("toggleIcon");
-        input.type = input.type === "password" ? "text" : "password";
-        icon.classList.toggle("fa-eye-slash");
+        listaDiv.innerHTML = html + "</tbody></table>";
     }
 
     function login() {
         const u = document.getElementById("usuario").value;
         const p = document.getElementById("senha").value;
         const loading = document.getElementById("loadingOverlay");
-        const errorMsg = document.getElementById("errorMessage");
+        const erroMsg = document.getElementById("erroSenha");
 
         loading.style.display = "flex";
-
+        
         setTimeout(() => {
             if (usuarios[u] && p === usuarios[u].senha) {
                 loading.style.display = "none";
                 document.getElementById("loginScreen").style.display = "none";
                 document.getElementById("sistema").style.display = "block";
-                document.getElementById("usuarioLogado").innerHTML = `<i class="fas fa-user-circle" style="color: var(--vermelho-cbm)"></i> Militar: <strong>${u}</strong>`;
                 
+                // Saudação
+                document.getElementById("usuarioLogado").innerHTML = `
+                    <i class="fas fa-user-circle" style="font-size:30px; color:var(--vermelho-cbm)"></i>
+                    <div>Bem-vindo, Militar: <span style="display:block; font-size:20px;">${u}</span></div>
+                `;
+
+                // Lógica de Permissões
                 document.querySelectorAll(".category").forEach(c => c.style.display = "none");
+                
                 if (usuarios[u].nivel === "admin") {
                     document.querySelectorAll(".category").forEach(c => c.style.display = "block");
                     if(u === "Desenvolvedor") document.getElementById("painelDev").style.display = "block";
                 } else {
-                    const alvo = document.getElementById("cat-" + usuarios[u].secao);
-                    if(alvo) alvo.style.display = "block";
+                    const secaoAtiva = document.getElementById("cat-" + usuarios[u].nivel);
+                    if(secaoAtiva) secaoAtiva.style.display = "block";
                 }
             } else {
                 loading.style.display = "none";
-                errorMsg.style.display = "block";
-                setTimeout(() => { errorMsg.style.display = "none"; }, 3000);
+                erroMsg.style.display = "block";
+                setTimeout(() => { erroMsg.style.display = "none"; }, 3000);
             }
         }, 1200);
     }
@@ -313,29 +316,30 @@
         const n = document.getElementById("novoNome").value.trim();
         const s = document.getElementById("novaSenha").value.trim();
         const nv = document.getElementById("novoNivel").value;
-        const sc = document.getElementById("novaSecao").value;
         if(n && s) {
-            usuarios[n] = { senha: s, nivel: nv, secao: (nv === 'admin' ? 'todas' : sc) };
+            usuarios[n] = { senha: s, nivel: nv };
             localStorage.setItem('bdSAdmC_vFinal', JSON.stringify(usuarios));
             atualizarInterfaceUsuarios();
-            alert("Militar cadastrado com sucesso!");
+            alert("Militar " + n + " cadastrado com sucesso!");
             document.getElementById("novoNome").value = "";
             document.getElementById("novaSenha").value = "";
         }
     }
 
     function excluirUsuario(n) {
-        if(n === "Desenvolvedor") return alert("Não é possível excluir o Desenvolvedor.");
-        if(confirm(`Deseja excluir o militar ${n}?`)) {
+        if(n === "Desenvolvedor") return alert("O usuário mestre não pode ser removido.");
+        if(confirm("Deseja realmente excluir o acesso de " + n + "?")) {
             delete usuarios[n];
             localStorage.setItem('bdSAdmC_vFinal', JSON.stringify(usuarios));
             atualizarInterfaceUsuarios();
         }
     }
 
+    // Relógio e Data
     setInterval(() => {
         const agora = new Date();
-        document.getElementById('dataAtual').innerText = agora.toLocaleDateString('pt-BR');
+        const opcoesData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('dataAtual').innerText = agora.toLocaleDateString('pt-BR', opcoesData);
         document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
     }, 1000);
 
