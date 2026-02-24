@@ -34,7 +34,6 @@
             position: relative; overflow: hidden;
         }
 
-        /* Efeito de feixes de luz no fundo */
         #loginScreen::before {
             content: ""; position: absolute; width: 200%; height: 200%;
             background: conic-gradient(from 180deg at 50% 50%, rgba(255,255,255,0.05) 0deg, transparent 40deg, rgba(255,255,255,0.05) 180deg, transparent 220deg);
@@ -77,7 +76,6 @@
             width: 100%; padding: 14px; margin-top: 8px; border-radius: 10px; 
             border: 1px solid #e2e8f0; font-size: 15px; background: #f8fafc;
         }
-        input:focus, select:focus { outline: none; border-color: var(--azul-fundo-light); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 
         .password-wrapper { position: relative; }
         .password-wrapper i { position: absolute; right: 15px; top: 22px; cursor: pointer; color: #94a3b8; padding: 5px; }
@@ -86,10 +84,8 @@
             width: 100%; padding: 16px; background: var(--vermelho-cbm); color: #fff; border: none; 
             border-radius: 10px; cursor: pointer; font-weight: 700; margin-top: 30px;
             font-size: 16px; text-transform: uppercase; letter-spacing: 1.5px;
-            box-shadow: 0 4px 6px -1px rgba(196, 0, 0, 0.3);
         }
-        .btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(196, 0, 0, 0.4); }
-        .btn-entrar:active { transform: translateY(0); }
+        .btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); }
 
         /* --- SISTEMA INTERNO --- */
         #sistema { display: none; flex: 1; background: var(--cinza-fundo); animation: slideUp 0.4s ease-out; }
@@ -113,12 +109,22 @@
         }
         .link-card:hover { 
             border-color: var(--vermelho-cbm); transform: translateY(-8px); 
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1); background: #fff;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
         }
         .link-card i { font-size: 40px; color: var(--azul-fundo-dark); margin-bottom: 15px; }
 
-        .footer-oficial { background: #000E1F; color: #cbd5e1; font-size: 14px; border-top: 5px solid var(--vermelho-cbm); }
-        .acesso-restrito { background: rgba(0,0,0,0.3); color: var(--laranja-cbm); padding: 12px; text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        /* RODAPÉ ESTILO ANTIGO COM LOCALIZAÇÃO */
+        .footer-oficial { 
+            background: #000E1F; 
+            color: #cbd5e1; 
+            text-align: center; 
+            padding: 30px 20px; 
+            font-size: 13px; 
+            border-top: 4px solid var(--vermelho-cbm);
+            line-height: 1.6;
+        }
+        .footer-oficial strong { color: #fff; display: block; margin-bottom: 5px; }
+        .footer-oficial i { color: var(--laranja-cbm); margin-right: 5px; }
 
         @media (max-width: 768px) {
             .login-container { flex-direction: column; }
@@ -145,7 +151,7 @@
             </div>
 
             <label style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase;">Militar Responsável</label>
-            <select id="usuario" onchange="document.getElementById('senha').focus()"></select>
+            <select id="usuario"></select>
             
             <label style="font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-top: 20px; display: block;">Chave de Acesso</label>
             <div class="password-wrapper">
@@ -172,30 +178,9 @@
                     <i class="far fa-calendar-alt"></i> <span id="dataAtual"></span> | <i class="far fa-clock"></i> <span id="relogio"></span>
                 </div>
             </div>
-            <button class="logout-btn" onclick="location.reload()" style="background:#f1f5f9; color:#475569; border:none; padding:10px 20px; border-radius:8px; font-weight:700; cursor:pointer;">
+            <button onclick="location.reload()" style="background:#f1f5f9; color:#475569; border:none; padding:10px 20px; border-radius:8px; font-weight:700; cursor:pointer;">
                 <i class="fas fa-sign-out-alt"></i> SAIR
             </button>
-        </div>
-
-        <div id="painelDev" style="display:none; background: #f8fafc; padding: 30px; border-radius: 12px; border: 1px dashed #cbd5e1; margin-bottom: 40px;">
-            <h3 style="margin-top:0; color: var(--azul-texto);"><i class="fas fa-user-cog"></i> Administração de Usuários</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-                <input type="text" id="novoNome" placeholder="Posto/Grad Nome">
-                <input type="text" id="novaSenha" placeholder="Senha">
-                <select id="novoNivel" onchange="document.getElementById('novaSecao').style.display = (this.value=='admin'?'none':'block')">
-                    <option value="restrito">Acesso Seção</option>
-                    <option value="admin">Acesso Total</option>
-                </select>
-                <select id="novaSecao">
-                    <option value="B1">B1 - Pessoal</option>
-                    <option value="B2">B2 - ALI</option>
-                    <option value="B3">B3 - Operações</option>
-                    <option value="B4">B4 - Logística</option>
-                    <option value="SCor">SCor - Correição</option>
-                </select>
-                <button onclick="criarNovoUsuario()" style="background:#059669; color:white; border:none; border-radius:8px; font-weight:700; cursor:pointer;">SALVAR</button>
-            </div>
-            <div id="listaUsuarios" style="margin-top:20px; background:white; border-radius:8px; border:1px solid #e2e8f0;"></div>
         </div>
 
         <div class="category" id="cat-B1">
@@ -203,29 +188,6 @@
             <div class="link-grid">
                 <a href="#" class="link-card"><i class="fas fa-file-signature"></i><br><strong>Escalas de Serviço</strong></a>
                 <a href="#" class="link-card"><i class="fas fa-plane-departure"></i><br><strong>Plano de Férias</strong></a>
-            </div>
-        </div>
-
-        <div class="category" id="cat-B2">
-            <div class="category-title"><i class="fas fa-user-shield"></i> ALI - INTELIGÊNCIA</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-search"></i><br><strong>Busca de Dados</strong></a>
-                <a href="#" class="link-card"><i class="fas fa-chart-pie"></i><br><strong>Relatórios Estáticos</strong></a>
-            </div>
-        </div>
-
-        <div class="category" id="cat-B3">
-            <div class="category-title"><i class="fas fa-fire-extinguisher"></i> B3 - OPERAÇÕES</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-map-marked-alt"></i><br><strong>Planilha Operacional</strong></a>
-            </div>
-        </div>
-
-        <div class="category" id="cat-B4">
-            <div class="category-title"><i class="fas fa-truck-loading"></i> B4 - LOGÍSTICA</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-gas-pump"></i><br><strong>Controle de Frota</strong></a>
-                <a href="#" class="link-card"><i class="fas fa-warehouse"></i><br><strong>Patrimônio</strong></a>
             </div>
         </div>
 
@@ -240,40 +202,28 @@
 </div>
 
 <footer class="footer-oficial">
-    <div style="max-width: 1200px; margin: auto; padding: 40px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
-        <div>
-            <h4 style="color:white; margin-bottom:15px;">6º BATALHÃO DE BOMBEIRO MILITAR</h4>
-            <p style="font-size:13px; line-height:1.6;">Orgão responsável pela gestão administrativa e correicional da unidade.</p>
-        </div>
-        <div>
-            <h4 style="color:white; margin-bottom:15px;">LOCALIZAÇÃO</h4>
-            <p style="font-size:13px;"><i class="fas fa-map-marker-alt"></i> R. Tenente Coronel Brito, 03<br>Santa Cruz do Sul - RS</p>
-        </div>
-    </div>
-    <div class="acesso-restrito">
-        <i class="fas fa-shield-alt"></i> AMBIENTE MONITORADO - USO EXCLUSIVO DO 6º BBM
-    </div>
+    <strong>6º BATALHÃO DE BOMBEIRO MILITAR</strong>
+    <i class="fas fa-map-marker-alt"></i> Rua Tenente Coronel Brito, 03 - Centro, Santa Cruz do Sul - RS<br>
+    © 2024 Corpo de Bombeiros Militar do Rio Grande do Sul - Uso Restrito
 </footer>
 
 <script>
     // Banco de Dados Simulado
     const inicial = { 
         "Desenvolvedor": { senha: "admin_6bbm", nivel: "admin", secao: "todas" },
-        "Chefe SadmC": { senha: "1234", nivel: "admin", secao: "todas" }
+        "Sd Lagemann": { senha: "1234", nivel: "admin", secao: "todas" }
     };
     let usuarios = JSON.parse(localStorage.getItem('bdSAdmC_vRefined')) || inicial;
 
     function atualizarInterfaceUsuarios() {
         const select = document.getElementById("usuario");
-        const listaDiv = document.getElementById("listaUsuarios");
         select.innerHTML = "";
-        let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;">
-            <tr style="background:#f1f5f9; text-align:left;"><th style="padding:12px;">Militar</th><th style="padding:12px;">Nível</th><th style="padding:12px;">Seção</th><th style="padding:12px;">Ação</th></tr>`;
         for (let u in usuarios) {
-            let opt = document.createElement("option"); opt.value = u; opt.innerText = u; select.add(opt);
-            html += `<tr style="border-top:1px solid #f1f5f9;"><td style="padding:10px 12px;">${u}</td><td>${usuarios[u].nivel}</td><td>${usuarios[u].secao}</td><td><button onclick="excluirUsuario('${u}')" style="color:#ef4444;border:none;background:none;cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
+            let opt = document.createElement("option"); 
+            opt.value = u; 
+            opt.innerText = u; 
+            select.add(opt);
         }
-        listaDiv.innerHTML = html + "</table>";
     }
 
     function login() {
@@ -285,52 +235,18 @@
         err.style.display = "none";
         
         if (usuarios[u] && p === usuarios[u].senha) {
-            // Efeito de carregamento
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Autenticando...';
-            btn.style.opacity = "0.7";
             btn.disabled = true;
 
             setTimeout(() => {
                 document.getElementById("loginScreen").style.display = "none";
                 document.getElementById("sistema").style.display = "block";
                 document.getElementById("usuarioLogado").innerText = "Bem-vindo, " + u;
-                
-                document.querySelectorAll(".category").forEach(c => c.style.display = "none");
-                
-                if (usuarios[u].nivel === "admin") {
-                    document.querySelectorAll(".category").forEach(c => c.style.display = "block");
-                    if(u === "Desenvolvedor") document.getElementById("painelDev").style.display = "block";
-                } else {
-                    const alvo = document.getElementById("cat-" + usuarios[u].secao);
-                    if(alvo) alvo.style.display = "block";
-                }
             }, 800);
         } else {
             err.style.display = "block";
             document.getElementById("senha").value = "";
             document.getElementById("senha").focus();
-        }
-    }
-
-    function criarNovoUsuario() {
-        const n = document.getElementById("novoNome").value.trim();
-        const s = document.getElementById("novaSenha").value.trim();
-        const nv = document.getElementById("novoNivel").value;
-        const sc = document.getElementById("novaSecao").value;
-        if(n && s) {
-            usuarios[n] = { senha: s, nivel: nv, secao: (nv === "admin" ? "todas" : sc) };
-            localStorage.setItem('bdSAdmC_vRefined', JSON.stringify(usuarios));
-            atualizarInterfaceUsuarios();
-            alert("Militar cadastrado com sucesso!");
-        }
-    }
-
-    function excluirUsuario(n) {
-        if(n === "Desenvolvedor") return;
-        if(confirm("Deseja realmente remover o acesso de " + n + "?")) { 
-            delete usuarios[n]; 
-            localStorage.setItem('bdSAdmC_vRefined', JSON.stringify(usuarios)); 
-            atualizarInterfaceUsuarios(); 
         }
     }
 
