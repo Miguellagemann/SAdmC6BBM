@@ -94,13 +94,11 @@
         .militar-bar { background: white; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
         .militar-status { font-size: 18px; font-weight: 800; color: var(--azul-medio); }
         
-        /* PAINEL ADMIN */
         #painelAdmin { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 2px dashed #ccc; display: none; }
         .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 15px; }
         .admin-table th { background: var(--azul-medio); color: white; padding: 10px; text-align: left; }
         .admin-table td { padding: 10px; border-bottom: 1px solid #eee; }
 
-        /* SEÇÕES */
         .secao-container { display: none; margin-top: 30px; }
         .secao-header { border-left: 6px solid var(--vermelho-cbm); padding-left: 12px; margin-bottom: 20px; font-size: 18px; font-weight: 800; color: var(--azul-texto); text-transform: uppercase; }
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
@@ -109,22 +107,92 @@
         .card-item span { font-weight: 800; font-size: 14px; }
         .card-item:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho-cbm); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        /* --- RESPONSIVIDADE --- */
-        @media (max-width: 768px) {
-            .login-container { flex-direction: column; min-height: unset; }
-            .login-left { padding: 30px; }
-            .login-right { padding: 30px; }
-            .militar-bar { flex-direction: column; text-align: center; gap: 15px; }
-            .card-grid { grid-template-columns: 1fr; }
+        /* --- RODAPÉ PROFISSIONAL CRIATIVO --- */
+        .footer-full {
+            background: linear-gradient(180deg, #001529 0%, #000b14 100%);
+            color: #ffffff;
+            border-top: 4px solid var(--vermelho-cbm);
+            padding-top: 40px;
         }
 
-        /* --- RODAPÉ --- */
-        .footer-full { background: #000E1F; color: white; border-top: 4px solid var(--vermelho-cbm); }
-        .footer-grid { max-width: 1100px; margin: auto; padding: 30px 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        .footer-col h4 { color: white; margin-bottom: 15px; font-size: 14px; text-transform: uppercase; font-weight: 800; position: relative; }
-        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -5px; width: 30px; height: 2px; background: var(--laranja-cbm); }
-        .footer-col p { font-size: 12px; color: #bdc3c7; margin: 5px 0; display: flex; align-items: center; gap: 8px; }
-        .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 15px; font-size: 9px; color: #95a5a6; font-weight: 700; text-transform: uppercase; }
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-box h4 {
+            color: var(--laranja-cbm);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-content { display: flex; flex-direction: column; gap: 12px; }
+
+        .contact-item {
+            text-decoration: none;
+            color: #cbd5e0;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .contact-item i { color: var(--laranja-cbm); width: 20px; text-align: center; }
+
+        .version-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-size: 10px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .footer-bottom b { color: var(--vermelho-cbm); }
+
+        /* --- RESPONSIVIDADE GERAL --- */
+        @media (max-width: 768px) {
+            .login-container { flex-direction: column; min-height: unset; }
+            .login-left, .login-right { padding: 30px; }
+            .militar-bar { flex-direction: column; text-align: center; gap: 15px; }
+            .card-grid { grid-template-columns: 1fr; }
+            .footer-container { text-align: center; }
+            .footer-box h4, .contact-item { justify-content: center; }
+            .contact-item:hover { transform: translateY(-3px); }
+        }
     </style>
 </head>
 <body>
@@ -222,23 +290,42 @@
 </div>
 
 <footer class="footer-full">
-    <div class="footer-grid">
-        <div class="footer-col">
-            <h4>6º BBM</h4>
-            <p><i class="fas fa-map-marker-alt"></i> Santa Cruz do Sul - RS</p>
-            <p><i class="fas fa-phone"></i> (51) 3711-2323</p>
+    <div class="footer-container">
+        <div class="footer-box">
+            <h4><i class="fas fa-map-marker-alt"></i> Localização</h4>
+            <div class="footer-content">
+                <a href="https://www.google.com/search?q=bombeiros+scs" target="_blank" class="contact-item">
+                    <i class="fas fa-location-dot"></i>
+                    <span>Rua Tenente-Coronel Brito, 03<br>Centro, Santa Cruz do Sul - RS</span>
+                </a>
+            </div>
         </div>
-        <div class="footer-col">
-            <h4>SAdmC Digital</h4>
-            <p><i class="fas fa-server"></i> Firebase Cloud Service</p>
-            <p><i class="fas fa-check-double"></i> v3.5.2 Final</p>
+        <div class="footer-box">
+            <h4><i class="fas fa-paper-plane"></i> Contato</h4>
+            <div class="footer-content">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>6bbm-sadm@cbm.rs.gov.br</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>(51) 3711-2323</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-box">
+            <h4><i class="fas fa-info-circle"></i> Sistema</h4>
+            <div class="footer-content">
+                <div class="version-tag"><i class="fas fa-check-circle"></i> Versão Final</div>
+            </div>
         </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 CORPO DE BOMBEIROS MILITAR - RS</div>
+    <div class="footer-bottom">
+        &copy; 2026 Desenvolvido para o <b>Corpo de Bombeiros Militar</b> - RS | 6º BBM
+    </div>
 </footer>
 
 <script>
-    // FIREBASE CONFIG
     const firebaseConfig = {
         apiKey: "AIzaSyDfHrIaQzylbPaPBH_rAlew1CoINTfIySE",
         authDomain: "sadmc-6bbm.firebaseapp.com",
