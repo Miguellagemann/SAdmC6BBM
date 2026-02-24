@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
-            --azul-fundo-dark: #001233;
-            --azul-fundo-light: #002855;
-            --azul-painel-glass: rgba(109, 125, 150, 0.7); 
+            /* TOM AJUSTADO PARA O AZUL DA IMAGEM */
+            --azul-fundo-dark: #002366;  
+            --azul-fundo-light: #003399; 
+            
+            --azul-painel-glass: rgba(255, 255, 255, 0.12); 
             --laranja-cbm: #FF9E3D; 
             --vermelho-cbm: #C40000;
             --vermelho-hover: #A30000;
@@ -25,7 +27,7 @@
             display: flex; flex-direction: column; min-height: 100vh; color: #334155;
         }
 
-        /* --- LOGIN COM EFEITO SOL --- */
+        /* --- LOGIN COM NOVO TOM DE AZUL --- */
         #loginScreen { 
             flex: 1; 
             background: radial-gradient(circle at center, var(--azul-fundo-light) 0%, var(--azul-fundo-dark) 100%);
@@ -38,66 +40,67 @@
             content: "";
             position: absolute;
             width: 150%; height: 150%;
-            background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, transparent 40%, rgba(255,255,255,0.02) 60%, transparent 100%);
+            background: linear-gradient(160deg, rgba(255,255,255,0.08) 0%, transparent 40%, rgba(255,255,255,0.03) 60%, transparent 100%);
             transform: rotate(-15deg);
             pointer-events: none;
         }
 
-        /* AJUSTE: Container com GAP para separar os lados */
+        /* Container com GAP mantido */
         .login-container {
             display: flex; 
             max-width: 900px; 
             width: 100%; 
             min-height: 480px;
             z-index: 2;
-            gap: 20px; /* Espaço entre o lado esquerdo e direito */
+            gap: 25px; 
         }
 
-        /* AJUSTE: Lado esquerdo agora é um bloco independente com bordas arredondadas */
+        /* Lado esquerdo: Vidro (Glassmorphism) */
         .login-left-side {
             background: var(--azul-painel-glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             flex: 1; padding: 40px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; text-align: center;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 15px; /* Bordas arredondadas em todos os lados */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
         .cbmrs-logo-text {
             font-size: 82px; font-weight: 800; margin: 0; line-height: 1;
             background: linear-gradient(to right, #FFEB3B 0%, #FF9800 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         .cbmrs-sub-text {
-            font-size: 14px; font-weight: 700; margin-top: 5px; color: #FF9800;
+            font-size: 14px; font-weight: 700; margin-top: 5px; color: #FFEB3B;
             text-transform: uppercase; letter-spacing: 0.5px;
         }
 
-        /* AJUSTE: Lado direito agora é um bloco independente com bordas arredondadas */
+        /* Lado direito: Branco */
         .login-right-side {
             background: #FFFFFF; 
             flex: 1.2; 
             padding: 50px 40px;
             display: flex; flex-direction: column; justify-content: center;
-            border-radius: 15px; /* Bordas arredondadas em todos os lados */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        /* Responsividade para celulares: empilha os blocos */
         @media (max-width: 768px) {
             .login-container { flex-direction: column; gap: 15px; }
             .cbmrs-logo-text { font-size: 60px; }
+            .login-left-side, .login-right-side { padding: 30px; }
         }
 
         .login-right-side h2 { color: var(--azul-texto); margin: 0; font-weight: 800; font-size: 24px; }
         .login-right-side p.subtitle { color: #666; font-size: 12px; margin-bottom: 25px; font-weight: 600; text-transform: uppercase; }
 
         .login-right-side select, .login-right-side input { 
-            width: 100%; padding: 14px; margin-top: 8px; border-radius: 6px; 
+            width: 100%; padding: 14px; margin-top: 8px; border-radius: 8px; 
             border: 1px solid #ddd; font-size: 15px; background: #fafafa;
         }
 
@@ -106,7 +109,7 @@
 
         .btn-entrar { 
             width: 100%; padding: 15px; background: var(--vermelho-cbm); color: #fff; border: none; 
-            border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 25px;
+            border-radius: 8px; cursor: pointer; font-weight: 700; margin-top: 25px;
             font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
         }
         .btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(196, 0, 0, 0.3); }
