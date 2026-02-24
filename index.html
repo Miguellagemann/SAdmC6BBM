@@ -239,7 +239,8 @@
                     <option value="B3">B3 - Seção de Operações</option>
                     <option value="B4">B4 - Logística e Patrimônio</option>
                     <option value="SCOR">SCor - Seção de Correição</option>
-                    <option value="MASTER">Acesso Master</option>
+                    <option value="CHEFE">Chefe do SAdmC (Ver Tudo)</option>
+                    <option value="MASTER">Desenvolvedor (Acesso Total)</option>
                 </select>
                 <button onclick="addMilitar()" style="background:#27ae60; color:white; border:none; padding:12px 30px; cursor:pointer; font-weight:800; border-radius:5px;">CADASTRAR</button>
             </div>
@@ -328,14 +329,19 @@
             <h4><i class="fas fa-info-circle"></i> SAdmC</h4>
             <p>Seção Administrativa e Correição</p>
             <p>Sistema de Gestão Interna</p>
-            <p>Versão 2.0</p>
+            <p>Versão 2.5</p>
         </div>
     </div>
     <div class="footer-bottom">SISTEMA RESTRITO AOS MILITARES DO 6º BBM</div>
 </footer>
 
 <script>
-    const dbPadrao = { "Desenvolvedor": { senha: "admin", nivel: "MASTER" }, "SGT BOCK": { senha: "123", nivel: "B1" } };
+    const dbPadrao = { 
+        "Desenvolvedor": { senha: "admin", nivel: "MASTER" }, 
+        "CHEFE DO SADMC": { senha: "123", nivel: "CHEFE" },
+        "SGT BOCK": { senha: "123", nivel: "B1" } 
+    };
+    
     let MILITARES = JSON.parse(localStorage.getItem('sadmc_db')) || dbPadrao;
 
     function render() {
@@ -345,13 +351,11 @@
         tabela.innerHTML = "";
 
         for (let m in MILITARES) {
-            // Select do Login
             let o = document.createElement("option"); 
             o.value = m; 
             o.innerText = m; 
             s.add(o);
 
-            // Linha da Tabela Admin
             let row = tabela.insertRow();
             row.innerHTML = `
                 <td><strong>${m}</strong></td>
@@ -379,6 +383,7 @@
         const n = document.getElementById("selectMilitar").value;
         const p = document.getElementById("inputSenha").value;
         const loader = document.getElementById("loadingOverlay");
+        
         if (MILITARES[n] && p === MILITARES[n].senha) {
             loader.style.display = "flex";
             setTimeout(() => {
@@ -386,14 +391,27 @@
                 document.getElementById("loginScreen").style.display = "none";
                 document.getElementById("sistema").style.display = "block";
                 document.getElementById("labelNome").innerText = n;
+                
                 const nivel = MILITARES[n].nivel;
+                
+                // LÓGICA DE PERMISSÃO REFINADA
                 if(nivel === "MASTER") {
+                    // DESENVOLVEDOR: Vê tudo + Painel
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
                     document.getElementById("painelAdmin").style.display = "block";
-                } else {
+                } 
+                else if (nivel === "CHEFE") {
+                    // CHEFE: Vê todas as seções, mas o Painel de Acesso fica oculto
+                    document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
+                    document.getElementById("painelAdmin").style.display = "none";
+                }
+                else {
+                    // SEÇÃO RESTRITA: Vê apenas a sua
                     const alvo = document.getElementById("secao-" + nivel);
                     if(alvo) alvo.style.display = "block";
+                    document.getElementById("painelAdmin").style.display = "none";
                 }
+                
             }, 1200);
         } else {
             const e = document.getElementById("erroSenha"); 
@@ -411,12 +429,12 @@
             saveDB();
             document.getElementById("admNome").value = "";
             document.getElementById("admSenha").value = "";
-            alert("Militar cadastrado!");
+            alert("Militar cadastrado com sucesso!");
         }
     }
 
     function deletarMilitar(nome) {
-        if(confirm(`Tem certeza que deseja remover o acesso de ${nome}?`)) {
+        if(confirm(`Remover acesso de ${nome}?`)) {
             delete MILITARES[nome];
             saveDB();
         }
