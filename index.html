@@ -27,7 +27,7 @@
             overflow-x: hidden;
         }
 
-        /* --- LOGIN COM EFEITO DE REFLEXO --- */
+        /* --- LOGIN --- */
         #loginScreen { 
             flex: 1; 
             background: linear-gradient(135deg, var(--azul-fundo-dark) 0%, var(--azul-fundo-light) 100%);
@@ -48,7 +48,6 @@
 
         .login-container { display: flex; max-width: 900px; width: 100%; z-index: 10; gap: 20px; position: relative; }
 
-        /* MENSAGEM DE ERRO ESTILIZADA */
         #errorMsg {
             display: none; position: absolute; top: -65px; left: 50%; transform: translateX(-50%);
             background: #fff; color: var(--vermelho-cbm); padding: 12px 25px; border-radius: 50px;
@@ -67,7 +66,6 @@
             background: var(--azul-painel-glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;
             color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
         }
 
         .cbmrs-logo-text {
@@ -104,14 +102,13 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* --- SISTEMA --- */
+        /* --- ÁREA INTERNA --- */
         #sistema { display: none; flex: 1; background: var(--cinza-fundo); animation: fadeIn 0.6s ease; }
-        .header-top { background: var(--azul-texto); color: #fff; text-align: center; padding: 18px; font-weight: 800; font-size: 18px; }
+        .header-top { background: var(--azul-texto); color: #fff; text-align: center; padding: 18px; font-weight: 800; }
         .header-sub { background: var(--vermelho-cbm); height: 4px; }
         .container { max-width: 1100px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .user-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #F1F5F9; padding-bottom: 15px; margin-bottom: 25px; }
 
-        /* PAINEL DEV ESTILIZADO */
         #painelDev { background: #F8FAFC; padding: 25px; border-radius: 12px; border: 2px solid var(--azul-fundo-dark); margin-bottom: 30px; }
         .dev-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
         .dev-grid input, .dev-grid select { padding: 10px; border: 1px solid #ddd; border-radius: 5px; flex: 1; }
@@ -120,14 +117,13 @@
         .category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 20px; margin-bottom: 20px; }
         .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
         .link-card { border: 1px solid #E2E8F0; padding: 30px; text-align: center; border-radius: 12px; text-decoration: none; color: #475569; display: flex; flex-direction: column; align-items: center; }
-        .link-card:hover { transform: translateY(-5px); border-color: var(--azul-fundo-light); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
         .link-card i { font-size: 35px; color: var(--vermelho-cbm); margin-bottom: 15px; }
 
-        #btnTop { position: fixed; bottom: 30px; right: 30px; background: var(--vermelho-cbm); color: #fff; border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: none; z-index: 1000; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
+        /* --- RODAPÉ --- */
         .footer-oficial { background: #000814; color: #fff; padding: 40px 20px; margin-top: auto; }
         .footer-main { max-width: 1100px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
-        .acesso-restrito { text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.05); color: #FF9E3D; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .footer-local { color: var(--laranja-cbm); font-weight: 800; font-size: 16px; margin: 0; }
+        .footer-subtext { font-size: 12px; opacity: 0.8; margin-top: 5px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -146,19 +142,19 @@
 
         <div class="login-right-side">
             <h2>SAdmC</h2>
-            <p style="font-size: 12px; color: #94A3B8; font-weight: 700; text-transform: uppercase; margin-bottom: 25px;">Acesso Administrativo</p>
+            <p style="font-size: 12px; color: #94A3B8; font-weight: 700; text-transform: uppercase; margin-bottom: 25px;">Seção de Administração e Correição</p>
             
-            <label style="font-size: 11px; font-weight: 800; color: #64748B;">MILITAR</label>
+            <label style="font-size: 11px; font-weight: 800; color: #64748B;">SELECIONE O MILITAR</label>
             <select id="usuario"></select>
             
-            <label style="font-size: 11px; font-weight: 800; color: #64748B; margin-top: 20px; display: block;">SENHA</label>
+            <label style="font-size: 11px; font-weight: 800; color: #64748B; margin-top: 20px; display: block;">SENHA DE ACESSO</label>
             <div class="password-wrapper">
                 <input type="password" id="senha" placeholder="••••••••">
                 <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
             </div>
             
             <button class="btn-entrar" id="btnEntrar" onclick="login()">
-                <span id="btnText">Entrar no Sistema</span>
+                <span id="btnText">Entrar na Seção</span>
                 <div class="spinner" id="btnSpinner"></div>
             </button>
         </div>
@@ -174,13 +170,13 @@
                 <span id="usuarioLogado" style="font-weight: 800; color: var(--azul-texto); font-size: 18px;"></span>
                 <div style="font-size: 12px; color: #64748B;"><span id="dataAtual"></span> | <span id="relogio"></span></div>
             </div>
-            <button onclick="location.reload()" style="background: var(--azul-texto); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700;">Sair</button>
+            <button onclick="location.reload()" style="background: var(--azul-texto); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700;">Sair da Seção</button>
         </div>
 
         <div id="painelDev" style="display:none;">
              <h4 style="margin:0 0 15px 0;"><i class="fas fa-user-shield"></i> Gestão de Acessos</h4>
              <div class="dev-grid">
-                <input type="text" id="novoNome" placeholder="Nome (Ex: SGT BOCK)">
+                <input type="text" id="novoNome" placeholder="Nome do Militar">
                 <input type="text" id="novaSenha" placeholder="Senha">
                 <select id="novoNivel" onchange="document.getElementById('novaSecao').style.display = (this.value=='admin'?'none':'block')">
                     <option value="restrito">Restrito</option>
@@ -195,68 +191,62 @@
                 </select>
                 <button onclick="criarNovoUsuario()" style="background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">CADASTRAR</button>
             </div>
-            <div id="listaUsuarios" style="background:white; border-radius:8px; overflow:hidden; border:1px solid #eee;"></div>
+            <div id="listaUsuarios" style="background:white; border-radius:8px; border:1px solid #eee;"></div>
         </div>
 
         <div class="category" id="cat-B1">
-            <div class="category-title">B1 - SEÇÃO PESSOAL</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-calendar-check"></i><strong>Escalas de Serviço</strong></a>
-                <a href="#" class="link-card"><i class="fas fa-umbrella-beach"></i><strong>Efetivo e Férias</strong></a>
-            </div>
+            <div class="category-title">B1 - SEÇÃO DE PESSOAL</div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-users"></i><strong>Efetivo</strong></a></div>
         </div>
         <div class="category" id="cat-B2">
-            <div class="category-title">ALI - AGÊNCIA LOCAL DE INTELIGÊNCIA</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Inteligência</strong></a>
-            </div>
+            <div class="category-title">B2 - AGÊNCIA LOCAL DE INTELIGÊNCIA (ALI)</div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Inteligência</strong></a></div>
+        </div>
+        <div class="category" id="cat-B3">
+            <div class="category-title">B3 - SEÇÃO DE OPERAÇÕES</div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-fire-extinguisher"></i><strong>Operações</strong></a></div>
         </div>
         <div class="category" id="cat-B4">
-            <div class="category-title">B4 - LOGÍSTICA</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></a>
-            </div>
+            <div class="category-title">B4 - SEÇÃO DE LOGÍSTICA</div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-truck"></i><strong>Patrimônio</strong></a></div>
         </div>
         <div class="category" id="cat-SCor">
-            <div class="category-title">SCOR - CORREIÇÃO</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>Processos</strong></a>
-            </div>
+            <div class="category-title">SCOR - SEÇÃO DE CORREIÇÃO</div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>Correição</strong></a></div>
         </div>
     </div>
 </div>
 
-<button id="btnTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></button>
-
 <footer class="footer-oficial">
     <div class="footer-main">
-        <div><h4 style="color:var(--laranja-cbm); margin:0;">6º BBM</h4><p style="margin:5px 0 0 0; font-size:12px;">SAdmC - Sistema Administrativo e Correição</p></div>
-        <div style="text-align:right; font-size:12px; opacity:0.8;"><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</div>
+        <div>
+            <p class="footer-local">SANTA CRUZ DO SUL - RS</p>
+            <p class="footer-subtext">6º BATALHÃO DE BOMBEIROS MILITAR</p>
+        </div>
+        <div style="text-align:right;">
+            <div style="font-size: 13px; font-weight: 700; color: var(--laranja-cbm);"><i class="fas fa-lock"></i> ACESSO RESTRITO</div>
+            <div style="font-size: 11px; opacity: 0.7; margin-top: 4px;">SAdmC - Seção de Administração e Correição</div>
+        </div>
     </div>
-    <div class="acesso-restrito"><i class="fas fa-lock"></i> Acesso restrito aos militares do 6º BBM</div>
 </footer>
 
 <script>
-    // BASE DE DADOS E PERSISTÊNCIA
     const inicial = { 
         "Desenvolvedor": { senha: "admin_6bbm", nivel: "admin", secao: "todas" },
         "Chefe SadmC": { senha: "1234", nivel: "admin", secao: "todas" }
     };
     let usuarios = JSON.parse(localStorage.getItem('bdSAdmC_vFinal')) || inicial;
 
-    // FUNÇÕES DE GESTÃO (PRESERVADAS)
     function atualizarInterfaceUsuarios() {
         const select = document.getElementById("usuario");
         const listaDiv = document.getElementById("listaUsuarios");
         if(!select) return;
         select.innerHTML = "";
-        
         let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;">
-            <tr style="background:#f1f5f9; text-align:left;"><th style="padding:12px;">Militar</th><th style="padding:12px;">Nível</th><th style="padding:12px;">Seção</th><th style="padding:12px;">Ação</th></tr>`;
-        
+            <tr style="background:#f1f5f9; text-align:left;"><th style="padding:12px;">Militar</th><th style="padding:12px;">Nível</th><th style="padding:12px;">Ação</th></tr>`;
         for (let u in usuarios) {
             let opt = document.createElement("option"); opt.value = u; opt.innerText = u; select.add(opt);
-            html += `<tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;">${u}</td><td>${usuarios[u].nivel}</td><td>${usuarios[u].secao}</td>
+            html += `<tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;">${u}</td><td>${usuarios[u].nivel}</td>
             <td><button onclick="excluirUsuario('${u}')" style="color:red;border:none;background:none;cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
         }
         listaDiv.innerHTML = html + "</table>";
@@ -277,7 +267,7 @@
     }
 
     function excluirUsuario(n) {
-        if(n === "Desenvolvedor") return alert("Acesso mestre não pode ser removido.");
+        if(n === "Desenvolvedor") return;
         if(confirm("Excluir " + n + "?")) {
             delete usuarios[n];
             localStorage.setItem('bdSAdmC_vFinal', JSON.stringify(usuarios));
@@ -292,7 +282,6 @@
         icon.classList.toggle("fa-eye-slash");
     }
 
-    // LOGIN COM LOADING PROFISSIONAL
     function login() {
         const u = document.getElementById("usuario").value;
         const p = document.getElementById("senha").value;
@@ -322,7 +311,7 @@
                 }
             } else {
                 btn.disabled = false;
-                btnText.innerText = "Entrar no Sistema";
+                btnText.innerText = "Entrar na Seção";
                 spinner.style.display = "none";
                 errorMsg.style.display = "block";
                 document.getElementById("senha").value = "";
@@ -330,14 +319,6 @@
             }
         }, 1200);
     }
-
-    // EVENTOS ADICIONAIS
-    document.getElementById("senha").addEventListener("keypress", (e) => { if (e.key === "Enter") login(); });
-    
-    window.onscroll = function() {
-        const btn = document.getElementById("btnTop");
-        btn.style.display = (document.documentElement.scrollTop > 300) ? "flex" : "none";
-    };
 
     setInterval(() => {
         const agora = new Date();
