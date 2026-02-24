@@ -97,12 +97,29 @@
 
         #btnTopo { display: none; position: fixed; bottom: 40px; right: 40px; z-index: 99; border: none; background: var(--vermelho-cbm); color: white; width: 55px; height: 55px; border-radius: 50%; font-size: 22px; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
 
-        /* RODAPÉ */
+        /* --- RODAPÉ --- */
         .footer-full { background: #000E1F; color: white; border-top: 6px solid var(--vermelho-cbm); margin-top: auto; }
         .footer-grid { max-width: 1200px; margin: auto; padding: 50px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
-        .footer-col h4 { color: var(--laranja-cbm); margin-bottom: 20px; font-size: 15px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
+        
+        /* Títulos do rodapé agora em Branco */
+        .footer-col h4 { 
+            color: #FFFFFF; 
+            margin-bottom: 20px; 
+            font-size: 15px; 
+            text-transform: uppercase; 
+            font-weight: 800; 
+            letter-spacing: 1px; 
+        }
+        
         .footer-col p { font-size: 13px; color: #ccc; margin: 8px 0; line-height: 1.6; }
         .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 20px; font-size: 11px; color: var(--laranja-cbm); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Estilo para o ícone de localização maior e vermelho */
+        .icon-loc {
+            color: #FF0000;
+            font-size: 1.3em;
+            margin-right: 5px;
+        }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -244,7 +261,11 @@
 <footer class="footer-full">
     <div class="footer-grid">
         <div class="footer-col">
-            <h4><i class="fas fa-map-marker-alt"></i> 6º BBM - Santa Cruz do Sul</h4>
+            <h4>
+                <a href="https://www.google.com/search?q=bombeiros+scs&sca_esv=0a5fe7958ee0ef33&sxsrf=ANbL-n4B-hzEe0R-ZcCfwccG2Pgdr12Vvg%3A1771958341747&ei=RfCdaZOqLcKq1sQP5Ji7uAk&biw=1600&bih=739&oq=bom&gs_lp=Egxnd3Mtd2l6LXNlcnAiA2JvbSoCCAAyChAjGIAEGCcYigUyBBAjGCcyChAAGIAEGEMYigUyEBAAGIAEGLEDGEMYgwEYigUyCxAAGIAEGLEDGIMBMhMQABiABBixAxhDGIMBGMkDGIoFMhAQLhiABBjRAxhDGMcBGIoFMgsQABiABBixAxiDATILEAAYgAQYkgMYigUyCxAAGIAEGJIDGIoFSNYcUABYnglwAXgBkAEAmAHJAaAB1QWqAQUwLjMuMbgBAcgBAPgBAZgCBaAC9QXCAgcQIxjwBRgnwgIKECMY8AUYJxjJAsICCxAuGIAEGLEDGIMBwgIIEC4YgAQYsQPCAg4QABiABBixAxiDARiKBcICBxAjGCcYyQLCAhAQIxjwBRiABBgnGMkCGIoFwgINEAAYgAQYsQMYQxiKBcICBRAAGIAEwgILEC4YgAQYxwEYrwGYAwCSBwUxLjMuMaAHxSeyBwUwLjMuMbgH8AXCBwMyLTXIBxyACAA&sclient=gws-wiz-serp" target="_blank" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-map-marker-alt icon-loc"></i> 6º BBM - Santa Cruz do Sul
+                </a>
+            </h4>
             <p><strong>Sede Administrativa</strong></p>
             <p>Rua Tenente-Coronel Brito, 03</p>
             <p>Centro - Santa Cruz do Sul/RS</p>
@@ -253,7 +274,7 @@
             <h4><i class="fas fa-phone-alt"></i> Contatos</h4>
             <p><strong>Emergência: 193</strong></p>
             <p>Administrativo: (51) 3711-2323</p>
-            <p>Email: 6bbm-sadm@cbm.rs.gov.br</p>
+            <p>Email: 6bbm-sadm@cbm.rs.gov.rs</p>
         </div>
         <div class="footer-col">
             <h4><i class="fas fa-info-circle"></i> SAdmC</h4>
@@ -324,11 +345,9 @@
                 
                 const nivel = MILITARES[n].nivel;
                 
-                // Esconder tudo primeiro para limpar a sessão anterior
                 document.querySelectorAll(".secao-container").forEach(x => x.style.display = "none");
                 document.getElementById("painelAdmin").style.display = "none";
 
-                // LOGICA DE PERMISSÃO ATUALIZADA
                 if(nivel === "MASTER") {
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
                     document.getElementById("painelAdmin").style.display = "block";
@@ -337,11 +356,9 @@
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
                 }
                 else if (nivel === "PUBLICO") {
-                    // Perfil Público vê apenas o Acervo
                     document.getElementById("secao-ACERVO").style.display = "block";
                 }
                 else {
-                    // Outras seções (B1, B2, etc.) veem o Acervo + Sua Seção
                     document.getElementById("secao-ACERVO").style.display = "block";
                     const alvo = document.getElementById("secao-" + nivel);
                     if(alvo) alvo.style.display = "block";
