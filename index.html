@@ -107,7 +107,6 @@
         .footer-col h4 { color: #FFFFFF; margin-bottom: 20px; font-size: 15px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
         .footer-col p { font-size: 13px; color: #ccc; margin: 8px 0; line-height: 1.6; }
         .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 20px; font-size: 11px; color: var(--laranja-cbm); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-        .icon-loc { color: #FF0000; font-size: 1.3em; margin-right: 5px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -200,7 +199,7 @@
                 <a href="#" class="card-item"><i class="fas fa-users-cog"></i><span>Gestão de Efetivo</span></a>
                 <a href="#" class="card-item"><i class="fas fa-calendar-alt"></i><span>Escalas de Serviço</span></a>
                 <a href="#" class="card-item"><i class="fas fa-file-alt"></i><span>Boletins Internos</span></a>
-                <a href="#" class="card-item"><i class="fas fa-medal"></i><span>Concessão de Medalhas</span></a>
+                <a href="#" class="card-item"><i class="fas fa-medal"></i><span>Medalhas e Elogios</span></a>
             </div>
         </div>
 
@@ -209,8 +208,7 @@
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-eye"></i><span>Produção de Conhecimento</span></a>
                 <a href="#" class="card-item"><i class="fas fa-user-secret"></i><span>Contra-Inteligência</span></a>
-                <a href="#" class="card-item"><i class="fas fa-file-shield"></i><span>Relatórios de Inteligência</span></a>
-                <a href="#" class="card-item"><i class="fas fa-fingerprint"></i><span>Operações de Inteligência</span></a>
+                <a href="#" class="card-item"><i class="fas fa-file-shield"></i><span>Relatórios SIGILOSOS</span></a>
             </div>
         </div>
 
@@ -218,9 +216,8 @@
             <div class="secao-header">B3 - Seção de Operações e Defesa Civil</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-map-marked-alt"></i><span>Planos de Contingência</span></a>
-                <a href="#" class="card-item"><i class="fas fa-cloud-showers-heavy"></i><span>Monitoramento Climático</span></a>
                 <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Alertas e Defesa Civil</span></a>
-                <a href="#" class="card-item"><i class="fas fa-fire-extinguisher"></i><span>Estatísticas Operacionais</span></a>
+                <a href="#" class="card-item"><i class="fas fa-fire-extinguisher"></i><span>Estatísticas 6º BBM</span></a>
             </div>
         </div>
 
@@ -230,7 +227,6 @@
                 <a href="#" class="card-item"><i class="fas fa-truck-pickup"></i><span>Gestão de Frota</span></a>
                 <a href="#" class="card-item"><i class="fas fa-tools"></i><span>Manutenção e Obras</span></a>
                 <a href="#" class="card-item"><i class="fas fa-boxes-stacked"></i><span>Carga e Almoxarifado</span></a>
-                <a href="#" class="card-item"><i class="fas fa-clipboard-list"></i><span>Inventário de Patrimônio</span></a>
             </div>
         </div>
 
@@ -239,7 +235,6 @@
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-gavel"></i><span>IPM e Sindicâncias</span></a>
                 <a href="#" class="card-item"><i class="fas fa-scale-balanced"></i><span>Processos Administrativos</span></a>
-                <a href="#" class="card-item"><i class="fas fa-book-bookmark"></i><span>Legislação e Normas</span></a>
                 <a href="#" class="card-item"><i class="fas fa-handcuffs"></i><span>Conselhos de Disciplina</span></a>
             </div>
         </div>
@@ -249,52 +244,42 @@
 <footer class="footer-full">
     <div class="footer-grid">
         <div class="footer-col">
-            <h4><i class="fas fa-map-marker-alt icon-loc"></i> 6º BBM - Santa Cruz do Sul</h4>
-            <p><strong>Sede Administrativa</strong></p>
+            <h4>6º BBM - Santa Cruz do Sul</h4>
             <p>Rua Tenente-Coronel Brito, 03</p>
             <p>Centro - Santa Cruz do Sul/RS</p>
         </div>
         <div class="footer-col">
-            <h4><i class="fas fa-phone-alt"></i> Contatos</h4>
-            <p><strong>Emergência: 193</strong></p>
-            <p>Administrativo: (51) 3711-2323</p>
-            <p>Email: 6bbm-sadm@cbm.rs.gov.rs</p>
-        </div>
-        <div class="footer-col">
-            <h4><i class="fas fa-info-circle"></i> SAdmC</h4>
+            <h4>SAdmC</h4>
             <p>Seção Administrativa e Correição</p>
-            <p>Sistema de Gestão Interna</p>
-            <p>Versão 3.1 (Nuvem 2026)</p>
+            <p>Versão 3.5 (Full Cloud 2026)</p>
         </div>
     </div>
     <div class="footer-bottom">SISTEMA RESTRITO AOS MILITARES DO 6º BBM</div>
 </footer>
 
 <script>
-    // --- CONFIGURAÇÃO FIREBASE (CHAVES DA SUA IMAGEM) ---
+    // --- SUA CONFIGURAÇÃO REAL DO FIREBASE ---
     const firebaseConfig = {
         apiKey: "AIzaSyDfHrIaQzylbPaPBH_rAlew1CoINTfIySE",
         authDomain: "sadmc-6bbm.firebaseapp.com",
-        databaseURL: "https://sadmc-6bbm-default-rtdb.firebaseio.com",
+        databaseURL: "https://sadmc-6bbm-4411d-default-rtdb.firebaseio.com/", 
         projectId: "sadmc-6bbm",
         storageBucket: "sadmc-6bbm.firebasestorage.app",
         messagingSenderId: "949715183102",
         appId: "1:949715183102:web:7c0f2c0153beb6c1fa8caf"
     };
 
-    // Inicialização do Firebase
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
     let MILITARES = {};
 
-    // --- SINCRONIZAÇÃO COM A NUVEM ---
+    // Sincroniza dados com Firebase
     database.ref('militares').on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
             MILITARES = data;
         } else {
-            // Se o banco estiver vazio pela primeira vez
             MILITARES = { "DESENVOLVEDOR": { senha: "admin", nivel: "MASTER" } };
             database.ref('militares').set(MILITARES);
         }
@@ -320,21 +305,9 @@
                 <td><strong>${m}</strong></td>
                 <td>${MILITARES[m].nivel}</td>
                 <td style="text-align: center;">
-                    ${m !== 'DESENVOLVEDOR' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash-alt"></i></button>` : '<small style="color:#999">Protegido</small>'}
+                    ${m !== 'DESENVOLVEDOR' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash-alt"></i></button>` : '<small>Protegido</small>'}
                 </td>
             `;
-        }
-    }
-
-    function togglePassword() {
-        const input = document.getElementById("inputSenha");
-        const icon = document.querySelector(".toggle-password");
-        if (input.type === "password") {
-            input.type = "text";
-            icon.classList.replace("fa-eye", "fa-eye-slash");
-        } else {
-            input.type = "password";
-            icon.classList.replace("fa-eye-slash", "fa-eye");
         }
     }
 
@@ -352,33 +325,25 @@
                 document.getElementById("labelNome").innerText = n;
                 
                 const nivel = MILITARES[n].nivel;
-                
-                // Limpa visibilidade das seções
                 document.querySelectorAll(".secao-container").forEach(x => x.style.display = "none");
                 document.getElementById("painelAdmin").style.display = "none";
 
-                // Lógica de Permissões
                 if(nivel === "MASTER") {
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
                     document.getElementById("painelAdmin").style.display = "block";
-                } 
-                else if (nivel === "CHEFE") {
+                } else if (nivel === "CHEFE") {
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
-                }
-                else if (nivel === "PUBLICO") {
+                } else if (nivel === "PUBLICO") {
                     document.getElementById("secao-ACERVO").style.display = "block";
-                }
-                else {
+                } else {
                     document.getElementById("secao-ACERVO").style.display = "block";
                     const alvo = document.getElementById("secao-" + nivel);
                     if(alvo) alvo.style.display = "block";
                 }
-                
             }, 1200);
         } else {
-            const e = document.getElementById("erroSenha"); 
-            e.style.display = "block";
-            setTimeout(() => e.style.display = "none", 3000);
+            document.getElementById("erroSenha").style.display = "block";
+            setTimeout(() => document.getElementById("erroSenha").style.display = "none", 3000);
         }
     }
 
@@ -387,44 +352,30 @@
         const s = document.getElementById("admSenha").value;
         const l = document.getElementById("admNivel").value;
         if(n && s) {
-            // Salva diretamente na Nuvem
-            database.ref('militares/' + n).set({ senha: s, nivel: l })
-                .then(() => {
-                    alert("Militar cadastrado com sucesso no Firebase!");
-                    document.getElementById("admNome").value = "";
-                    document.getElementById("admSenha").value = "";
-                })
-                .catch((error) => alert("Erro ao salvar: " + error.message));
+            database.ref('militares/' + n).set({ senha: s, nivel: l });
+            document.getElementById("admNome").value = "";
+            document.getElementById("admSenha").value = "";
         }
     }
 
     function deletarMilitar(nome) {
         if(confirm(`Remover acesso de ${nome}?`)) {
-            // Remove da Nuvem
-            database.ref('militares/' + nome).remove()
-                .then(() => alert("Militar removido da nuvem!"));
+            database.ref('militares/' + nome).remove();
         }
+    }
+
+    function togglePassword() {
+        const input = document.getElementById("inputSenha");
+        input.type = input.type === "password" ? "text" : "password";
     }
 
     function clock() {
         const d = new Date();
         const elem = document.getElementById('txtDataHora');
-        if(elem) {
-            elem.innerHTML = d.toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'}) + "<br>" + d.toLocaleTimeString('pt-BR');
-        }
+        if(elem) elem.innerHTML = d.toLocaleDateString('pt-BR', {weekday:'long', day:'numeric', month:'long'}) + "<br>" + d.toLocaleTimeString('pt-BR');
     }
-
-    window.onscroll = function() {
-        const btn = document.getElementById("btnTopo");
-        if(!btn) return;
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) btn.style.display = "block";
-        else btn.style.display = "none";
-    };
-
-    function voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-
     setInterval(clock, 1000);
-    clock();
+    function voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 </script>
 </body>
 </html>
