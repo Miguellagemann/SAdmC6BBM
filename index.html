@@ -71,13 +71,13 @@
             background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent); 
             animation: sweep 4s infinite; 
         }
-        .login-left img { width: 200px; z-index: 2; animation: brilhoLogo 3s infinite ease-in-out; }
+        .login-left img { width: 180px; z-index: 2; animation: brilhoLogo 3s infinite ease-in-out; }
         .login-left h1 { 
             font-size: 80px; font-weight: 900; margin: 10px 0 0 0; z-index: 2;
             background: linear-gradient(180deg, #FFD700 0%, #FF8C00 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -3px;
         }
-        .login-left .sub-titulo-logo { font-weight: 800; text-transform: uppercase; font-size: 14px; color: #FF9E3D; z-index: 2; margin-top: -5px; letter-spacing: 1px; }
+        .login-left .sub-titulo-logo { font-weight: 800; text-transform: uppercase; font-size: 14px; color: #FF9E3D; z-index: 2; margin-top: -5px; letter-spacing: 1px; text-align: center; }
         .login-left p { font-weight: 600; font-size: 12px; color: rgba(255,255,255,0.8); z-index: 2; margin-top: 15px; }
         
         .login-right { flex: 1.1; padding: 60px; display: flex; flex-direction: column; justify-content: center; background: white; }
@@ -85,14 +85,14 @@
         .sub-sigla { color: #888; font-size: 11px; margin-bottom: 30px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
         .form-group { margin-bottom: 20px; position: relative; }
         .form-group label { display: block; font-weight: 800; font-size: 11px; color: #555; text-transform: uppercase; margin-bottom: 8px; }
-        .form-group select, .form-group input { width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; outline: none; font-size: 15px; font-weight: 600; }
+        .form-group select, .form-group input { width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; outline: none; font-size: 15px; font-weight: 600; background: #fff; }
         .toggle-password { position: absolute; right: 15px; top: 38px; cursor: pointer; color: #999; font-size: 18px; z-index: 10; }
         .btn-acesso { width: 100%; padding: 18px; background: var(--vermelho-cbm); color: white; border: none; border-radius: 8px; font-weight: 800; text-transform: uppercase; cursor: pointer; margin-top: 10px; }
         .btn-acesso:hover { background: #a00000; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(196,0,0,0.3); }
 
         /* --- INTERFACE INTERNA --- */
         #sistema { display: none; flex: 1; background: var(--cinza-fundo); padding-bottom: 80px; }
-        .header-top { background: var(--azul-texto); color: white; text-align: center; padding: 15px; font-weight: 800; font-size: 18px; letter-spacing: 1px; }
+        .header-top { background: var(--azul-texto); color: white; text-align: center; padding: 15px; font-weight: 800; font-size: 16px; letter-spacing: 1px; }
         .header-stripe { background: var(--vermelho-cbm); height: 6px; }
         .dashboard-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
         .militar-bar { background: white; padding: 25px 40px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
@@ -102,7 +102,8 @@
 
         /* PAINEL ADMIN */
         #painelAdmin { background: #fff; padding: 30px; border-radius: 12px; margin-bottom: 40px; border: 2px dashed var(--azul-medio); display: none; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .admin-table-wrapper { width: 100%; overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 500px; }
         .admin-table th { background: var(--azul-medio); color: white; padding: 12px; text-align: left; font-size: 12px; text-transform: uppercase; }
         .admin-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
 
@@ -124,7 +125,28 @@
         .footer-col i { color: var(--laranja-cbm); width: 20px; }
         .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 25px; font-size: 11px; color: #95a5a6; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
         
-        #btnTopo { display: none; position: fixed; bottom: 40px; right: 40px; z-index: 99; border: none; background: var(--vermelho-cbm); color: white; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+        #btnTopo { display: none; position: fixed; bottom: 40px; right: 20px; z-index: 99; border: none; background: var(--vermelho-cbm); color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+
+        /* --- MEDIA QUERIES PARA CELULAR --- */
+        @media (max-width: 768px) {
+            .login-container { flex-direction: column; min-height: auto; }
+            .login-left { padding: 40px 20px; }
+            .login-left h1 { font-size: 60px; }
+            .login-right { padding: 40px 20px; }
+            
+            .militar-bar { flex-direction: column; text-align: center; gap: 20px; padding: 20px; }
+            .txt-data-hora { text-align: center; border-right: none; border-bottom: 4px solid var(--laranja-cbm); padding-right: 0; padding-bottom: 10px; }
+            
+            .secao-header { font-size: 18px; text-align: center; border-left: none; border-bottom: 4px solid var(--vermelho-cbm); padding-left: 0; padding-bottom: 10px; }
+            .card-grid { grid-template-columns: 1fr; }
+            
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-col h4::after { left: 50%; transform: translateX(-50%); }
+            .footer-col p { justify-content: center; }
+
+            #painelAdmin div { flex-direction: column; }
+            #painelAdmin input, #painelAdmin select, #painelAdmin button { width: 100% !important; flex: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -189,14 +211,16 @@
                 </select>
                 <button onclick="addMilitar()" style="background:#27ae60; color:white; border:none; padding:12px 25px; cursor:pointer; font-weight:800; border-radius:5px;">CADASTRAR</button>
             </div>
-            <table class="admin-table">
-                <thead><tr><th>Militar</th><th>Nível</th><th>Ações</th></tr></thead>
-                <tbody id="tabelaUsuarios"></tbody>
-            </table>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead><tr><th>Militar</th><th>Nível</th><th>Ações</th></tr></thead>
+                    <tbody id="tabelaUsuarios"></tbody>
+                </table>
+            </div>
         </div>
 
         <div id="secao-ACERVO" class="secao-container">
-            <div class="secao-header" style="border-left-color: var(--laranja-cbm);">Acervo Normativo e Modelos</div>
+            <div class="secao-header" style="border-left-color: var(--laranja-cbm); border-bottom-color: var(--laranja-cbm);">Acervo Normativo e Modelos</div>
             <div class="card-grid">
                 <a href="#" class="card-item"><i class="fas fa-file-signature"></i><span>Modelos de Requerimentos</span></a>
                 <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Ordens de Serviço</span></a>
@@ -326,6 +350,7 @@
                     const alvo = document.getElementById("secao-" + nivel);
                     if(alvo) alvo.style.display = "block";
                 }
+                window.scrollTo(0,0);
             }, 1000);
         } else {
             document.getElementById("erroSenha").style.display = "block";
