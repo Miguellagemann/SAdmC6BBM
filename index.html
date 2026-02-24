@@ -6,6 +6,10 @@
     <title>SAdmC - 6º BBM | CBMRS</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <style>
         :root {
             --azul-escuro: #001D3D;
@@ -100,26 +104,10 @@
         /* --- RODAPÉ --- */
         .footer-full { background: #000E1F; color: white; border-top: 6px solid var(--vermelho-cbm); margin-top: auto; }
         .footer-grid { max-width: 1200px; margin: auto; padding: 50px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
-        
-        /* Títulos do rodapé agora em Branco */
-        .footer-col h4 { 
-            color: #FFFFFF; 
-            margin-bottom: 20px; 
-            font-size: 15px; 
-            text-transform: uppercase; 
-            font-weight: 800; 
-            letter-spacing: 1px; 
-        }
-        
+        .footer-col h4 { color: #FFFFFF; margin-bottom: 20px; font-size: 15px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
         .footer-col p { font-size: 13px; color: #ccc; margin: 8px 0; line-height: 1.6; }
         .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 20px; font-size: 11px; color: var(--laranja-cbm); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-
-        /* Estilo para o ícone de localização maior e vermelho */
-        .icon-loc {
-            color: #FF0000;
-            font-size: 1.3em;
-            margin-right: 5px;
-        }
+        .icon-loc { color: #FF0000; font-size: 1.3em; margin-right: 5px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -147,7 +135,7 @@
             <div class="sub-sigla">Seção Administrativa e Correição</div>
             <div class="form-group">
                 <label>Militar Solicitante</label>
-                <select id="selectMilitar"></select>
+                <select id="selectMilitar"><option>Carregando banco...</option></select>
             </div>
             <div class="form-group">
                 <label>Senha de Acesso</label>
@@ -261,11 +249,7 @@
 <footer class="footer-full">
     <div class="footer-grid">
         <div class="footer-col">
-            <h4>
-                <a href="https://www.google.com/search?q=bombeiros+scs&sca_esv=0a5fe7958ee0ef33&sxsrf=ANbL-n4B-hzEe0R-ZcCfwccG2Pgdr12Vvg%3A1771958341747&ei=RfCdaZOqLcKq1sQP5Ji7uAk&biw=1600&bih=739&oq=bom&gs_lp=Egxnd3Mtd2l6LXNlcnAiA2JvbSoCCAAyChAjGIAEGCcYigUyBBAjGCcyChAAGIAEGEMYigUyEBAAGIAEGLEDGEMYgwEYigUyCxAAGIAEGLEDGIMBMhMQABiABBixAxhDGIMBGMkDGIoFMhAQLhiABBjRAxhDGMcBGIoFMgsQABiABBixAxiDATILEAAYgAQYkgMYigUyCxAAGIAEGJIDGIoFSNYcUABYnglwAXgBkAEAmAHJAaAB1QWqAQUwLjMuMbgBAcgBAPgBAZgCBaAC9QXCAgcQIxjwBRgnwgIKECMY8AUYJxjJAsICCxAuGIAEGLEDGIMBwgIIEC4YgAQYsQPCAg4QABiABBixAxiDARiKBcICBxAjGCcYyQLCAhAQIxjwBRiABBgnGMkCGIoFwgINEAAYgAQYsQMYQxiKBcICBRAAGIAEwgILEC4YgAQYxwEYrwGYAwCSBwUxLjMuMaAHxSeyBwUwLjMuMbgH8AXCBwMyLTXIBxyACAA&sclient=gws-wiz-serp" target="_blank" style="text-decoration: none; color: inherit;">
-                    <i class="fas fa-map-marker-alt icon-loc"></i> 6º BBM - Santa Cruz do Sul
-                </a>
-            </h4>
+            <h4><i class="fas fa-map-marker-alt icon-loc"></i> 6º BBM - Santa Cruz do Sul</h4>
             <p><strong>Sede Administrativa</strong></p>
             <p>Rua Tenente-Coronel Brito, 03</p>
             <p>Centro - Santa Cruz do Sul/RS</p>
@@ -280,24 +264,48 @@
             <h4><i class="fas fa-info-circle"></i> SAdmC</h4>
             <p>Seção Administrativa e Correição</p>
             <p>Sistema de Gestão Interna</p>
-            <p>Versão 3.0 (2026)</p>
+            <p>Versão 3.1 (Nuvem 2026)</p>
         </div>
     </div>
     <div class="footer-bottom">SISTEMA RESTRITO AOS MILITARES DO 6º BBM</div>
 </footer>
 
 <script>
-    const dbPadrao = { 
-        "Desenvolvedor": { senha: "admin", nivel: "MASTER" },
-        "CHEFE DO SADMC": { senha: "123", nivel: "CHEFE" },
-        "MILITAR PÚBLICO": { senha: "193", nivel: "PUBLICO" }
+    // --- CONFIGURAÇÃO FIREBASE (CHAVES DA SUA IMAGEM) ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyDfHrIaQzylbPaPBH_rAlew1CoINTfIySE",
+        authDomain: "sadmc-6bbm.firebaseapp.com",
+        databaseURL: "https://sadmc-6bbm-default-rtdb.firebaseio.com",
+        projectId: "sadmc-6bbm",
+        storageBucket: "sadmc-6bbm.firebasestorage.app",
+        messagingSenderId: "949715183102",
+        appId: "1:949715183102:web:7c0f2c0153beb6c1fa8caf"
     };
-    
-    let MILITARES = JSON.parse(localStorage.getItem('sadmc_db')) || dbPadrao;
+
+    // Inicialização do Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    let MILITARES = {};
+
+    // --- SINCRONIZAÇÃO COM A NUVEM ---
+    database.ref('militares').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            MILITARES = data;
+        } else {
+            // Se o banco estiver vazio pela primeira vez
+            MILITARES = { "DESENVOLVEDOR": { senha: "admin", nivel: "MASTER" } };
+            database.ref('militares').set(MILITARES);
+        }
+        render();
+    });
 
     function render() {
         const s = document.getElementById("selectMilitar"); 
         const tabela = document.getElementById("tabelaUsuarios");
+        if(!s || !tabela) return;
+
         s.innerHTML = "";
         tabela.innerHTML = "";
 
@@ -312,7 +320,7 @@
                 <td><strong>${m}</strong></td>
                 <td>${MILITARES[m].nivel}</td>
                 <td style="text-align: center;">
-                    ${m !== 'Desenvolvedor' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash-alt"></i></button>` : '<small style="color:#999">Protegido</small>'}
+                    ${m !== 'DESENVOLVEDOR' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash-alt"></i></button>` : '<small style="color:#999">Protegido</small>'}
                 </td>
             `;
         }
@@ -345,9 +353,11 @@
                 
                 const nivel = MILITARES[n].nivel;
                 
+                // Limpa visibilidade das seções
                 document.querySelectorAll(".secao-container").forEach(x => x.style.display = "none");
                 document.getElementById("painelAdmin").style.display = "none";
 
+                // Lógica de Permissões
                 if(nivel === "MASTER") {
                     document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
                     document.getElementById("painelAdmin").style.display = "block";
@@ -373,44 +383,47 @@
     }
 
     function addMilitar() {
-        const n = document.getElementById("admNome").value.toUpperCase();
+        const n = document.getElementById("admNome").value.toUpperCase().trim();
         const s = document.getElementById("admSenha").value;
         const l = document.getElementById("admNivel").value;
         if(n && s) {
-            MILITARES[n] = { senha: s, nivel: l };
-            saveDB();
-            document.getElementById("admNome").value = "";
-            document.getElementById("admSenha").value = "";
-            alert("Militar cadastrado com sucesso!");
+            // Salva diretamente na Nuvem
+            database.ref('militares/' + n).set({ senha: s, nivel: l })
+                .then(() => {
+                    alert("Militar cadastrado com sucesso no Firebase!");
+                    document.getElementById("admNome").value = "";
+                    document.getElementById("admSenha").value = "";
+                })
+                .catch((error) => alert("Erro ao salvar: " + error.message));
         }
     }
 
     function deletarMilitar(nome) {
         if(confirm(`Remover acesso de ${nome}?`)) {
-            delete MILITARES[nome];
-            saveDB();
+            // Remove da Nuvem
+            database.ref('militares/' + nome).remove()
+                .then(() => alert("Militar removido da nuvem!"));
         }
-    }
-
-    function saveDB() {
-        localStorage.setItem('sadmc_db', JSON.stringify(MILITARES));
-        render();
     }
 
     function clock() {
         const d = new Date();
-        document.getElementById('txtDataHora').innerHTML = d.toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'}) + "<br>" + d.toLocaleTimeString('pt-BR');
+        const elem = document.getElementById('txtDataHora');
+        if(elem) {
+            elem.innerHTML = d.toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long'}) + "<br>" + d.toLocaleTimeString('pt-BR');
+        }
     }
 
     window.onscroll = function() {
-        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) document.getElementById("btnTopo").style.display = "block";
-        else document.getElementById("btnTopo").style.display = "none";
+        const btn = document.getElementById("btnTopo");
+        if(!btn) return;
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) btn.style.display = "block";
+        else btn.style.display = "none";
     };
 
     function voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
     setInterval(clock, 1000);
-    render(); 
     clock();
 </script>
 </body>
