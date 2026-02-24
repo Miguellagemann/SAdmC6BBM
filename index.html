@@ -115,6 +115,7 @@
             display: flex; justify-content: space-between; align-items: center; 
             box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; 
         }
+        .saudacao-box { text-align: left; }
         .saudacao-box .txt-bemvindo { font-size: 12px; color: #999; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 2px; }
         .militar-status { font-size: 24px; font-weight: 800; color: var(--azul-medio); }
         .militar-status span { color: var(--vermelho-cbm); }
@@ -123,10 +124,15 @@
         .btn-sair { background: var(--azul-medio); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 800; }
         .btn-sair:hover { background: var(--vermelho-cbm); }
 
+        /* --- PAINEL ADMIN E TABELA --- */
         #painelAdmin { 
             background: #fff; padding: 30px; border-radius: 12px; margin-bottom: 40px; 
             border: 2px dashed var(--azul-medio); display: none;
         }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 14px; }
+        .admin-table th { background: var(--azul-medio); color: white; padding: 12px; text-align: left; }
+        .admin-table td { padding: 12px; border-bottom: 1px solid #eee; }
+        .btn-del { background: none; border: none; color: var(--vermelho-cbm); cursor: pointer; font-weight: 700; }
 
         /* SEÇÕES E CARDS */
         .secao-container { display: none; margin-top: 50px; animation: fadeIn 0.6s ease; }
@@ -224,7 +230,7 @@
 
         <div id="painelAdmin">
             <h3><i class="fas fa-user-cog"></i> Painel de Gerenciamento de Acessos</h3>
-            <div style="display:flex; gap:15px; flex-wrap: wrap;">
+            <div style="display:flex; gap:15px; flex-wrap: wrap; margin-bottom: 25px;">
                 <input type="text" id="admNome" placeholder="Nome Completo / Graduação" style="padding:12px; flex:2; border-radius:5px; border:1px solid #ccc;">
                 <input type="password" id="admSenha" placeholder="Senha" style="padding:12px; flex:1; border-radius:5px; border:1px solid #ccc;">
                 <select id="admNivel" style="padding:12px; flex:1; border-radius:5px; border:1px solid #ccc;">
@@ -236,6 +242,19 @@
                     <option value="MASTER">Acesso Master</option>
                 </select>
                 <button onclick="addMilitar()" style="background:#27ae60; color:white; border:none; padding:12px 30px; cursor:pointer; font-weight:800; border-radius:5px;">CADASTRAR</button>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Militar</th>
+                            <th>Nível de Acesso</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaUsuarios"></tbody>
+                </table>
             </div>
         </div>
 
@@ -321,9 +340,26 @@
 
     function render() {
         const s = document.getElementById("selectMilitar"); 
+        const tabela = document.getElementById("tabelaUsuarios");
         s.innerHTML = "";
+        tabela.innerHTML = "";
+
         for (let m in MILITARES) {
-            let o = document.createElement("option"); o.value = m; o.innerText = m; s.add(o);
+            // Select do Login
+            let o = document.createElement("option"); 
+            o.value = m; 
+            o.innerText = m; 
+            s.add(o);
+
+            // Linha da Tabela Admin
+            let row = tabela.insertRow();
+            row.innerHTML = `
+                <td><strong>${m}</strong></td>
+                <td>${MILITARES[m].nivel}</td>
+                <td style="text-align: center;">
+                    ${m !== 'Desenvolvedor' ? `<button class="btn-del" onclick="deletarMilitar('${m}')"><i class="fas fa-trash-alt"></i> Excluir</button>` : '<small style="color:#999">Protegido</small>'}
+                </td>
+            `;
         }
     }
 
@@ -367,14 +403,28 @@
     }
 
     function addMilitar() {
-        const n = document.getElementById("admNome").value;
+        const n = document.getElementById("admNome").value.toUpperCase();
         const s = document.getElementById("admSenha").value;
         const l = document.getElementById("admNivel").value;
         if(n && s) {
             MILITARES[n] = { senha: s, nivel: l };
-            localStorage.setItem('sadmc_db', JSON.stringify(MILITARES));
-            alert("Militar cadastrado!"); render();
+            saveDB();
+            document.getElementById("admNome").value = "";
+            document.getElementById("admSenha").value = "";
+            alert("Militar cadastrado!");
         }
+    }
+
+    function deletarMilitar(nome) {
+        if(confirm(`Tem certeza que deseja remover o acesso de ${nome}?`)) {
+            delete MILITARES[nome];
+            saveDB();
+        }
+    }
+
+    function saveDB() {
+        localStorage.setItem('sadmc_db', JSON.stringify(MILITARES));
+        render();
     }
 
     function clock() {
@@ -390,7 +440,8 @@
     function voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
     setInterval(clock, 1000);
-    render(); clock();
+    render(); 
+    clock();
 </script>
 </body>
 </html>
