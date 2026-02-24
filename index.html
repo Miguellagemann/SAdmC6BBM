@@ -11,7 +11,7 @@
             /* Tons inspirados no SOL */
             --azul-fundo-dark: #001233;
             --azul-fundo-light: #002855;
-            --azul-painel-glass: rgba(109, 125, 150, 0.7); 
+            --azul-painel-glass: rgba(255, 255, 255, 0.1); 
             --laranja-cbm: #FF9E3D; 
             --vermelho-cbm: #C40000;
             --vermelho-hover: #A30000;
@@ -26,24 +26,46 @@
             display: flex; flex-direction: column; min-height: 100vh; color: #334155;
         }
 
-        /* --- LOGIN COM EFEITO SOL --- */
+        /* --- LOGIN COM EFEITO LUZ CENTRAL (SOL) --- */
         #loginScreen { 
             flex: 1; 
-            /* Gradiente radial para criar o ponto de luz central */
-            background: radial-gradient(circle at center, var(--azul-fundo-light) 0%, var(--azul-fundo-dark) 100%);
+            /* Gradiente radial centralizado para criar o ponto de luz */
+            background: radial-gradient(circle at center, #003566 0%, #001D3D 60%, #000814 100%);
             display: flex; justify-content: center; align-items: center; padding: 20px; 
             position: relative;
             overflow: hidden;
         }
 
-        /* Reflexos geométricos de fundo */
+        /* Aura de brilho solar pulsante */
         #loginScreen::before {
             content: "";
             position: absolute;
-            width: 150%; height: 150%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 158, 61, 0.15) 0%, transparent 70%);
+            animation: pulseLight 10s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        /* Feixe de luz geométrica */
+        #loginScreen::after {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
             background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, transparent 40%, rgba(255,255,255,0.02) 60%, transparent 100%);
             transform: rotate(-15deg);
             pointer-events: none;
+            animation: sweep 12s infinite linear;
+        }
+
+        @keyframes pulseLight {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        @keyframes sweep {
+            0% { transform: translateX(-10%) rotate(-15deg); }
+            100% { transform: translateX(10%) rotate(-15deg); }
         }
 
         .login-container {
@@ -51,10 +73,10 @@
             border-radius: 12px; overflow: hidden; 
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .login-left-side {
-            /* Efeito Glassmorphism (Vidro Fosco) */
             background: var(--azul-painel-glass);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
@@ -115,7 +137,6 @@
         
         .logout-btn { background: var(--azul-texto); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
 
-        /* --- BOTÃO VOLTAR AO TOPO --- */
         #btnTop { 
             position: fixed; bottom: 30px; right: 30px; background: var(--vermelho-cbm); color: #fff; 
             border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; 
@@ -252,7 +273,7 @@
         <div class="footer-section">
             <h4>CONTATO</h4>
             <p>
-                <a href="https://www.google.com/maps?q=R.+Tenente+Coronel+Brito,+03+-+Santa+Cruz+do+Sul/RS" target="_blank" style="color: inherit; text-decoration: none;">
+                <a href="https://www.google.com/maps/search/?api=1&query=R.+Tenente+Coronel+Brito,+03+-+Santa+Cruz+do+Sul/RS" target="_blank" style="color: inherit; text-decoration: none;">
                     <i class="fas fa-location-dot" style="color: var(--vermelho-cbm); font-size: 20px; margin-right: 5px;"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS
                 </a>
             </p>
@@ -274,6 +295,7 @@
     function atualizarInterfaceUsuarios() {
         const select = document.getElementById("usuario");
         const listaDiv = document.getElementById("listaUsuarios");
+        if(!select) return;
         select.innerHTML = "";
         let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;">
             <tr style="background:#eee; text-align:left;"><th style="padding:10px;">Militar</th><th style="padding:10px;">Nível</th><th style="padding:10px;">Seção</th><th style="padding:10px;">Ação</th></tr>`;
