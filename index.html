@@ -8,122 +8,132 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
-            --azul-fundo-dark: #003566; 
-            --azul-fundo-light: #00509d;
-            --azul-brilho: rgba(255, 255, 255, 0.12);
-            --azul-painel-glass: rgba(255, 255, 255, 0.15); 
-            --laranja-cbm: #FFC300; 
-            --vermelho-cbm: #D90429;
-            --vermelho-hover: #EF233C;
-            --azul-texto: #001D3D;
-            --cinza-fundo: #EDF2F4;
+            /* Tons inspirados no SOL */
+            --azul-fundo-dark: #001233;
+            --azul-fundo-light: #002855;
+            --azul-painel-glass: rgba(109, 125, 150, 0.7); 
+            --laranja-cbm: #FF9E3D; 
+            --vermelho-cbm: #C40000;
+            --vermelho-hover: #A30000;
+            --azul-texto: #002B5B;
+            --cinza-fundo: #F4F6F9;
         }
 
-        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; transition: all 0.2s ease; }
         
         body { 
             margin: 0; font-family: 'Open Sans', sans-serif; background: var(--azul-fundo-dark); 
             display: flex; flex-direction: column; min-height: 100vh; color: #334155;
-            overflow-x: hidden;
         }
 
-        /* --- LOGIN --- */
+        /* --- LOGIN COM EFEITO SOL --- */
         #loginScreen { 
             flex: 1; 
-            background: linear-gradient(135deg, var(--azul-fundo-dark) 0%, var(--azul-fundo-light) 100%);
+            /* Gradiente radial para criar o ponto de luz central */
+            background: radial-gradient(circle at center, var(--azul-fundo-light) 0%, var(--azul-fundo-dark) 100%);
             display: flex; justify-content: center; align-items: center; padding: 20px; 
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: hidden;
         }
 
-        #loginScreen::after {
-            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent 45%, var(--azul-brilho) 50%, transparent 55%);
-            animation: sweep 6s infinite linear; pointer-events: none;
+        /* Reflexos geométricos de fundo */
+        #loginScreen::before {
+            content: "";
+            position: absolute;
+            width: 150%; height: 150%;
+            background: linear-gradient(160deg, rgba(255,255,255,0.05) 0%, transparent 40%, rgba(255,255,255,0.02) 60%, transparent 100%);
+            transform: rotate(-15deg);
+            pointer-events: none;
         }
 
-        @keyframes sweep {
-            0% { transform: translateX(-30%) translateY(-30%); }
-            100% { transform: translateX(30%) translateY(30%); }
-        }
-
-        .login-container { display: flex; max-width: 900px; width: 100%; z-index: 10; gap: 20px; position: relative; }
-
-        #errorMsg {
-            display: none; position: absolute; top: -65px; left: 50%; transform: translateX(-50%);
-            background: #fff; color: var(--vermelho-cbm); padding: 12px 25px; border-radius: 50px;
-            font-size: 14px; font-weight: 800; border-left: 5px solid var(--vermelho-cbm);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3); z-index: 100;
-            animation: shake 0.4s ease-in-out;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(-50%); }
-            25% { transform: translateX(-55%); }
-            75% { transform: translateX(-45%); }
+        .login-container {
+            display: flex; max-width: 850px; width: 100%; min-height: 480px;
+            border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            z-index: 2;
         }
 
         .login-left-side {
-            background: var(--azul-painel-glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
+            /* Efeito Glassmorphism (Vidro Fosco) */
+            background: var(--azul-painel-glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            flex: 1; padding: 40px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.1);
         }
 
         .cbmrs-logo-text {
-            font-size: 82px; font-weight: 800; margin: 0;
-            background: linear-gradient(to bottom, #FFFFFF 30%, #FFD60A 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 82px; font-weight: 800; margin: 0; line-height: 1;
+            background: linear-gradient(to right, #FFEB3B 0%, #FF9800 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px;
+        }
+
+        .cbmrs-sub-text {
+            font-size: 14px; font-weight: 700; margin-top: 5px; color: #FF9800;
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
 
         .login-right-side {
-            background: #FFFFFF; flex: 1.2; padding: 50px 40px; border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: center;
+            background: #FFFFFF; flex: 1.2; padding: 50px 40px;
+            display: flex; flex-direction: column; justify-content: center;
         }
 
-        .login-right-side h2 { color: var(--azul-texto); margin: 0; font-weight: 800; }
+        .login-right-side h2 { color: var(--azul-texto); margin: 0; font-weight: 800; font-size: 24px; }
+        .login-right-side p.subtitle { color: #666; font-size: 12px; margin-bottom: 25px; font-weight: 600; text-transform: uppercase; }
+
         .login-right-side select, .login-right-side input { 
-            width: 100%; padding: 15px; margin-top: 10px; border-radius: 10px; 
-            border: 2px solid #F1F5F9; font-size: 15px; background: #F8FAFC;
+            width: 100%; padding: 14px; margin-top: 8px; border-radius: 6px; 
+            border: 1px solid #ddd; font-size: 15px; background: #fafafa;
         }
 
         .password-wrapper { position: relative; width: 100%; }
-        .password-wrapper i { position: absolute; right: 15px; top: 25px; cursor: pointer; color: #94A3B8; }
+        .password-wrapper i { position: absolute; right: 15px; top: 22px; cursor: pointer; color: #999; }
 
         .btn-entrar { 
-            width: 100%; padding: 16px; background: var(--vermelho-cbm); color: #fff; border: none; 
-            border-radius: 10px; cursor: pointer; font-weight: 800; margin-top: 30px;
-            font-size: 15px; text-transform: uppercase; display: flex; justify-content: center; align-items: center; gap: 12px;
+            width: 100%; padding: 15px; background: var(--vermelho-cbm); color: #fff; border: none; 
+            border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 25px;
+            font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); }
-        .btn-entrar:disabled { background: #CBD5E1; cursor: not-allowed; }
+        .btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(196, 0, 0, 0.3); }
 
-        .spinner {
-            display: none; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%; border-top-color: #fff; animation: spin 0.8s infinite linear;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- ÁREA INTERNA --- */
-        #sistema { display: none; flex: 1; background: var(--cinza-fundo); animation: fadeIn 0.6s ease; }
-        .header-top { background: var(--azul-texto); color: #fff; text-align: center; padding: 18px; font-weight: 800; }
-        .header-sub { background: var(--vermelho-cbm); height: 4px; }
-        .container { max-width: 1100px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .user-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #F1F5F9; padding-bottom: 15px; margin-bottom: 25px; }
-
-        #painelDev { background: #F8FAFC; padding: 25px; border-radius: 12px; border: 2px solid var(--azul-fundo-dark); margin-bottom: 30px; }
-        .dev-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-        .dev-grid input, .dev-grid select { padding: 10px; border: 1px solid #ddd; border-radius: 5px; flex: 1; }
+        /* --- SISTEMA INTERNO --- */
+        #sistema { display: none; flex: 1; background: var(--cinza-fundo); }
+        .header-top { background: var(--azul-texto); color: #fff; text-align: center; padding: 15px; font-weight: 800; font-size: 20px; }
+        .header-sub { background: var(--vermelho-cbm); height: 5px; }
+        .container { max-width: 1100px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         
-        .category { display: none; margin-bottom: 35px; }
-        .category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 20px; margin-bottom: 20px; }
-        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .link-card { border: 1px solid #E2E8F0; padding: 30px; text-align: center; border-radius: 12px; text-decoration: none; color: #475569; display: flex; flex-direction: column; align-items: center; }
-        .link-card i { font-size: 35px; color: var(--vermelho-cbm); margin-bottom: 15px; }
+        .user-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        #painelDev { background: #f8fafc; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 2px solid var(--azul-texto); }
+        .category { margin-bottom: 30px; display: none; animation: fadeIn 0.5s ease; }
+        .category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 19px; margin-bottom: 20px; }
+        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .link-card { border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; height: 100%; }
+        .link-card:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho-cbm); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .link-card i { font-size: 35px; color: var(--azul-texto); margin-bottom: 15px; }
+        
+        .logout-btn { background: var(--azul-texto); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+
+        /* --- BOTÃO VOLTAR AO TOPO --- */
+        #btnTop { 
+            position: fixed; bottom: 30px; right: 30px; background: var(--vermelho-cbm); color: #fff; 
+            border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; 
+            display: none; z-index: 1000; align-items: center; justify-content: center; font-size: 20px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
 
         /* --- RODAPÉ --- */
-        .footer-oficial { background: #000814; color: #fff; padding: 40px 20px; margin-top: auto; }
-        .footer-main { max-width: 1100px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
-        .footer-local { color: var(--laranja-cbm); font-weight: 800; font-size: 16px; margin: 0; }
-        .footer-subtext { font-size: 12px; opacity: 0.8; margin-top: 5px; }
+        .footer-oficial { background: #000E1F; color: #fff; font-size: 14px; margin-top: auto; border-top: 5px solid var(--vermelho-cbm); }
+        .footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
+        .footer-section h4 { color: var(--laranja-cbm); margin-bottom: 15px; font-weight: 800; text-transform: uppercase; }
+        .footer-section p { margin: 5px 0; line-height: 1.6; font-weight: 600; }
+        
+        .acesso-restrito {
+            text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.05);
+            color: #FF9E3D; font-weight: 700; font-size: 12px; text-transform: uppercase;
+            letter-spacing: 1px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -132,57 +142,53 @@
 
 <div id="loginScreen">
     <div class="login-container">
-        <div id="errorMsg"><i class="fas fa-exclamation-triangle"></i> Senha incorreta! Tente novamente.</div>
-        
         <div class="login-left-side">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="Logo" style="width: 150px; margin-bottom: 20px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="Logo CBMRS" style="width: 170px; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));">
             <h1 class="cbmrs-logo-text">CBMRS</h1>
-            <p style="color: #FFD60A; font-weight: 800; letter-spacing: 3px; margin: 0;">6º BATALHÃO</p>
+            <p class="cbmrs-sub-text">Corpo de Bombeiros Militar</p>
         </div>
-
         <div class="login-right-side">
-            <h2>SAdmC</h2>
-            <p style="font-size: 12px; color: #94A3B8; font-weight: 700; text-transform: uppercase; margin-bottom: 25px;">Seção de Administração e Correição</p>
+            <h2>SAdmC - 6º BBM</h2>
+            <p class="subtitle">Seção Administrativa e Correição</p>
             
-            <label style="font-size: 11px; font-weight: 800; color: #64748B;">SELECIONE O MILITAR</label>
+            <label style="font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase;">Militar</label>
             <select id="usuario"></select>
             
-            <label style="font-size: 11px; font-weight: 800; color: #64748B; margin-top: 20px; display: block;">SENHA DE ACESSO</label>
+            <label style="font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; margin-top: 20px;">Senha</label>
             <div class="password-wrapper">
-                <input type="password" id="senha" placeholder="••••••••">
+                <input type="password" id="senha" placeholder="Senha">
                 <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
             </div>
             
-            <button class="btn-entrar" id="btnEntrar" onclick="login()">
-                <span id="btnText">Entrar na Seção</span>
-                <div class="spinner" id="btnSpinner"></div>
-            </button>
+            <button class="btn-entrar" onclick="login()">Entrar</button>
         </div>
     </div>
 </div>
 
 <div id="sistema">
-    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RIO GRANDE DO SUL</div>
+    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
     <div class="header-sub"></div>
     <div class="container">
         <div class="user-bar">
-            <div>
-                <span id="usuarioLogado" style="font-weight: 800; color: var(--azul-texto); font-size: 18px;"></span>
-                <div style="font-size: 12px; color: #64748B;"><span id="dataAtual"></span> | <span id="relogio"></span></div>
+            <span id="usuarioLogado" style="font-weight: 800; color: var(--azul-texto); font-size: 18px;"></span>
+            <div style="font-size: 14px; font-weight: 600; color: #666;">
+                <span id="dataAtual"></span> | <span id="relogio"></span>
             </div>
-            <button onclick="location.reload()" style="background: var(--azul-texto); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700;">Sair da Seção</button>
+            <button class="logout-btn" onclick="location.reload()">Sair</button>
         </div>
 
         <div id="painelDev" style="display:none;">
-             <h4 style="margin:0 0 15px 0;"><i class="fas fa-user-shield"></i> Gestão de Acessos</h4>
-             <div class="dev-grid">
-                <input type="text" id="novoNome" placeholder="Nome do Militar">
-                <input type="text" id="novaSenha" placeholder="Senha">
-                <select id="novoNivel" onchange="document.getElementById('novaSecao').style.display = (this.value=='admin'?'none':'block')">
-                    <option value="restrito">Restrito</option>
-                    <option value="admin">Admin</option>
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin:0; color: var(--azul-texto);"><i class="fas fa-user-shield"></i> Gestão de Acessos</h3>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                <input type="text" id="novoNome" placeholder="Nome (Ex: SGT BOCK)" style="flex:2; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <input type="text" id="novaSenha" placeholder="Senha" style="flex:1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <select id="novoNivel" style="flex:1; padding: 10px;" onchange="document.getElementById('novaSecao').style.display = (this.value=='admin'?'none':'block')">
+                    <option value="restrito">Acesso Restrito</option>
+                    <option value="admin">Acesso Total (Admin)</option>
                 </select>
-                <select id="novaSecao">
+                <select id="novaSecao" style="flex:1; padding: 10px;">
                     <option value="B1">B1 - Pessoal</option>
                     <option value="B2">B2 - ALI</option>
                     <option value="B3">B3 - Operações</option>
@@ -191,42 +197,70 @@
                 </select>
                 <button onclick="criarNovoUsuario()" style="background: #059669; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">CADASTRAR</button>
             </div>
-            <div id="listaUsuarios" style="background:white; border-radius:8px; border:1px solid #eee;"></div>
+            <div id="listaUsuarios" style="max-height: 200px; overflow-y: auto; background: white; border: 1px solid #ddd; border-radius: 5px;"></div>
         </div>
 
         <div class="category" id="cat-B1">
-            <div class="category-title">B1 - SEÇÃO DE PESSOAL</div>
-            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-users"></i><strong>Efetivo</strong></a></div>
+            <div class="category-title">B1 - SEÇÃO PESSOAL</div>
+            <div class="link-grid">
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-calendar-check"></i><strong>Escalas de Serviço</strong></a>
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-umbrella-beach"></i><strong>Efetivo e Férias</strong></a>
+            </div>
         </div>
+
         <div class="category" id="cat-B2">
-            <div class="category-title">B2 - AGÊNCIA LOCAL DE INTELIGÊNCIA (ALI)</div>
-            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Inteligência</strong></a></div>
+            <div class="category-title">ALI - AGÊNCIA LOCAL DE INTELIGÊNCIA</div>
+            <div class="link-grid">
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-user-secret"></i><strong>Dados de Inteligência</strong></a>
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-chart-line"></i><strong>Estatísticas</strong></a>
+            </div>
         </div>
+
         <div class="category" id="cat-B3">
-            <div class="category-title">B3 - SEÇÃO DE OPERAÇÕES</div>
-            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-fire-extinguisher"></i><strong>Operações</strong></a></div>
+            <div class="category-title">B3 - OPERAÇÕES</div>
+            <div class="link-grid">
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-person-shelter"></i><strong>Planilha Operacional</strong></a>
+            </div>
         </div>
+
         <div class="category" id="cat-B4">
-            <div class="category-title">B4 - SEÇÃO DE LOGÍSTICA</div>
-            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-truck"></i><strong>Patrimônio</strong></a></div>
+            <div class="category-title">B4 - LOGÍSTICA</div>
+            <div class="link-grid">
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></a>
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-boxes-stacked"></i><strong>Carga e Patrimônio</strong></a>
+            </div>
         </div>
+
         <div class="category" id="cat-SCor">
-            <div class="category-title">SCOR - SEÇÃO DE CORREIÇÃO</div>
-            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>Correição</strong></a></div>
+            <div class="category-title">SCOR - CORREIÇÃO</div>
+            <div class="link-grid">
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-gavel"></i><strong>Processos</strong></a>
+                <a href="#" target="_blank" class="link-card"><i class="fas fa-balance-scale"></i><strong>Legislação</strong></a>
+            </div>
         </div>
     </div>
 </div>
 
+<button id="btnTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></button>
+
 <footer class="footer-oficial">
     <div class="footer-main">
-        <div>
-            <p class="footer-local">SANTA CRUZ DO SUL - RS</p>
-            <p class="footer-subtext">6º BATALHÃO DE BOMBEIROS MILITAR</p>
+        <div class="footer-section">
+            <h4>6º BATALHÃO DE BOMBEIRO MILITAR</h4>
+            <p>Seção Administrativa e Correição - SAdmC</p>
         </div>
-        <div style="text-align:right;">
-            <div style="font-size: 13px; font-weight: 700; color: var(--laranja-cbm);"><i class="fas fa-lock"></i> ACESSO RESTRITO</div>
-            <div style="font-size: 11px; opacity: 0.7; margin-top: 4px;">SAdmC - Seção de Administração e Correição</div>
+        <div class="footer-section">
+            <h4>CONTATO</h4>
+            <p>
+                <a href="https://www.google.com/maps?q=R.+Tenente+Coronel+Brito,+03+-+Santa+Cruz+do+Sul/RS" target="_blank" style="color: inherit; text-decoration: none;">
+                    <i class="fas fa-location-dot" style="color: var(--vermelho-cbm); font-size: 20px; margin-right: 5px;"></i> R. Tenente Coronel Brito, 03 - Santa Cruz do Sul/RS
+                </a>
+            </p>
+            <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
         </div>
+    </div>
+    <div class="acesso-restrito">
+        <i class="fas fa-lock"></i> Acesso restrito aos militares do 6º BBM
     </div>
 </footer>
 
@@ -240,14 +274,12 @@
     function atualizarInterfaceUsuarios() {
         const select = document.getElementById("usuario");
         const listaDiv = document.getElementById("listaUsuarios");
-        if(!select) return;
         select.innerHTML = "";
         let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;">
-            <tr style="background:#f1f5f9; text-align:left;"><th style="padding:12px;">Militar</th><th style="padding:12px;">Nível</th><th style="padding:12px;">Ação</th></tr>`;
+            <tr style="background:#eee; text-align:left;"><th style="padding:10px;">Militar</th><th style="padding:10px;">Nível</th><th style="padding:10px;">Seção</th><th style="padding:10px;">Ação</th></tr>`;
         for (let u in usuarios) {
             let opt = document.createElement("option"); opt.value = u; opt.innerText = u; select.add(opt);
-            html += `<tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;">${u}</td><td>${usuarios[u].nivel}</td>
-            <td><button onclick="excluirUsuario('${u}')" style="color:red;border:none;background:none;cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
+            html += `<tr><td style="padding:8px 10px;">${u}</td><td>${usuarios[u].nivel}</td><td>${usuarios[u].secao}</td><td><button onclick="excluirUsuario('${u}')" style="color:red;border:none;background:none;cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
         }
         listaDiv.innerHTML = html + "</table>";
     }
@@ -262,17 +294,12 @@
             localStorage.setItem('bdSAdmC_vFinal', JSON.stringify(usuarios));
             atualizarInterfaceUsuarios();
             alert("Militar cadastrado!");
-            document.getElementById("novoNome").value = ""; document.getElementById("novaSenha").value = "";
         }
     }
 
     function excluirUsuario(n) {
         if(n === "Desenvolvedor") return;
-        if(confirm("Excluir " + n + "?")) {
-            delete usuarios[n];
-            localStorage.setItem('bdSAdmC_vFinal', JSON.stringify(usuarios));
-            atualizarInterfaceUsuarios();
-        }
+        if(confirm("Excluir " + n + "?")) { delete usuarios[n]; localStorage.setItem('bdSAdmC_vFinal', JSON.stringify(usuarios)); atualizarInterfaceUsuarios(); }
     }
 
     function togglePassword() {
@@ -285,40 +312,29 @@
     function login() {
         const u = document.getElementById("usuario").value;
         const p = document.getElementById("senha").value;
-        const btn = document.getElementById("btnEntrar");
-        const btnText = document.getElementById("btnText");
-        const spinner = document.getElementById("btnSpinner");
-        const errorMsg = document.getElementById("errorMsg");
-
-        errorMsg.style.display = "none";
-        btn.disabled = true;
-        btnText.innerText = "VERIFICANDO...";
-        spinner.style.display = "block";
-
-        setTimeout(() => {
-            if (usuarios[u] && p === usuarios[u].senha) {
-                document.getElementById("loginScreen").style.display = "none";
-                document.getElementById("sistema").style.display = "block";
-                document.getElementById("usuarioLogado").innerText = "Militar: " + u;
-                
-                document.querySelectorAll(".category").forEach(c => c.style.display = "none");
-                if (usuarios[u].nivel === "admin") {
-                    document.querySelectorAll(".category").forEach(c => c.style.display = "block");
-                    if(u === "Desenvolvedor") document.getElementById("painelDev").style.display = "block";
-                } else {
-                    const alvo = document.getElementById("cat-" + usuarios[u].secao);
-                    if(alvo) alvo.style.display = "block";
-                }
+        if (usuarios[u] && p === usuarios[u].senha) {
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("sistema").style.display = "block";
+            document.getElementById("usuarioLogado").innerText = "Militar: " + u;
+            document.querySelectorAll(".category").forEach(c => c.style.display = "none");
+            if (usuarios[u].nivel === "admin") {
+                document.querySelectorAll(".category").forEach(c => c.style.display = "block");
+                if(u === "Desenvolvedor") document.getElementById("painelDev").style.display = "block";
             } else {
-                btn.disabled = false;
-                btnText.innerText = "Entrar na Seção";
-                spinner.style.display = "none";
-                errorMsg.style.display = "block";
-                document.getElementById("senha").value = "";
-                document.getElementById("senha").focus();
+                const alvo = document.getElementById("cat-" + usuarios[u].secao);
+                if(alvo) alvo.style.display = "block";
             }
-        }, 1200);
+        } else { alert("Senha incorreta!"); }
     }
+
+    document.getElementById("senha").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") login();
+    });
+
+    window.onscroll = function() {
+        const btn = document.getElementById("btnTop");
+        btn.style.display = (document.documentElement.scrollTop > 300) ? "flex" : "none";
+    };
 
     setInterval(() => {
         const agora = new Date();
