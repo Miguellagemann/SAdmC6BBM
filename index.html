@@ -8,342 +8,342 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
-            --azul-fundo-dark: #001233;
-            --azul-fundo-light: #002855;
+            --azul-cbm-escuro: #001D3D;
+            --azul-cbm-medio: #003566;
             --laranja-cbm: #FF9E3D; 
             --vermelho-cbm: #C40000;
-            --vermelho-hover: #A30000;
             --azul-texto: #002B5B;
             --cinza-fundo: #F4F6F9;
-            --glass: rgba(255, 255, 255, 0.1);
+            --branco: #FFFFFF;
         }
 
         * { box-sizing: border-box; transition: all 0.2s ease; }
         
         body { 
-            margin: 0; font-family: 'Open Sans', sans-serif; background: var(--azul-fundo-dark); 
-            display: flex; flex-direction: column; min-height: 100vh; color: #334155;
+            margin: 0; 
+            font-family: 'Open Sans', sans-serif; 
+            background: var(--azul-cbm-escuro); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
         }
 
-        /* --- ANIMAÇÃO DE LUZ NO FUNDO (LOGIN) --- */
-        #loginScreen::before {
-            content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
-            animation: sweep 8s infinite linear; pointer-events: none; z-index: 1;
-        }
-        @keyframes sweep {
-            0% { transform: translate(-15%, -15%); }
-            100% { transform: translate(15%, 15%); }
-        }
-
-        /* --- COMPONENTES DE ALERTA E CARGA --- */
+        /* --- ANIMAÇÕES E COMPONENTES DE SISTEMA --- */
         #loadingOverlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 18, 51, 0.95); z-index: 9999;
             flex-direction: column; justify-content: center; align-items: center; color: white;
         }
         .spinner {
-            width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.1);
+            width: 60px; height: 60px; border: 6px solid rgba(255, 255, 255, 0.1);
             border-top-color: var(--laranja-cbm); border-radius: 50%; animation: spin 1s infinite linear;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         #erroSenha {
             display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: #ff4d4d; color: white; padding: 15px 30px; border-radius: 8px;
-            font-weight: 700; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 10000;
-            animation: fadeInDown 0.4s ease-out;
+            background: var(--vermelho-cbm); color: white; padding: 15px 40px; border-radius: 8px;
+            font-weight: 800; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 10000;
+            animation: slideDown 0.4s ease-out;
         }
-        @keyframes fadeInDown { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        @keyframes slideDown { from { transform: translate(-50%, -100%); } to { transform: translate(-50%, 0); } }
 
-        /* --- TELA DE LOGIN --- */
+        /* --- TELA DE LOGIN (ESTILO IMAGEM 2) --- */
         #loginScreen { 
-            flex: 1; background: radial-gradient(circle at center, #003566 0%, #001D3D 60%, #000814 100%);
-            display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; overflow: hidden;
+            flex: 1; display: flex; justify-content: center; align-items: center; 
+            padding: 20px; position: relative; overflow: hidden;
+            background: radial-gradient(circle, #003566 0%, #001D3D 100%);
         }
-        .login-container {
-            display: flex; max-width: 850px; width: 100%; min-height: 480px;
-            border-radius: 12px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            z-index: 2; border: 1px solid rgba(255, 255, 255, 0.1);
+        
+        /* Efeito de feixe de luz no fundo */
+        #loginScreen::after {
+            content: ""; position: absolute; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%);
+            animation: sweep 10s infinite linear;
         }
-        .login-left-side {
-            background: var(--glass); backdrop-filter: blur(15px);
-            flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center; border-right: 1px solid rgba(255,255,255,0.1);
-        }
-        .cbmrs-logo-text {
-            font-size: 82px; font-weight: 800; margin: 0; line-height: 1;
-            background: linear-gradient(to right, #FFEB3B 0%, #FF9800 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px;
-        }
-        .login-right-side { background: #FFFFFF; flex: 1.2; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; }
-        .login-right-side select, .login-right-side input { width: 100%; padding: 14px; margin-top: 8px; border-radius: 6px; border: 1px solid #ddd; outline: none; font-size: 15px; }
-        .btn-entrar { width: 100%; padding: 15px; background: var(--vermelho-cbm); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 25px; font-size: 16px; text-transform: uppercase; }
-        .btn-entrar:hover { background: var(--vermelho-hover); }
+        @keyframes sweep { from { transform: translate(-20%, -20%); } to { transform: translate(20%, 20%); } }
 
-        /* --- SISTEMA INTERNO --- */
+        .login-container { 
+            display: flex; max-width: 900px; width: 100%; min-height: 500px; 
+            border-radius: 15px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); 
+            z-index: 5; background: var(--branco);
+        }
+        
+        .login-left { 
+            background: var(--azul-cbm-medio); flex: 1; padding: 50px; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; 
+        }
+        .login-left img { width: 150px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3)); }
+        .login-left h1 { font-size: 75px; margin: 10px 0; color: #FFD700; letter-spacing: -3px; }
+        .login-left p { font-weight: 800; font-size: 14px; text-transform: uppercase; color: var(--laranja-cbm); }
+
+        .login-right { flex: 1.2; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .login-right h2 { margin: 0; color: var(--azul-cbm-medio); font-size: 30px; }
+        .login-right .sub { color: #888; font-size: 12px; margin-bottom: 35px; text-transform: uppercase; font-weight: 600; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 800; font-size: 11px; color: #555; text-transform: uppercase; margin-bottom: 8px; }
+        .form-group select, .form-group input { 
+            width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; 
+            outline: none; font-size: 15px; font-weight: 600; color: #333;
+        }
+        .form-group input:focus { border-color: var(--azul-cbm-medio); }
+
+        .btn-acesso { 
+            width: 100%; padding: 18px; background: var(--vermelho-cbm); color: white; 
+            border: none; border-radius: 8px; font-weight: 800; text-transform: uppercase; 
+            cursor: pointer; font-size: 16px; margin-top: 10px; box-shadow: 0 4px 10px rgba(196,0,0,0.3);
+        }
+        .btn-acesso:hover { background: #e60000; transform: translateY(-2px); }
+
+        /* --- INTERFACE DO SISTEMA (ESTILO IMAGEM 1) --- */
         #sistema { display: none; flex: 1; background: var(--cinza-fundo); }
-        .header-top { background: var(--azul-texto); color: #fff; text-align: center; padding: 15px; font-weight: 800; font-size: 20px; }
-        .header-sub { background: var(--vermelho-cbm); height: 5px; }
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-        
-        .user-info-card { 
-            background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;
-        }
-        #usuarioLogado { font-weight: 700; color: var(--azul-texto); font-size: 18px; display: flex; align-items: center; gap: 10px; }
-        
-        /* CATEGORIAS */
-        .category { display: none; margin-bottom: 40px; animation: fadeIn 0.5s ease; }
-        .category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 20px; margin-bottom: 20px; text-transform: uppercase; }
-        .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .link-card { 
-            background: #fff; border: 1px solid #eee; padding: 30px; text-align: center; border-radius: 10px; 
-            text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        .link-card:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho-cbm); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .link-card i { font-size: 40px; color: var(--azul-texto); margin-bottom: 15px; }
+        .header-top { background: var(--azul-texto); color: white; text-align: center; padding: 14px; font-weight: 800; font-size: 19px; }
+        .header-stripe { background: var(--vermelho-cbm); height: 6px; }
 
-        /* PAINEL ADMIN */
-        #painelDev { 
-            background: #f1f5f9; border: 2px solid var(--azul-texto); padding: 25px; border-radius: 10px; margin-bottom: 30px; display: none;
+        .dashboard-container { max-width: 1200px; margin: 25px auto; padding: 0 20px; }
+
+        /* BARRA DO MILITAR */
+        .militar-bar { 
+            background: white; padding: 25px 35px; border-radius: 10px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06); margin-bottom: 30px;
+        }
+        .militar-bar .info-nome { font-size: 20px; font-weight: 800; color: var(--azul-cbm-medio); }
+        .militar-bar .info-nome span { color: var(--azul-cbm-medio); }
+        .militar-bar .info-tempo { font-size: 15px; color: #666; font-weight: 700; text-align: center; }
+        .btn-logout { 
+            background: var(--azul-cbm-medio); color: white; border: none; 
+            padding: 10px 25px; border-radius: 6px; font-weight: 800; cursor: pointer; 
         }
 
-        /* --- RODAPÉ --- */
-        .footer-oficial { background: #000E1F; color: #fff; font-size: 14px; margin-top: auto; border-top: 5px solid var(--vermelho-cbm); }
-        .footer-main { max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
-        .footer-section h4 { color: var(--laranja-cbm); margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-        .footer-section p { margin: 8px 0; color: #cbd5e1; }
-        .acesso-restrito { text-align: center; padding: 15px; background: rgba(0,0,0,0.3); color: #FF9E3D; font-weight: 700; font-size: 12px; }
+        /* GRID DE CATEGORIAS */
+        .secao-container { display: none; animation: fadeIn 0.5s ease forwards; }
+        .secao-header { 
+            border-left: 8px solid var(--vermelho-cbm); padding-left: 20px; 
+            margin-bottom: 25px; font-size: 22px; font-weight: 800; color: var(--azul-texto);
+            text-transform: uppercase;
+        }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .card-item { 
+            background: white; padding: 35px; border-radius: 12px; text-decoration: none; color: inherit;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .card-item i { font-size: 45px; color: var(--azul-cbm-medio); margin-bottom: 20px; }
+        .card-item span { font-weight: 800; font-size: 16px; color: #444; }
+        .card-item:hover { 
+            transform: translateY(-8px); border-top: 5px solid var(--vermelho-cbm);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* PAINEL ADMINISTRADOR */
+        #painelAdmin { 
+            background: #eef2f7; padding: 30px; border-radius: 10px; margin-bottom: 40px; 
+            border: 2px dashed var(--azul-cbm-medio); display: none;
+        }
+
+        /* RODAPÉ DETALHADO */
+        .footer-full { background: #000E1F; color: white; border-top: 6px solid var(--vermelho-cbm); margin-top: auto; }
+        .footer-grid { 
+            max-width: 1200px; margin: auto; padding: 50px 20px; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;
+        }
+        .footer-col h4 { color: var(--laranja-cbm); margin-bottom: 20px; font-size: 16px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .footer-col p { font-size: 14px; line-height: 1.6; color: #ccc; }
+        .footer-col i { width: 25px; color: var(--laranja-cbm); }
+        .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 20px; font-size: 12px; font-weight: 700; color: var(--laranja-cbm); letter-spacing: 1px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div id="loadingOverlay"><div class="spinner"></div><span style="font-weight: 800; letter-spacing: 2px;">PROCESSANDO...</span></div>
-<div id="erroSenha"><i class="fas fa-lock"></i> SENHA INCORRETA! TENTE NOVAMENTE.</div>
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <div style="font-weight: 800; letter-spacing: 2px;">AUTENTICANDO NO SISTEMA...</div>
+</div>
+
+<div id="erroSenha"><i class="fas fa-exclamation-triangle"></i> ACESSO NEGADO! SENHA INCORRETA.</div>
 
 <div id="loginScreen">
     <div class="login-container">
-        <div class="login-left-side">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" style="width: 160px; margin-bottom: 20px;">
-            <h1 class="cbmrs-logo-text">CBMRS</h1>
-            <p style="font-weight: 700; color: #FF9E3D; letter-spacing: 1px;">6º BATALHÃO DE BOMBEIRO MILITAR</p>
+        <div class="login-left">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="Brasão CBMRS">
+            <h1>CBMRS</h1>
+            <p>6º Batalhão de Bombeiro Militar</p>
         </div>
-        <form class="login-right-side" onsubmit="event.preventDefault(); login();">
-            <h2 style="margin:0; color: var(--azul-texto);">SAdmC - Acesso</h2>
-            <p style="color:#666; font-size:13px; margin-bottom:30px;">SISTEMA ADMINISTRATIVO E CORREIÇÃO</p>
+        <form class="login-right" onsubmit="event.preventDefault(); acaoLogin();">
+            <h2>SAdmC - Acesso</h2>
+            <div class="sub">Seção Administrativa e Correição</div>
             
-            <label style="font-weight: 600; font-size: 12px;">MILITAR</label>
-            <select id="usuario"></select>
+            <div class="form-group">
+                <label>Militar Solicitante</label>
+                <select id="selectMilitar">
+                    </select>
+            </div>
             
-            <label style="font-weight: 600; font-size: 12px; display:block; margin-top:20px;">SENHA</label>
-            <input type="password" id="senha" placeholder="••••••••">
+            <div class="form-group">
+                <label>Senha de Acesso</label>
+                <input type="password" id="inputSenha" placeholder="Digite sua senha de 4 dígitos">
+            </div>
             
-            <button type="submit" class="btn-entrar">Acessar Sistema</button>
+            <button type="submit" class="btn-acesso">Acessar Sistema</button>
         </form>
     </div>
 </div>
 
 <div id="sistema">
-    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
-    <div class="header-sub"></div>
+    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO ESTADO DO RS</div>
+    <div class="header-stripe"></div>
     
-    <div class="container">
-        <div class="user-info-card">
-            <div id="usuarioLogado"></div>
-            
-            <div style="text-align: right;">
-                <div style="font-weight: 700; color: #444;"><span id="dataAtual"></span></div>
-                <div style="color: var(--vermelho-cbm); font-weight: 800;" id="relogio"></div>
+    <div class="dashboard-container">
+        <div class="militar-bar">
+            <div class="info-nome">Militar: <span id="labelNome"></span></div>
+            <div class="info-tempo">
+                <i class="far fa-calendar-alt"></i> <span id="txtData"></span><br>
+                <i class="far fa-clock"></i> <span id="txtHora"></span>
             </div>
-            <button onclick="location.reload()" style="background:var(--azul-texto); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:700;">SAIR</button>
+            <button class="btn-logout" onclick="location.reload()">SAIR DO SISTEMA</button>
         </div>
 
-        <div id="painelDev">
-            <h3 style="margin-top:0; color: var(--azul-texto);"><i class="fas fa-user-cog"></i> Gerenciamento de Usuários</h3>
-            <form onsubmit="event.preventDefault(); criarNovoUsuario();" style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap:10px;">
-                <input type="text" id="novoNome" placeholder="Nome Completo do Militar" required style="padding:10px;">
-                <input type="text" id="novaSenha" placeholder="Senha" required style="padding:10px;">
-                <select id="novoNivel" style="padding:10px;">
+        <div id="painelAdmin">
+            <h3 style="margin:0 0 20px 0; color:var(--azul-cbm-medio); text-transform:uppercase;">
+                <i class="fas fa-tools"></i> Gestão de Usuários e Acessos
+            </h3>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="admNome" placeholder="Novo Militar" style="padding:10px; flex:2;">
+                <input type="password" id="admSenha" placeholder="Senha" style="padding:10px; flex:1;">
+                <select id="admNivel" style="padding:10px; flex:1;">
                     <option value="B1">Seção B1</option>
-                    <option value="B2">Seção B2</option>
-                    <option value="B3">Seção B3</option>
-                    <option value="B4">Seção B4</option>
-                    <option value="SCor">Seção SCor</option>
-                    <option value="admin">Administrador</option>
+                    <option value="SCOR">Correição</option>
+                    <option value="MASTER">Master</option>
                 </select>
-                <button type="submit" style="background:#059669; color:white; border:none; border-radius:5px; font-weight:700; cursor:pointer;">CADASTRAR</button>
-            </form>
-            <div id="listaUsuarios" style="margin-top:20px; max-height: 200px; overflow-y: auto; background:white; border-radius:5px; padding:10px;"></div>
-        </div>
-
-        <div class="category" id="cat-B1">
-            <div class="category-title">B1 - Seção de Pessoal</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-calendar-check"></i><strong>Escalas de Serviço</strong></a>
-                <a href="#" class="link-card"><i class="fas fa-users-cog"></i><strong>Gestão de Efetivo</strong></a>
+                <button onclick="addNovoMilitar()" style="background:#2ecc71; color:white; border:none; padding:10px 20px; font-weight:800; cursor:pointer;">CADASTRAR</button>
             </div>
         </div>
 
-        <div class="category" id="cat-B2">
-            <div class="category-title">B2 - Seção de Inteligência</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Relatórios ALI</strong></a>
+        <div id="secao-B1" class="secao-container">
+            <div class="secao-header">B1 - Seção de Pessoal e Recursos Humanos</div>
+            <div class="card-grid">
+                <a href="#" class="card-item"><i class="fas fa-calendar-check"></i><span>Escalas de Serviço</span></a>
+                <a href="#" class="card-item"><i class="fas fa-user-clock"></i><span>Controle de Efetivo</span></a>
+                <a href="#" class="card-item"><i class="fas fa-file-signature"></i><span>Boletins Internos</span></a>
+                <a href="#" class="card-item"><i class="fas fa-medal"></i><span>Ficha de Conduta</span></a>
             </div>
         </div>
 
-        <div class="category" id="cat-B3">
-            <div class="category-title">B3 - Seção de Operações</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-fire-extinguisher"></i><strong>Planos de Auxílio Mutuo</strong></a>
-            </div>
-        </div>
-
-        <div class="category" id="cat-B4">
-            <div class="category-title">B4 - Seção de Logística</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Controle de Frota</strong></a>
-            </div>
-        </div>
-
-        <div class="category" id="cat-SCor">
-            <div class="category-title">SCor - Seção de Correição</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>IPM / Sindicâncias</strong></a>
+        <div id="secao-SCOR" class="secao-container" style="margin-top:40px;">
+            <div class="secao-header">SCor - Seção de Correição e Disciplina</div>
+            <div class="card-grid">
+                <a href="#" class="card-item"><i class="fas fa-gavel"></i><span>IPM / Sindicâncias</span></a>
+                <a href="#" class="card-item"><i class="fas fa-balance-scale"></i><span>Conselhos de Disciplina</span></a>
+                <a href="#" class="card-item"><i class="fas fa-user-shield"></i><span>Processos Administrativos</span></a>
             </div>
         </div>
     </div>
 </div>
 
-<footer class="footer-oficial">
-    <div class="footer-main">
-        <div class="footer-section">
-            <h4><i class="fas fa-map-marked-alt"></i> Localização</h4>
-            <p><strong>6º Batalhão de Bombeiro Militar</strong></p>
-            <p>Rua Tenente-Coronel Brito, 03</p>
-            <p>Centro, Santa Cruz do Sul - RS</p>
-            <p>CEP: 96810-202</p>
+<footer class="footer-full">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4><i class="fas fa-building"></i> Unidade Responsável</h4>
+            <p><strong>6º Batalhão de Bombeiro Militar</strong><br>Sede: Santa Cruz do Sul - RS</p>
+            <p>Abrangência: Vales do Rio Pardo e Taquari</p>
         </div>
-        <div class="footer-section">
-            <h4><i class="fas fa-phone-alt"></i> Contato</h4>
-            <p><strong>Telefone Emergência:</strong> 193</p>
-            <p><strong>Administrativo:</strong> (51) 3711-2323</p>
-            <p><strong>E-mail:</strong> 6bbm-sadmc@cbm.rs.gov.br</p>
+        <div class="footer-col">
+            <h4><i class="fas fa-map-marker-alt"></i> Endereço da Sede</h4>
+            <p><i class="fas fa-chevron-right"></i> Rua Tenente-Coronel Brito, 03</p>
+            <p><i class="fas fa-chevron-right"></i> Centro | CEP: 96810-202</p>
+            <p><i class="fas fa-chevron-right"></i> Santa Cruz do Sul - RS</p>
         </div>
-        <div class="footer-section">
-            <h4><i class="fas fa-info-circle"></i> Informações</h4>
-            <p>Corpo de Bombeiros Militar do Rio Grande do Sul</p>
-            <p>Servir e Proteger</p>
+        <div class="footer-col">
+            <h4><i class="fas fa-headset"></i> Canais de Comunicação</h4>
+            <p><i class="fas fa-phone"></i> Emergência: 193</p>
+            <p><i class="fas fa-phone-alt"></i> Administrativo: (51) 3711-2323</p>
+            <p><i class="fas fa-envelope"></i> 6bbm-sadmc@cbm.rs.gov.br</p>
         </div>
     </div>
-    <div class="acesso-restrito">CONTEÚDO RESTRITO - MONITORAMENTO ATIVO PELO 6º BBM</div>
+    <div class="footer-bottom">
+        SISTEMA RESTRITO - USO EXCLUSIVO PARA FINS ADMINISTRATIVOS E MILITARES DO 6º BBM
+    </div>
 </footer>
 
 <script>
-    // Banco de Dados Local
-    const inicial = { 
-        "Desenvolvedor": { senha: "admin", nivel: "admin" },
+    // Banco de Dados Simulado no LocalStorage
+    const dbInicial = {
+        "Desenvolvedor": { senha: "admin", nivel: "MASTER" },
         "SGT BOCK": { senha: "123", nivel: "B1" }
     };
-    let usuarios = JSON.parse(localStorage.getItem('bdSAdmC_vFinal')) || inicial;
+    
+    let MILITARES = JSON.parse(localStorage.getItem('sadmc_db')) || dbInicial;
 
-    function atualizarInterfaceUsuarios() {
-        const select = document.getElementById("usuario");
-        const listaDiv = document.getElementById("listaUsuarios");
-        if(!select) return;
-        
+    function renderSelect() {
+        const select = document.getElementById("selectMilitar");
         select.innerHTML = "";
-        let html = `<table style="width:100%; border-collapse:collapse; text-align:left;">
-                    <thead style="background:#eee;"><tr><th style="padding:8px;">Militar</th><th>Nível</th><th>Ação</th></tr></thead><tbody>`;
-        
-        for (let u in usuarios) {
-            let opt = document.createElement("option"); 
-            opt.value = u; opt.innerText = u; 
+        for (let m in MILITARES) {
+            let opt = document.createElement("option");
+            opt.value = m; opt.innerText = m;
             select.add(opt);
-            
-            html += `<tr style="border-bottom:1px solid #ddd">
-                        <td style="padding:8px;">${u}</td>
-                        <td>${usuarios[u].nivel}</td>
-                        <td><button onclick="excluirUsuario('${u}')" style="color:red; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button></td>
-                    </tr>`;
         }
-        listaDiv.innerHTML = html + "</tbody></table>";
     }
 
-    function login() {
-        const u = document.getElementById("usuario").value;
-        const p = document.getElementById("senha").value;
-        const loading = document.getElementById("loadingOverlay");
-        const erroMsg = document.getElementById("erroSenha");
+    function acaoLogin() {
+        const nome = document.getElementById("selectMilitar").value;
+        const senha = document.getElementById("inputSenha").value;
+        const loader = document.getElementById("loadingOverlay");
+        const erro = document.getElementById("erroSenha");
 
-        loading.style.display = "flex";
-        
+        loader.style.display = "flex";
+
         setTimeout(() => {
-            if (usuarios[u] && p === usuarios[u].senha) {
-                loading.style.display = "none";
+            if (MILITARES[nome] && senha === MILITARES[nome].senha) {
+                loader.style.display = "none";
                 document.getElementById("loginScreen").style.display = "none";
                 document.getElementById("sistema").style.display = "block";
+                document.getElementById("labelNome").innerText = nome;
                 
-                // Saudação
-                document.getElementById("usuarioLogado").innerHTML = `
-                    <i class="fas fa-user-circle" style="font-size:30px; color:var(--vermelho-cbm)"></i>
-                    <div>Bem-vindo, Militar: <span style="display:block; font-size:20px;">${u}</span></div>
-                `;
-
-                // Lógica de Permissões
-                document.querySelectorAll(".category").forEach(c => c.style.display = "none");
-                
-                if (usuarios[u].nivel === "admin") {
-                    document.querySelectorAll(".category").forEach(c => c.style.display = "block");
-                    if(u === "Desenvolvedor") document.getElementById("painelDev").style.display = "block";
-                } else {
-                    const secaoAtiva = document.getElementById("cat-" + usuarios[u].nivel);
-                    if(secaoAtiva) secaoAtiva.style.display = "block";
+                // Controle de Acesso
+                const nivel = MILITARES[nome].nivel;
+                if(nivel === "MASTER") {
+                    document.getElementById("secao-B1").style.display = "block";
+                    document.getElementById("secao-SCOR").style.display = "block";
+                    document.getElementById("painelAdmin").style.display = "block";
+                } else if(nivel === "B1") {
+                    document.getElementById("secao-B1").style.display = "block";
+                } else if(nivel === "SCOR") {
+                    document.getElementById("secao-SCOR").style.display = "block";
                 }
             } else {
-                loading.style.display = "none";
-                erroMsg.style.display = "block";
-                setTimeout(() => { erroMsg.style.display = "none"; }, 3000);
+                loader.style.display = "none";
+                erro.style.display = "block";
+                setTimeout(() => erro.style.display = "none", 3000);
             }
         }, 1200);
     }
 
-    function criarNovoUsuario() {
-        const n = document.getElementById("novoNome").value.trim();
-        const s = document.getElementById("novaSenha").value.trim();
-        const nv = document.getElementById("novoNivel").value;
+    function addNovoMilitar() {
+        const n = document.getElementById("admNome").value;
+        const s = document.getElementById("admSenha").value;
+        const v = document.getElementById("admNivel").value;
         if(n && s) {
-            usuarios[n] = { senha: s, nivel: nv };
-            localStorage.setItem('bdSAdmC_vFinal', JSON.stringify(usuarios));
-            atualizarInterfaceUsuarios();
+            MILITARES[n] = { senha: s, nivel: v };
+            localStorage.setItem('sadmc_db', JSON.stringify(MILITARES));
             alert("Militar " + n + " cadastrado com sucesso!");
-            document.getElementById("novoNome").value = "";
-            document.getElementById("novaSenha").value = "";
+            renderSelect();
         }
     }
 
-    function excluirUsuario(n) {
-        if(n === "Desenvolvedor") return alert("O usuário mestre não pode ser removido.");
-        if(confirm("Deseja realmente excluir o acesso de " + n + "?")) {
-            delete usuarios[n];
-            localStorage.setItem('bdSAdmC_vFinal', JSON.stringify(usuarios));
-            atualizarInterfaceUsuarios();
-        }
+    function clock() {
+        const d = new Date();
+        document.getElementById('txtData').innerText = d.toLocaleDateString('pt-BR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+        document.getElementById('txtHora').innerText = d.toLocaleTimeString('pt-BR');
     }
 
-    // Relógio e Data
-    setInterval(() => {
-        const agora = new Date();
-        const opcoesData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('dataAtual').innerText = agora.toLocaleDateString('pt-BR', opcoesData);
-        document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-BR');
-    }, 1000);
-
-    atualizarInterfaceUsuarios();
+    setInterval(clock, 1000);
+    renderSelect();
+    clock();
 </script>
 </body>
 </html>
