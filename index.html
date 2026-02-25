@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<!-- FIREBASE CORRETO -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -132,22 +132,25 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
+// FUNÇÃO DE LOGIN
 function login(){
-const email = document.getElementById("email").value;
+const email = document.getElementById("email").value.trim();
 const senha = document.getElementById("senha").value;
 
 auth.signInWithEmailAndPassword(email, senha)
 .then((userCredential)=>{
 const uid = userCredential.user.uid;
 
-db.ref("usuarios/"+uid).once("value").then((snapshot)=>{
+// BUSCA NO NÓ 'militares'
+db.ref("militares/"+uid).once("value").then((snapshot)=>{
 const dados = snapshot.val();
 
-if(!dados){
+if(!dados || !dados.nivel){
 document.getElementById("erro").innerText="Usuário sem nível cadastrado.";
 return;
 }
 
+// MOSTRA AS SEÇÕES DE ACORDO COM O NÍVEL
 mostrarSecao(dados.nivel);
 });
 })
@@ -156,6 +159,7 @@ document.getElementById("erro").innerText=error.message;
 });
 }
 
+// FUNÇÃO PARA MOSTRAR SEÇÕES
 function mostrarSecao(nivel){
 document.getElementById("loginScreen").style.display="none";
 document.getElementById("sistema").style.display="block";
@@ -170,16 +174,18 @@ if(alvo) alvo.style.display="block";
 }
 }
 
+// LOGOUT
 function logout(){
 auth.signOut();
 location.reload();
 }
 
+// MANTER LOGIN ATIVO
 auth.onAuthStateChanged((user)=>{
 if(user){
-db.ref("usuarios/"+user.uid).once("value").then((snapshot)=>{
+db.ref("militares/"+user.uid).once("value").then((snapshot)=>{
 const dados = snapshot.val();
-if(dados) mostrarSecao(dados.nivel);
+if(dados && dados.nivel) mostrarSecao(dados.nivel);
 });
 }
 });
