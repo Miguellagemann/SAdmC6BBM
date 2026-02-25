@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAdmC - 6º BBM | CBMRS</title>
+<meta name="robots" content="noindex, nofollow">
+<title>Portal de Intranet | SAdmC - 6º BBM</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -59,6 +60,7 @@ body {
     background: #FFFFFF; flex: 1.2; padding: 50px 40px;
     display: flex; flex-direction: column; justify-content: center;
 }
+/* 2. Textos alterados para parecer portal administrativo interno */
 .login-right-side h2 { color: var(--azul-texto); margin: 0; font-weight: 800; font-size: 24px; }
 .login-right-side p.subtitle { color: #666; font-size: 12px; margin-bottom: 25px; font-weight: 600; text-transform: uppercase; }
 .login-right-side input, .login-right-side select { 
@@ -111,16 +113,16 @@ th { background: var(--azul-texto); color: white; }
             <p class="cbmrs-sub-text">Corpo de Bombeiros Militar</p>
         </div>
         <div class="login-right-side">
-            <h2>SAdmC - 6º BBM</h2>
-            <p class="subtitle">Seção Administrativa e Correição</p>
-            <label>Email</label>
-            <input type="email" id="email" placeholder="seu.email@cbm.rs.gov.br">
-            <label>Senha</label>
+            <h2>Portal de Intranet - SAdmC</h2>
+            <p class="subtitle">Uso Exclusivo - 6º BBM</p>
+            <label>ID de Militar (E-mail)</label>
+            <input type="email" id="email" placeholder="nome.sobrenome@cbm.rs.gov.br">
+            <label>Credencial de Acesso</label>
             <div class="password-wrapper">
-                <input type="password" id="senha" placeholder="Senha">
+                <input type="password" id="senha" placeholder="Digite sua credencial">
                 <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
             </div>
-            <button class="btn-entrar" onclick="login()">Entrar</button>
+            <button class="btn-entrar" onclick="login()">AUTENTICAR NO SISTEMA</button>
         </div>
     </div>
 </div>
@@ -222,7 +224,7 @@ th { background: var(--azul-texto); color: white; }
         </div>
     </div>
     <div class="acesso-restrito">
-        <i class="fas fa-lock"></i> Acesso restrito aos militares do 6º BBM
+        <i class="fas fa-lock"></i> Uso Administrativo Interno
     </div>
 </footer>
 
@@ -231,6 +233,7 @@ th { background: var(--azul-texto); color: white; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
+// 3. Verifique se as chaves abaixo são as do seu Firebase Console
 const firebaseConfig = {
   apiKey: "AIzaSyDE0OQwFJ2tDu-Ws2W9ZCalrBQetWoFjwk",
   authDomain: "sadmc-6bbm-4411d.firebaseapp.com",
@@ -258,7 +261,7 @@ async function login() {
         const snapshot = await firebase.database().ref('militares/' + user.uid).get();
         if(!snapshot.exists()) { alert("Usuário não autorizado no banco de dados!"); return; }
         mostrarSistema(user, snapshot.val());
-    } catch(e) { alert("Erro no login: " + e.message); }
+    } catch(e) { alert("Erro de autenticação. Verifique os dados."); }
 }
 
 function mostrarSistema(user, dados) {
@@ -308,10 +311,9 @@ async function cadastrarMilitar() {
     const secao = document.getElementById("novaSecao").value;
     const nivel = document.getElementById("novoNivel").value;
 
-    if(!nome || !email || !senha) { alert("Preencha tudo!"); return; }
+    if(!nome || !email || !senha) { alert("Preencha todos os campos."); return; }
 
     try {
-        // Criação no Auth e Database
         const tempApp = firebase.initializeApp(firebaseConfig, "Secondary");
         const userCredential = await tempApp.auth().createUserWithEmailAndPassword(email, senha);
         const novoUid = userCredential.user.uid;
@@ -320,13 +322,13 @@ async function cadastrarMilitar() {
             nome: nome, secao: secao, nivel: nivel
         });
 
-        alert("Militar cadastrado!");
+        alert("Novo militar cadastrado com sucesso!");
         tempApp.delete();
-    } catch (e) { alert("Erro: " + e.message); }
+    } catch (e) { alert("Erro ao cadastrar militar."); }
 }
 
 async function removerMilitar(uid) {
-    if(confirm("Remover este acesso?")) {
+    if(confirm("Deseja remover este acesso permanentemente?")) {
         await firebase.database().ref('militares/' + uid).remove();
     }
 }
