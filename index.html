@@ -1,366 +1,184 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAdmC - 6º BBM | CBMRS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAdmC - 6º BBM | CBMRS</title>
 
-    <style>
-        :root {
-            --azul-escuro: #001D3D;
-            --azul-medio: #003566;
-            --laranja-cbm: #FF9E3D; 
-            --vermelho-cbm: #C40000;
-            --azul-texto: #002B5B;
-            --cinza-fundo: #F4F6F9;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        * { box-sizing: border-box; transition: all 0.2s ease; }
-        html { scroll-behavior: smooth; }
-        
-        body { 
-            margin: 0; 
-            font-family: 'Open Sans', sans-serif; 
-            background: var(--azul-escuro); 
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh; 
-        }
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
-        /* --- ANIMAÇÕES --- */
-        @keyframes entradaPainel { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes sweep { 0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; } }
-        @keyframes brilhoLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0)); } 50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.4)); } }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- LOADING E ERRO --- */
-        #loadingOverlay { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 18, 51, 0.95); z-index: 9999; 
-            flex-direction: column; justify-content: center; align-items: center; color: white; 
-        }
-        .spinner { width: 60px; height: 60px; border: 6px solid rgba(255, 255, 255, 0.1); border-top-color: var(--laranja-cbm); border-radius: 50%; animation: spin 1s infinite linear; }
-        #erroSenha { 
-            display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
-            background: var(--vermelho-cbm); color: white; padding: 15px 40px; border-radius: 8px; 
-            font-weight: 800; z-index: 10000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-        }
-
-        /* --- TELA DE LOGIN --- */
-        #loginScreen { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; background: radial-gradient(circle, #003566 0%, #001D3D 100%); }
-        .login-container { display: flex; max-width: 950px; width: 100%; min-height: 550px; border-radius: 20px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); background: #fff; animation: entradaPainel 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        
-        .login-left { 
-            background: #4A5568; 
-            flex: 1; 
-            padding: 40px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            position: relative; 
-            overflow: hidden; 
-        }
-        .login-left::before { 
-            content: ""; position: absolute; top: 0; width: 100%; height: 100%; 
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent); 
-            animation: sweep 4s infinite; 
-        }
-        .login-left img { width: 180px; z-index: 2; animation: brilhoLogo 3s infinite ease-in-out; }
-        .login-left h1 { 
-            font-size: 80px; font-weight: 900; margin: 10px 0 0 0; z-index: 2;
-            background: linear-gradient(180deg, #FFD700 0%, #FF8C00 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -3px;
-        }
-        .login-left .sub-titulo-logo { font-weight: 800; text-transform: uppercase; font-size: 14px; color: #FF9E3D; z-index: 2; margin-top: -5px; letter-spacing: 1px; text-align: center; }
-        .login-left p { font-weight: 600; font-size: 12px; color: rgba(255,255,255,0.8); z-index: 2; margin-top: 15px; }
-        
-        .login-right { flex: 1.1; padding: 60px; display: flex; flex-direction: column; justify-content: center; background: white; }
-        .login-right h2 { margin: 0; color: var(--azul-medio); font-size: 28px; font-weight: 800; }
-        .sub-sigla { color: #888; font-size: 11px; margin-bottom: 30px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
-        .form-group { margin-bottom: 20px; position: relative; }
-        .form-group label { display: block; font-weight: 800; font-size: 11px; color: #555; text-transform: uppercase; margin-bottom: 8px; }
-        .form-group select, .form-group input { width: 100%; padding: 14px; border: 1.5px solid #ddd; border-radius: 8px; outline: none; font-size: 15px; font-weight: 600; background: #fff; }
-        .toggle-password { position: absolute; right: 15px; top: 38px; cursor: pointer; color: #999; font-size: 18px; z-index: 10; }
-        .btn-acesso { width: 100%; padding: 18px; background: var(--vermelho-cbm); color: white; border: none; border-radius: 8px; font-weight: 800; text-transform: uppercase; cursor: pointer; margin-top: 10px; }
-        .btn-acesso:hover { background: #a00000; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(196,0,0,0.3); }
-
-        /* --- INTERFACE INTERNA --- */
-        #sistema { display: none; flex: 1; background: var(--cinza-fundo); padding-bottom: 80px; }
-        .header-top { background: var(--azul-texto); color: white; text-align: center; padding: 15px; font-weight: 800; font-size: 16px; letter-spacing: 1px; }
-        .header-stripe { background: var(--vermelho-cbm); height: 6px; }
-        .dashboard-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-        .militar-bar { background: white; padding: 25px 40px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 40px; }
-        .militar-status { font-size: 24px; font-weight: 800; color: var(--azul-medio); }
-        .militar-status span { color: var(--vermelho-cbm); }
-        .txt-data-hora { text-align: right; font-weight: 700; color: #666; font-size: 14px; line-height: 1.4; border-right: 4px solid var(--laranja-cbm); padding-right: 15px; }
-
-        /* PAINEL ADMIN */
-        #painelAdmin { background: #fff; padding: 30px; border-radius: 12px; margin-bottom: 40px; border: 2px dashed var(--azul-medio); display: none; }
-        .admin-table-wrapper { width: 100%; overflow-x: auto; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; min-width: 500px; }
-        .admin-table th { background: var(--azul-medio); color: white; padding: 12px; text-align: left; font-size: 12px; text-transform: uppercase; }
-        .admin-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; }
-
-        /* SEÇÕES E CARDS */
-        .secao-container { display: none; margin-top: 50px; animation: entradaPainel 0.6s ease; }
-        .secao-header { border-left: 10px solid var(--vermelho-cbm); padding-left: 20px; margin-bottom: 30px; font-size: 22px; font-weight: 800; color: var(--azul-texto); text-transform: uppercase; }
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card-item { background: white; padding: 40px 20px; border-radius: 15px; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; border: 1px solid #eee; text-align: center; }
-        .card-item i { font-size: 45px; color: var(--azul-medio); margin-bottom: 20px; }
-        .card-item span { font-weight: 800; font-size: 16px; color: #333; }
-        .card-item:hover { transform: translateY(-10px); border-top: 6px solid var(--vermelho-cbm); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-
-        /* --- RODAPÉ --- */
-        .footer-full { background: #000E1F; color: white; border-top: 6px solid var(--vermelho-cbm); margin-top: auto; }
-        .footer-grid { max-width: 1200px; margin: auto; padding: 60px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; }
-        .footer-col h4 { color: #FFFFFF; margin-bottom: 25px; font-size: 16px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; position: relative; }
-        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -8px; width: 40px; height: 3px; background: var(--laranja-cbm); }
-        .footer-col p { font-size: 14px; color: #bdc3c7; margin: 10px 0; line-height: 1.6; display: flex; align-items: center; gap: 10px; }
-        .footer-col i { color: var(--laranja-cbm); width: 20px; }
-        .footer-bottom { background: rgba(0,0,0,0.4); text-align: center; padding: 25px; font-size: 11px; color: #95a5a6; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-        
-        #btnTopo { display: none; position: fixed; bottom: 40px; right: 20px; z-index: 99; border: none; background: var(--vermelho-cbm); color: white; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
-
-        /* --- MEDIA QUERIES PARA CELULAR --- */
-        @media (max-width: 768px) {
-            .login-container { flex-direction: column; min-height: auto; }
-            .login-left { padding: 40px 20px; }
-            .login-left h1 { font-size: 60px; }
-            .login-right { padding: 40px 20px; }
-            .militar-bar { flex-direction: column; text-align: center; gap: 20px; padding: 20px; }
-            .txt-data-hora { text-align: center; border-right: none; border-bottom: 4px solid var(--laranja-cbm); padding-right: 0; padding-bottom: 10px; }
-            .secao-header { font-size: 18px; text-align: center; border-left: none; border-bottom: 4px solid var(--vermelho-cbm); padding-left: 0; padding-bottom: 10px; }
-            .card-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
-            .footer-col h4::after { left: 50%; transform: translateX(-50%); }
-            .footer-col p { justify-content: center; }
-        }
-    </style>
+<style>
+body{margin:0;font-family:'Open Sans',sans-serif;background:#001D3D}
+#loginScreen{display:flex;justify-content:center;align-items:center;height:100vh;background:radial-gradient(circle,#003566,#001D3D)}
+.login-container{display:flex;max-width:900px;width:100%;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.6)}
+.login-left{flex:1;background:#4A5568;color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px}
+.login-left img{width:150px}
+.login-left h1{font-size:60px;margin:10px 0}
+.login-right{flex:1;padding:50px}
+.login-right h2{margin:0 0 20px;color:#003566}
+.login-right select,.login-right input{width:100%;padding:14px;margin-bottom:15px;border-radius:8px;border:1px solid #ccc;font-weight:600}
+.login-right button{width:100%;padding:16px;background:#C40000;color:#fff;border:none;border-radius:8px;font-weight:800;cursor:pointer}
+.login-right button:hover{background:#900}
+#erroSenha{display:none;background:#C40000;color:#fff;padding:10px;border-radius:6px;margin-bottom:10px;font-weight:700}
+#sistema{display:none;background:#F4F6F9;min-height:100vh;padding-bottom:60px}
+.header{background:#003566;color:#fff;padding:15px;text-align:center;font-weight:800}
+.dashboard{max-width:1200px;margin:30px auto;padding:0 20px}
+.militar-bar{background:#fff;padding:20px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:#fff;padding:30px;border-radius:10px;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,.1)}
+.card i{font-size:40px;margin-bottom:15px;color:#003566}
+.admin{background:#fff;padding:20px;border-radius:10px;margin-bottom:30px;display:none}
+.admin input,.admin select{padding:10px;margin:5px;border-radius:5px;border:1px solid #ccc}
+.admin button{padding:10px 15px;background:#27ae60;color:#fff;border:none;border-radius:5px;font-weight:700;cursor:pointer}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{padding:10px;border-bottom:1px solid #ddd}
+th{background:#003566;color:#fff}
+</style>
 </head>
 <body>
 
-<div id="loadingOverlay"><div class="spinner"></div><p style="font-weight: 800; margin-top: 20px; letter-spacing: 2px;">AUTENTICANDO MILITAR...</p></div>
-<div id="erroSenha">SENHA INCORRETA! TENTE NOVAMENTE.</div>
-<button id="btnTopo" onclick="voltarAoTopo()"><i class="fas fa-chevron-up"></i></button>
-
 <div id="loginScreen">
-    <div class="login-container">
-        <div class="login-left">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="CBMRS">
-            <h1>CBMRS</h1>
-            <div class="sub-titulo-logo">Corpo de Bombeiros Militar</div>
-            <p>6º Batalhão de Bombeiro Militar</p>
-        </div>
-        <form class="login-right" onsubmit="event.preventDefault(); acaoLogin();">
-            <h2>SAdmC - Acesso</h2>
-            <div class="sub-sigla">Seção Administrativa e Correição</div>
-            <div class="form-group">
-                <label>Militar Solicitante</label>
-                <select id="selectMilitar"><option>Carregando banco...</option></select>
-            </div>
-            <div class="form-group">
-                <label>Senha de Acesso</label>
-                <input type="password" id="inputSenha" placeholder="Digite sua senha">
-                <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
-            </div>
-            <button type="submit" class="btn-acesso">Entrar no Sistema</button>
-        </form>
+  <div class="login-container">
+    <div class="login-left">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png">
+      <h1>CBMRS</h1>
+      <p>6º Batalhão de Bombeiro Militar</p>
     </div>
+    <div class="login-right">
+      <h2>SAdmC - Acesso</h2>
+      <div id="erroSenha">Senha incorreta</div>
+      <select id="selectMilitar"></select>
+      <input type="password" id="inputSenha" placeholder="Senha">
+      <button onclick="acaoLogin()">Entrar</button>
+    </div>
+  </div>
 </div>
 
 <div id="sistema">
-    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO ESTADO DO RIO GRANDE DO SUL</div>
-    <div class="header-stripe"></div>
-    
-    <div class="dashboard-container">
-        <div class="militar-bar">
-            <div>
-                <div style="font-size: 12px; color: #999; font-weight: 800; text-transform: uppercase;">Bem-vindo,</div>
-                <div class="militar-status">Militar: <span id="labelNome"></span></div>
-            </div>
-            <div id="txtDataHora" class="txt-data-hora"></div>
-            <button onclick="location.reload()" style="background:var(--azul-medio); color:white; border:none; padding:10px 20px; border-radius:5px; font-weight:800; cursor:pointer;">SAIR</button>
-        </div>
+  <div class="header">CORPO DE BOMBEIROS MILITAR DO RS</div>
 
-        <div id="painelAdmin">
-            <h3><i class="fas fa-user-cog"></i> Gerenciamento de Acessos</h3>
-            <div style="display:flex; gap:10px; flex-wrap: wrap; margin-bottom: 20px;">
-                <input type="text" id="admNome" placeholder="Nome / Graduação" style="padding:12px; flex:2; border-radius:5px; border:1px solid #ccc;">
-                <input type="password" id="admSenha" placeholder="Senha" style="padding:12px; flex:1; border-radius:5px; border:1px solid #ccc;">
-                <select id="admNivel" style="padding:12px; flex:1; border-radius:5px; border:1px solid #ccc;">
-                    <option value="PUBLICO">Apenas Acervo</option>
-                    <option value="B1">B1 - RH</option>
-                    <option value="B2">B2 - Inteligência</option>
-                    <option value="B3">B3 - Operações</option>
-                    <option value="B4">B4 - Logística</option>
-                    <option value="SCOR">SCor - Correição</option>
-                    <option value="CHEFE">Chefe (Ver Tudo)</option>
-                    <option value="MASTER">Desenvolvedor</option>
-                </select>
-                <button onclick="addMilitar()" style="background:#27ae60; color:white; border:none; padding:12px 25px; cursor:pointer; font-weight:800; border-radius:5px;">CADASTRAR</button>
-            </div>
-            <div class="admin-table-wrapper">
-                <table class="admin-table">
-                    <thead><tr><th>Militar</th><th>Nível</th><th style="text-align:center;">Ações</th></tr></thead>
-                    <tbody id="tabelaUsuarios"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="secao-ACERVO" class="secao-container">
-            <div class="secao-header" style="border-left-color: var(--laranja-cbm); border-bottom-color: var(--laranja-cbm);">Acervo Normativo e Modelos</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-file-signature"></i><span>Modelos de Requerimentos</span></a>
-                <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Ordens de Serviço</span></a>
-                <a href="#" class="card-item"><i class="fas fa-book"></i><span>Manuais e POPs</span></a>
-            </div>
-        </div>
-
-        <div id="secao-B1" class="secao-container">
-            <div class="secao-header">B1 - Recursos Humanos</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-users-cog"></i><span>Gestão de Efetivo</span></a>
-                <a href="#" class="card-item"><i class="fas fa-calendar-alt"></i><span>Escalas de Serviço</span></a>
-                <a href="#" class="card-item"><i class="fas fa-user-graduate"></i><span>Cursos e Estágios</span></a>
-            </div>
-        </div>
-
-        <div id="secao-B2" class="secao-container">
-            <div class="secao-header">B2 - Agência Local de Inteligência</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-user-secret"></i><span>Relatórios ALI</span></a>
-                <a href="#" class="card-item"><i class="fas fa-shield-alt"></i><span>Análise de Riscos</span></a>
-            </div>
-        </div>
-
-        <div id="secao-B3" class="secao-container">
-            <div class="secao-header">B3 - Operações de Defesa Civil</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-map-marked-alt"></i><span>Planos de Contingência</span></a>
-                <a href="#" class="card-item"><i class="fas fa-fire-extinguisher"></i><span>Estatísticas Operacionais</span></a>
-            </div>
-        </div>
-
-        <div id="secao-B4" class="secao-container">
-            <div class="secao-header">B4 - Logística e Patrimônio</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-truck-pickup"></i><span>Gestão de Frota</span></a>
-                <a href="#" class="card-item"><i class="fas fa-tools"></i><span>Manutenção de Materiais</span></a>
-                <a href="#" class="card-item"><i class="fas fa-warehouse"></i><span>Controle de Carga</span></a>
-            </div>
-        </div>
-
-        <div id="secao-SCOR" class="secao-container">
-            <div class="secao-header">SCor - Seção de Correição</div>
-            <div class="card-grid">
-                <a href="#" class="card-item"><i class="fas fa-gavel"></i><span>IPM e Sindicâncias</span></a>
-                <a href="#" class="card-item"><i class="fas fa-balance-scale"></i><span>Processos Administrativos</span></a>
-                <a href="#" class="card-item"><i class="fas fa-clipboard-check"></i><span>Conselhos de Disciplina</span></a>
-            </div>
-        </div>
+  <div class="dashboard">
+    <div class="militar-bar">
+      <div>Bem-vindo, <strong id="labelNome"></strong></div>
+      <button onclick="logout()" style="background:#C40000;color:white;border:none;padding:8px 15px;border-radius:5px;font-weight:700;cursor:pointer;">Sair</button>
     </div>
+
+    <div class="admin" id="painelAdmin">
+      <h3>Painel Administrador</h3>
+      <input type="text" id="admNome" placeholder="Nome">
+      <input type="password" id="admSenha" placeholder="Senha">
+      <select id="admNivel">
+        <option value="B1">B1</option>
+        <option value="B2">B2</option>
+        <option value="B3">B3</option>
+        <option value="B4">B4</option>
+        <option value="SCOR">SCOR</option>
+        <option value="CHEFE">CHEFE</option>
+        <option value="MASTER">MASTER</option>
+      </select>
+      <button onclick="addMilitar()">Cadastrar</button>
+
+      <table>
+        <thead>
+          <tr><th>Nome</th><th>Nível</th><th>Ação</th></tr>
+        </thead>
+        <tbody id="tabelaUsuarios"></tbody>
+      </table>
+    </div>
+
+    <div class="card-grid" id="cardsArea"></div>
+  </div>
 </div>
 
-<footer class="footer-full">
-    <div class="footer-grid">
-        <div class="footer-col">
-            <h4>6º Batalhão de Bombeiro Militar</h4>
-            <p><i class="fas fa-map-marker-alt"></i> Rua Tenente-Coronel Brito, 03</p>
-            <p><i class="fas fa-city"></i> Santa Cruz do Sul - RS</p>
-            <p><i class="fas fa-phone"></i> (51) 3711-2323</p>
-        </div>
-    </div>
-    <div class="footer-bottom">&copy; 2026 <span>6° BATALHÃO DE BOMBEIRO MILITAR</span> - RS | USO RESTRITO</div>
-</footer>
-
 <script>
-    // CONFIGURAÇÃO FIREBASE
-    const firebaseConfig = {
-        apiKey: "AIzaSyDfHrIaQzylbPaPBH_rAlew1CoINTfIySE",
-        authDomain: "sadmc-6bbm.firebaseapp.com",
-        databaseURL: "https://sadmc-6bbm-4411d-default-rtdb.firebaseio.com/", 
-        projectId: "sadmc-6bbm",
-        storageBucket: "sadmc-6bbm.firebasestorage.app",
-        messagingSenderId: "949715183102",
-        appId: "1:949715183102:web:7c0f2c0153beb6c1fa8caf"
-    };
+const firebaseConfig={
+  apiKey:"AIzaSyDE0OQwFJ2tDu-Ws2W9ZCalrBQetWoFjwk",
+  authDomain:"sadmc-6bbm-4411d.firebaseapp.com",
+  databaseURL:"https://sadmc-6bbm-4411d-default-rtdb.firebaseio.com",
+  projectId:"sadmc-6bbm-4411d",
+  storageBucket:"sadmc-6bbm-4411d.appspot.com",
+  messagingSenderId:"566392365968",
+  appId:"1:566392365968:web:f18185da477e65ea368915"
+};
 
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    let MILITARES = {};
+firebase.initializeApp(firebaseConfig);
+const database=firebase.database();
+let MILITARES={};
 
-    database.ref('militares').on('value', (snapshot) => {
-        MILITARES = snapshot.val() || { "DESENVOLVEDOR": { senha: "admin", nivel: "MASTER" } };
-        render();
-    });
+database.ref("militares").on("value",snapshot=>{
+  MILITARES=snapshot.val()||{"DESENVOLVEDOR":{senha:"admin",nivel:"MASTER"}};
+  render();
+});
 
-    function render() {
-        const s = document.getElementById("selectMilitar"); 
-        const tabela = document.getElementById("tabelaUsuarios");
-        if(!s || !tabela) return;
-        s.innerHTML = ""; tabela.innerHTML = "";
-        for (let m in MILITARES) {
-            let o = document.createElement("option"); o.value = m; o.innerText = m; s.add(o);
-            let row = tabela.insertRow();
-            row.innerHTML = `<td>${m}</td><td>${MILITARES[m].nivel}</td><td style="text-align:center;"><button onclick="deletarMilitar('${m}')" style="color:red; background:none; border:none; cursor:pointer;"><i class="fas fa-trash"></i></button></td>`;
-        }
+function render(){
+  const select=document.getElementById("selectMilitar");
+  const tabela=document.getElementById("tabelaUsuarios");
+  select.innerHTML="";
+  tabela.innerHTML="";
+  for(let nome in MILITARES){
+    let opt=document.createElement("option");
+    opt.value=nome;
+    opt.textContent=nome;
+    select.appendChild(opt);
+
+    let row=tabela.insertRow();
+    row.innerHTML=`<td>${nome}</td>
+                   <td>${MILITARES[nome].nivel}</td>
+                   <td><button onclick="deletarMilitar('${nome}')">Excluir</button></td>`;
+  }
+}
+
+function acaoLogin(){
+  const nome=document.getElementById("selectMilitar").value;
+  const senha=document.getElementById("inputSenha").value;
+
+  if(MILITARES[nome]&&MILITARES[nome].senha===senha){
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("sistema").style.display="block";
+    document.getElementById("labelNome").innerText=nome;
+
+    const nivel=MILITARES[nome].nivel;
+    if(nivel==="MASTER")document.getElementById("painelAdmin").style.display="block";
+
+    gerarCards(nivel);
+
+  }else{
+    document.getElementById("erroSenha").style.display="block";
+    setTimeout(()=>{document.getElementById("erroSenha").style.display="none";},3000);
+  }
+}
+
+function gerarCards(nivel){
+  const area=document.getElementById("cardsArea");
+  area.innerHTML="";
+  const secoes={
+    B1:"Recursos Humanos",
+    B2:"Inteligência",
+    B3:"Operações",
+    B4:"Logística",
+    SCOR:"Correição"
+  };
+  for(let s in secoes){
+    if(nivel==="MASTER"||nivel==="CHEFE"||nivel===s){
+      area.innerHTML+=`<div class="card"><i class="fas fa-folder"></i><h3>${secoes[s]}</h3></div>`;
     }
+  }
+}
 
-    function acaoLogin() {
-        const n = document.getElementById("selectMilitar").value;
-        const p = document.getElementById("inputSenha").value;
-        if (MILITARES[n] && p === MILITARES[n].senha) {
-            document.getElementById("loadingOverlay").style.display = "flex";
-            setTimeout(() => {
-                document.getElementById("loadingOverlay").style.display = "none";
-                document.getElementById("loginScreen").style.display = "none";
-                document.getElementById("sistema").style.display = "block";
-                document.getElementById("labelNome").innerText = n;
-                const nivel = MILITARES[n].nivel;
-                document.querySelectorAll(".secao-container").forEach(x => x.style.display = "none");
-                if(nivel === "MASTER" || nivel === "CHEFE") {
-                    document.querySelectorAll(".secao-container").forEach(x => x.style.display = "block");
-                    if(nivel === "MASTER") document.getElementById("painelAdmin").style.display = "block";
-                } else {
-                    document.getElementById("secao-ACERVO").style.display = "block";
-                    const alvo = document.getElementById("secao-" + nivel);
-                    if(alvo) alvo.style.display = "block";
-                }
-                window.scrollTo(0,0);
-            }, 1000);
-        } else {
-            document.getElementById("erroSenha").style.display = "block";
-            document.getElementById("inputSenha").value = "";
-            setTimeout(() => document.getElementById("erroSenha").style.display = "none", 3000);
-        }
-    }
-
-    function addMilitar() {
-        const n = document.getElementById("admNome").value.toUpperCase().trim();
-        const s = document.getElementById("admSenha").value;
-        const l = document.getElementById("admNivel").value;
-        if(n && s) {
-            database.ref('militares/' + n).set({ senha: s, nivel: l });
-            document.getElementById("admNome").value = "";
-            document.getElementById("admSenha").value = "";
-        }
-    }
-
-    function deletarMilitar(n) { if(confirm(`Remover ${n}?`)) database.ref('militares/' + n).remove(); }
-    function togglePassword() { const i = document.getElementById("inputSenha"); i.type = i.type === "password" ? "text" : "password"; }
-    function clock() {
-        const d = new Date();
-        document.getElementById('txtDataHora').innerHTML = d.toLocaleDateString('pt-BR', {day:'numeric', month:'long'}) + "<br>" + d.toLocaleTimeString('pt-BR');
-    }
-    setInterval(clock, 1000);
-    window.onscroll = function() { document.getElementById("btnTopo").style.display = window.scrollY > 300 ? "block" : "none"; };
-    function voltarAoTopo() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function logout(){location.reload();}
+function addMilitar(){
+  const nome=document.getElementById("admNome").value.toUpperCase();
+  const senha=document.getElementById("admSenha").value;
+  const nivel=document.getElementById("admNivel").value;
+  if(nome&&senha)database.ref("militares/"+nome).set({senha:senha,nivel:nivel});
+}
+function deletarMilitar(nome){database.ref("militares/"+nome).remove();}
 </script>
+
 </body>
 </html>
