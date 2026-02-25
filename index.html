@@ -4,294 +4,340 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAdmC - 6º BBM | CBMRS</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
 <style>
 :root {
-  --azul-escuro:#001D3D; --azul-medio:#003566; --laranja-cbm:#FF9E3D; --vermelho-cbm:#C40000; --azul-texto:#002B5B; --cinza-fundo:#F4F6F9;
+    --azul-fundo-dark: #001233;
+    --azul-fundo-light: #002855;
+    --azul-painel-glass: rgba(109, 125, 150, 0.7); 
+    --laranja-cbm: #FF9E3D; 
+    --vermelho-cbm: #C40000;
+    --vermelho-hover: #A30000;
+    --azul-texto: #002B5B;
+    --cinza-fundo: #F4F6F9;
 }
-*{box-sizing:border-box; transition:all 0.2s ease;}
-body{margin:0;font-family:'Open Sans',sans-serif; background:var(--azul-escuro); display:flex; flex-direction:column; min-height:100vh;}
-@keyframes entradaPainel{from{opacity:0; transform:translateY(40px);} to{opacity:1; transform:translateY(0);}}
-@keyframes sweep{0%{left:-100%;}50%{left:100%;}100%{left:100%;}}
-@keyframes brilhoLogo{0%,100%{filter:drop-shadow(0 0 5px rgba(255,215,0,0));}50%{filter:drop-shadow(0 0 25px rgba(255,215,0,0.4));}}
-@keyframes spin{to{transform:rotate(360deg);}}
-#loginScreen{flex:1; display:flex; justify-content:center; align-items:center; padding:20px; background:radial-gradient(circle,#003566 0%,#001D3D 100%);}
-.login-container{display:flex; max-width:950px; width:100%; min-height:550px; border-radius:20px; overflow:hidden; box-shadow:0 40px 80px rgba(0,0,0,0.6); background:#fff; animation:entradaPainel 0.8s cubic-bezier(0.2,0.8,0.2,1);}
-.login-left{background:#778899; flex:1; padding:40px; display:flex; flex-direction:column; justify-content:center; align-items:center; position:relative; overflow:hidden;}
-.login-left::before{content:""; position:absolute; top:0; width:100%; height:100%; background: linear-gradient(120deg,transparent, rgba(255,255,255,0.15),transparent); animation:sweep 4s infinite;}
-.login-left img{width:180px; z-index:2; animation:brilhoLogo 3s infinite ease-in-out;}
-.login-left h1{font-size:80px; font-weight:900; margin:10px 0 0 0; z-index:2; background: linear-gradient(180deg,#FFD700 0%,#FF8C00 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:-3px;}
-.login-left .sub-titulo-logo{font-weight:800; text-transform:uppercase; font-size:14px; color:#FF9E3D; z-index:2; margin-top:-5px; letter-spacing:1px; text-align:center;}
-.login-left p{font-weight:600; font-size:12px; color:rgba(255,255,255,0.8); z-index:2; margin-top:15px;}
-.login-right{flex:1.1; padding:60px; display:flex; flex-direction:column; justify-content:center; background:white;}
-.login-right h2{margin:0; color: var(--azul-medio); font-size:28px; font-weight:800;}
-.login-right input{width:100%; padding:14px; margin-bottom:15px; border:1.5px solid #ddd; border-radius:8px; outline:none; font-size:15px; font-weight:600;}
-.btn-acesso{width:100%; padding:18px; background:var(--vermelho-cbm); color:white; border:none; border-radius:8px; font-weight:800; text-transform:uppercase; cursor:pointer; margin-top:10px;}
-.btn-acesso:hover{background:#a00000; transform:translateY(-2px); box-shadow:0 10px 20px rgba(196,0,0,0.3);}
-#sistema{display:none; flex:1; background:var(--cinza-fundo); padding-bottom:80px;}
-.header-top{background:var(--azul-texto); color:white; text-align:center; padding:15px; font-weight:800; font-size:16px; letter-spacing:1px;}
-.header-stripe{background:var(--vermelho-cbm); height:6px;}
-.dashboard-container{max-width:1200px; margin:30px auto; padding:0 20px;}
-.militar-bar{background:white; padding:25px 40px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 4px 20px rgba(0,0,0,0.08); margin-bottom:40px;}
-.militar-status{font-size:24px; font-weight:800; color:var(--azul-medio);}
-.militar-status span{color:var(--vermelho-cbm);}
-.txt-data-hora{text-align:right; font-weight:700; color:#666; font-size:14px; border-right:4px solid var(--laranja-cbm); padding-right:15px;}
-#painelAdmin{background:#fff; padding:30px; border-radius:12px; margin-bottom:40px; border:2px dashed var(--azul-medio); display:none;}
-.admin-table-wrapper{width:100%; overflow-x:auto;}
-.admin-table{width:100%; border-collapse:collapse; margin-top:20px; min-width:500px;}
-.admin-table th{background: var(--azul-medio); color:white; padding:12px; text-align:left; font-size:12px; text-transform:uppercase;}
-.admin-table td{padding:12px; border-bottom:1px solid #eee; font-size:14px;}
-.secao-container{display:none; margin-top:50px; animation:entradaPainel 0.6s ease;}
-.secao-header{border-left:10px solid var(--vermelho-cbm); padding-left:20px; margin-bottom:30px; font-size:22px; font-weight:800; color:var(--azul-texto); text-transform:uppercase;}
-.card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px;}
-.card-item{background:white; padding:40px 20px; border-radius:15px; text-decoration:none; color:inherit; display:flex; flex-direction:column; align-items:center; border:1px solid #eee; text-align:center; transition:0.3s;}
-.card-item i{font-size:45px; color:var(--azul-medio); margin-bottom:20px;}
-.card-item span{font-weight:800; font-size:16px; color:#333;}
-.card-item:hover{transform:translateY(-10px); border-top:6px solid var(--vermelho-cbm); box-shadow:0 15px 35px rgba(0,0,0,0.1);}
-.footer-full{background:#000E1F; color:white; border-top:6px solid var(--vermelho-cbm); margin-top:auto;}
-.footer-grid{max-width:1200px; margin:auto; padding:60px 20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:50px;}
-.footer-col h4{color:#fff; margin-bottom:25px; font-size:16px; text-transform:uppercase; font-weight:800; letter-spacing:1px; position:relative;}
-.footer-col h4::after{content:''; position:absolute; left:0; bottom:-8px; width:40px; height:3px; background:var(--laranja-cbm);}
-.footer-col p{font-size:14px; color:#bdc3c7; margin:10px 0; line-height:1.6; display:flex; align-items:center; gap:10px;}
-.footer-col i{color:var(--laranja-cbm); width:20px;}
-.footer-bottom{background:rgba(0,0,0,0.4); text-align:center; padding:25px; font-size:11px; color:#95a5a6; font-weight:700; text-transform:uppercase; letter-spacing:2px;}
-#btnTopo{display:none; position:fixed; bottom:40px; right:20px; z-index:99; border:none; background:var(--vermelho-cbm); color:white; width:50px; height:50px; border-radius:50%; cursor:pointer; box-shadow:0 5px 20px rgba(0,0,0,0.3);}
-@media(max-width:768px){.login-container{flex-direction:column; min-height:auto;}.login-left{padding:40px 20px;}.login-left h1{font-size:60px;}.login-right{padding:40px 20px;}.militar-bar{flex-direction:column;text-align:center; gap:20px;padding:20px;}.txt-data-hora{text-align:center;border-right:none;border-bottom:4px solid var(--laranja-cbm);padding-right:0;padding-bottom:10px;}.card-grid{grid-template-columns:1fr;}}
+
+* { box-sizing: border-box; transition: all 0.2s ease; }
+
+body { 
+    margin: 0; font-family: 'Open Sans', sans-serif; background: var(--azul-fundo-dark); 
+    display: flex; flex-direction: column; min-height: 100vh; color: #334155;
+}
+
+/* --- LOGIN --- */
+#loginScreen { 
+    flex: 1; 
+    background: radial-gradient(circle at center, var(--azul-fundo-light) 0%, var(--azul-fundo-dark) 100%);
+    display: flex; justify-content: center; align-items: center; padding: 20px; 
+    position: relative; overflow: hidden;
+}
+.login-container {
+    display: flex; max-width: 850px; width: 100%; min-height: 480px;
+    border-radius: 12px; overflow: hidden; 
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6); z-index: 2;
+}
+.login-left-side {
+    background: var(--azul-painel-glass);
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    flex: 1; padding: 40px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    color: white; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.1);
+}
+.cbmrs-logo-text {
+    font-size: 82px; font-weight: 800; margin: 0; line-height: 1;
+    background: linear-gradient(to right, #FFEB3B 0%, #FF9800 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px;
+}
+.cbmrs-sub-text {
+    font-size: 14px; font-weight: 700; margin-top: 5px; color: #FF9800;
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+.login-right-side {
+    background: #FFFFFF; flex: 1.2; padding: 50px 40px;
+    display: flex; flex-direction: column; justify-content: center;
+}
+.login-right-side h2 { color: var(--azul-texto); margin: 0; font-weight: 800; font-size: 24px; }
+.login-right-side p.subtitle { color: #666; font-size: 12px; margin-bottom: 25px; font-weight: 600; text-transform: uppercase; }
+.login-right-side input, .login-right-side select { 
+    width: 100%; padding: 12px; margin-top: 8px; border-radius: 6px; 
+    border: 1px solid #ddd; font-size: 15px; background: #fafafa;
+}
+.password-wrapper { position: relative; width: 100%; }
+.password-wrapper i { position: absolute; right: 15px; top: 22px; cursor: pointer; color: #999; }
+.btn-entrar { 
+    width: 100%; padding: 15px; background: var(--vermelho-cbm); color: #fff; border: none; 
+    border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 25px;
+    font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
+}
+.btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(196, 0, 0, 0.3); }
+
+/* --- SISTEMA --- */
+#sistema { display: none; flex: 1; background: var(--cinza-fundo); }
+.header-top { background: var(--azul-texto); color: #fff; text-align: center; padding: 15px; font-weight: 800; font-size: 20px; }
+.header-sub { background: var(--vermelho-cbm); height: 5px; }
+.container { max-width: 1100px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+.user-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+
+/* --- PAINEL GESTÃO --- */
+#painelDev { background: #f8fafc; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 2px solid var(--azul-texto); display:none; }
+table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; border-right: 1px solid #eee; }
+th { background: var(--azul-texto); color: white; }
+
+.category { margin-bottom: 30px; display: none; animation: fadeIn 0.5s ease; }
+.category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 19px; margin-bottom: 20px; }
+.link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.link-card { border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; height: 100%; }
+.link-card:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho-cbm); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.link-card i { font-size: 35px; color: var(--azul-texto); margin-bottom: 15px; }
+
+.logout-btn { background: var(--azul-texto); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+.footer-oficial { background: #000E1F; color: #fff; font-size: 14px; margin-top: auto; border-top: 5px solid var(--vermelho-cbm); }
+.footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
+.acesso-restrito { text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.05); color: #FF9E3D; font-weight: 700; font-size: 12px; text-transform: uppercase; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 </style>
 </head>
-
 <body>
 
-<div id="loginScreen" class="login-container">
-  <div class="login-left">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="CBMRS">
-    <h1>CBMRS</h1>
-    <div class="sub-titulo-logo">Corpo de Bombeiros Militar</div>
-    <p>6º Batalhão de Bombeiro Militar</p>
-  </div>
-  <div class="login-right">
-    <h2>SAdmC - Acesso</h2>
-    <input type="email" id="inputEmail" placeholder="E-mail">
-    <input type="password" id="inputSenha" placeholder="Crie sua senha">
-    <button class="btn-acesso" onclick="acaoLogin()">Entrar</button>
-    <button class="btn-acesso" style="background:#27ae60;" onclick="criarConta()">Criar Conta</button>
-    <button class="btn-acesso" style="background:#888;" onclick="esqueciSenha()">Esqueci a Senha</button>
-  </div>
+<div id="loginScreen">
+    <div class="login-container">
+        <div class="login-left-side">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" alt="Logo CBMRS" style="width: 170px; margin-bottom: 20px;">
+            <h1 class="cbmrs-logo-text">CBMRS</h1>
+            <p class="cbmrs-sub-text">Corpo de Bombeiros Militar</p>
+        </div>
+        <div class="login-right-side">
+            <h2>SAdmC - 6º BBM</h2>
+            <p class="subtitle">Seção Administrativa e Correição</p>
+            <label>Email</label>
+            <input type="email" id="email" placeholder="seu.email@cbm.rs.gov.br">
+            <label>Senha</label>
+            <div class="password-wrapper">
+                <input type="password" id="senha" placeholder="Senha">
+                <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
+            </div>
+            <button class="btn-entrar" onclick="login()">Entrar</button>
+        </div>
+    </div>
 </div>
 
 <div id="sistema">
-  <div class="header-top">CORPO DE BOMBEIROS MILITAR DO ESTADO DO RIO GRANDE DO SUL</div>
-  <div class="header-stripe"></div>
-  <div class="dashboard-container">
-    <div class="militar-bar">
-      <div>
-        <div style="font-size:12px;color:#999;font-weight:800;text-transform:uppercase;">Bem-vindo,</div>
-        <div class="militar-status">Militar: <span id="labelNome"></span></div>
-      </div>
-      <div id="txtDataHora" class="txt-data-hora"></div>
-      <button onclick="location.reload()" style="background:var(--azul-medio); color:white; border:none; padding:10px 20px; border-radius:5px; font-weight:800; cursor:pointer;">SAIR</button>
+    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
+    <div class="header-sub"></div>
+    <div class="container">
+        <div class="user-bar">
+            <span id="usuarioLogado" style="font-weight: 800; color: var(--azul-texto); font-size: 18px;"></span>
+            <div style="font-size: 14px; font-weight: 600; color: #666;">
+                <span id="dataAtual"></span> | <span id="relogio"></span>
+            </div>
+            <button class="logout-btn" onclick="firebase.auth().signOut().then(()=>location.reload())">Sair</button>
+        </div>
+
+        <div id="painelDev">
+            <h3 style="margin:0; color: var(--azul-texto);"><i class="fas fa-user-shield"></i> Gestão de Acessos (MASTER)</h3>
+            <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-top: 15px; margin-bottom: 20px;">
+                <h4 style="margin-top:0;">Cadastrar Novo Militar</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <input type="text" id="novoNome" placeholder="Nome (Ex: Sd Lagemann)">
+                    <input type="email" id="novoEmail" placeholder="E-mail Institucional">
+                    <input type="password" id="novaSenha" placeholder="Senha Provisória">
+                    <select id="novaSecao">
+                        <option value="B1">B1 - Pessoal</option>
+                        <option value="B2">B2 - Inteligência</option>
+                        <option value="B3">B3 - Operações</option>
+                        <option value="B4">B4 - Logística</option>
+                        <option value="SCor">SCor - Correição</option>
+                    </select>
+                    <select id="novoNivel">
+                        <option value="user">Usuário Comum</option>
+                        <option value="admin">Administrador</option>
+                        <option value="MASTER">Master</option>
+                    </select>
+                    <button onclick="cadastrarMilitar()" style="background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">CADASTRAR</button>
+                </div>
+            </div>
+            <h4>Militares Cadastrados</h4>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Seção</th>
+                            <th>Nível</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaMilitares"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="category" id="cat-B1">
+            <div class="category-title">B1 - SEÇÃO PESSOAL</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-calendar-check"></i><strong>Escalas de Serviço</strong></a>
+                <a href="#" class="link-card"><i class="fas fa-umbrella-beach"></i><strong>Efetivo e Férias</strong></a>
+            </div>
+        </div>
+
+        <div class="category" id="cat-B2">
+            <div class="category-title">ALI - AGÊNCIA LOCAL DE INTELIGÊNCIA</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Dados de Inteligência</strong></a>
+            </div>
+        </div>
+
+        <div class="category" id="cat-B3">
+            <div class="category-title">B3 - OPERAÇÕES</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-person-shelter"></i><strong>Planilha Operacional</strong></a>
+            </div>
+        </div>
+
+        <div class="category" id="cat-B4">
+            <div class="category-title">B4 - LOGÍSTICA</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></a>
+            </div>
+        </div>
+
+        <div class="category" id="cat-SCor">
+            <div class="category-title">SCOR - CORREIÇÃO</div>
+            <div class="link-grid">
+                <a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>Processos e Legislação</strong></a>
+            </div>
+        </div>
     </div>
-
-    <div id="painelAdmin">
-      <h3><i class="fas fa-user-cog"></i> Gerenciamento de Acessos</h3>
-      <input type="text" id="admNome" placeholder="Nome / Graduação">
-      <select id="admNivel">
-        <option value="PUBLICO">Apenas Acervo</option>
-        <option value="B1">B1 - RH</option>
-        <option value="B2">B2 - Inteligência</option>
-        <option value="B3">B3 - Operações</option>
-        <option value="B4">B4 - Logística</option>
-        <option value="SCOR">SCor - Correição</option>
-        <option value="CHEFE">Chefe (Ver Tudo)</option>
-        <option value="MASTER">Desenvolvedor</option>
-      </select>
-      <button onclick="addMilitar()" style="background:#27ae60;color:white;">Adicionar Militar</button>
-
-      <div class="admin-table-wrapper">
-        <table class="admin-table">
-          <thead><tr><th>Nome</th><th>Nível</th><th>Ações</th></tr></thead>
-          <tbody id="tabelaUsuarios"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Seções -->
-    <div id="secao-ACERVO" class="secao-container">
-      <div class="secao-header" style="border-left-color:var(--laranja-cbm); border-bottom-color:var(--laranja-cbm);">Acervo Normativo e Modelos</div>
-      <div class="card-grid">
-        <a href="#" class="card-item"><i class="fas fa-file-signature"></i><span>Modelos de Requerimentos</span></a>
-        <a href="#" class="card-item"><i class="fas fa-bullhorn"></i><span>Ordens de Serviço</span></a>
-        <a href="#" class="card-item"><i class="fas fa-book"></i><span>Manuais e POPs</span></a>
-      </div>
-    </div>
-
-    <div id="secao-B1" class="secao-container">
-      <div class="secao-header">B1 - Recursos Humanos</div>
-      <div class="card-grid">
-        <a href="#" class="card-item"><i class="fas fa-users-cog"></i><span>Gestão de Efetivo</span></a>
-        <a href="#" class="card-item"><i class="fas fa-calendar-alt"></i><span>Escalas de Serviço</span></a>
-        <a href="#" class="card-item"><i class="fas fa-user-graduate"></i><span>Cursos e Estágios</span></a>
-      </div>
-    </div>
-
-    <div id="secao-B2" class="secao-container">
-      <div class="secao-header">B2 - Inteligência</div>
-      <div class="card-grid">
-        <a href="#" class="card-item"><i class="fas fa-user-secret"></i><span>Relatórios ALI</span></a>
-        <a href="#" class="card-item"><i class="fas fa-shield-alt"></i><span>Análise de Riscos</span></a>
-      </div>
-    </div>
-
-    <div id="secao-B3" class="secao-container">
-      <div class="secao-header">B3 - Operações</div>
-      <div class="card-grid">
-        <a href="#" class="card-item"><i class="fas fa-map-marked-alt"></i><span>Planos de Contingência</span></a>
-        <a href="#" class="card-item"><i class="fas fa-fire-extinguisher"></i><span>Estatísticas Operacionais</span></a>
-      </div>
-    </div>
-
-    <div id="secao-B4" class="secao-container">
-      <div class="secao-header">B4 - Logística</div>
-      <div class="card-grid">
-        <a href="#" class="card-item"><i class="fas fa-truck-pickup"></i><span>Gestão de Frota</span></a>
-        <a href="#" class="card-item"><i class="fas fa-tools"></i><span>Manutenção de Materiais</span></a>
-        <a href="#" class="card-item"><i class="fas fa-warehouse"></i><span>Controle de Carga</span></a>
-      </div>
-    </div>
-
-    <div id="secao-SCOR" class="secao-container">
-      <div class="secao-header">SCor - Correição e Disciplina</div>
-      <div class="card-grid">
-        <a href="#" class="card-item"><i class="fas fa-gavel"></i><span>IPM e Sindicâncias</span></a>
-        <a href="#" class="card-item"><i class="fas fa-balance-scale"></i><span>Processos Administrativos</span></a>
-        <a href="#" class="card-item"><i class="fas fa-clipboard-check"></i><span>Conselhos de Disciplina</span></a>
-      </div>
-    </div>
-
-  </div>
 </div>
 
-<footer class="footer-full">
-  <div class="footer-grid">
-    <div class="footer-col">
-      <h4>6º Batalhão de Bombeiro Militar</h4>
-      <p><i class="fas fa-map-marker-alt"></i> Rua Tenente-Coronel Brito, 03</p>
-      <p><i class="fas fa-city"></i> Santa Cruz do Sul - RS</p>
-      <p><i class="fas fa-phone"></i> (51) 3711-2323</p>
+<footer class="footer-oficial">
+    <div class="footer-main">
+        <div class="footer-section">
+            <h4>6º BATALHÃO DE BOMBEIRO MILITAR</h4>
+            <p>Seção Administrativa e Correição - SAdmC</p>
+        </div>
     </div>
-    <div class="footer-col">
-      <h4>Seção Administrativa</h4>
-      <p><i class="fas fa-shield-halved"></i> Correição e Disciplina</p>
-      <p><i class="fas fa-folder-open"></i> Arquivo Geral e Acervo</p>
-      <p><i class="fas fa-clock"></i> Atendimento: 8h às 18h</p>
+    <div class="acesso-restrito">
+        <i class="fas fa-lock"></i> Acesso restrito aos militares do 6º BBM
     </div>
-    <div class="footer-col">
-      <h4>Contato</h4>
-      <p><i class="fas fa-envelope"></i> contato@cbmrs.rs.gov.br</p>
-      <p><i class="fas fa-phone-alt"></i> (51) 3711-2323</p>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2026 CBMRS - Todos os direitos reservados</div>
 </footer>
 
-<button id="btnTopo" onclick="voltarAoTopo()"><i class="fas fa-chevron-up"></i></button>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-// Firebase
-const firebaseConfig = { 
-  apiKey:"AIzaSyDfHrIaQzylbPaPBH_rAlew1CoINTfIySE",
-  authDomain:"sadmc-6bbm.firebaseapp.com",
-  databaseURL:"https://sadmc-6bbm-4411d-default-rtdb.firebaseio.com/",
-  projectId:"sadmc-6bbm",
-  storageBucket:"sadmc-6bbm.firebasestorage.app",
-  messagingSenderId:"949715183102",
-  appId:"1:949715183102:web:7c0f2c0153beb6c1fa8caf"
+const firebaseConfig = {
+  apiKey: "AIzaSyDE0OQwFJ2tDu-Ws2W9ZCalrBQetWoFjwk",
+  authDomain: "sadmc-6bbm-4411d.firebaseapp.com",
+  databaseURL: "https://sadmc-6bbm-4411d-default-rtdb.firebaseio.com",
+  projectId: "sadmc-6bbm-4411d",
+  storageBucket: "sadmc-6bbm-4411d.firebasestorage.app",
+  messagingSenderId: "566392365968",
+  appId: "1:566392365968:web:f18185da477e65ea368915"
 };
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const database = firebase.database();
 
-function acaoLogin() {
-  const email = document.getElementById("inputEmail").value.trim();
-  const senha = document.getElementById("inputSenha").value;
-  if(!email||!senha) return alert("Informe e-mail e senha!");
-  auth.signInWithEmailAndPassword(email, senha).then(cred=>{
-    const uid = cred.user.uid;
-    database.ref('militares/'+uid).once('value').then(snap=>{
-      const dados = snap.val();
-      if(!dados) return alert("Usuário autenticado, mas não cadastrado no sistema.");
-      document.getElementById("loginScreen").style.display="none";
-      document.getElementById("sistema").style.display="block";
-      document.getElementById("labelNome").innerText=dados.nome||email;
-      // Renderizar seções
-      mostrarSecoes(dados.nivel);
-      if(dados.nivel==="MASTER"){ document.getElementById("painelAdmin").style.display="block"; renderUsuarios(); }
-    });
-  }).catch(err=>alert("Erro ao entrar: "+err.message));
+function togglePassword() {
+    const input = document.getElementById("senha");
+    const icon = document.getElementById("toggleIcon");
+    input.type = input.type === "password" ? "text" : "password";
+    icon.classList.toggle("fa-eye-slash");
 }
 
-function criarConta() {
-  const email = document.getElementById("inputEmail").value.trim();
-  const senha = document.getElementById("inputSenha").value;
-  if(!email||!senha) return alert("Informe e-mail e senha!");
-  auth.createUserWithEmailAndPassword(email, senha).then(cred=>{
-    const uid = cred.user.uid;
-    const nome = prompt("Informe seu nome completo:")||email;
-    database.ref('militares/'+uid).set({nome:nome,nivel:"PUBLICO"})
-      .then(()=>alert("Conta criada com sucesso! Faça login."));
-  }).catch(err=>alert("Erro: "+err.message));
+async function login() {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+    try {
+        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, senha);
+        const user = userCredential.user;
+        const snapshot = await firebase.database().ref('militares/' + user.uid).get();
+        if(!snapshot.exists()) { alert("Usuário não autorizado no banco de dados!"); return; }
+        mostrarSistema(user, snapshot.val());
+    } catch(e) { alert("Erro no login: " + e.message); }
 }
 
-function esqueciSenha() {
-  const email = document.getElementById("inputEmail").value.trim();
-  if(!email) return alert("Informe seu e-mail!");
-  auth.sendPasswordResetEmail(email).then(()=>alert("Link enviado para "+email)).catch(err=>alert("Erro: "+err.message));
-}
+function mostrarSistema(user, dados) {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("sistema").style.display = "block";
+    document.getElementById("usuarioLogado").innerText = "Militar: " + dados.nome;
+    
+    document.querySelectorAll(".category").forEach(c => c.style.display = "none");
 
-// Admin
-function renderUsuarios() {
-  const tabela = document.getElementById("tabelaUsuarios");
-  tabela.innerHTML="";
-  database.ref('militares').once('value').then(snap=>{
-    const data = snap.val()||{};
-    for(let uid in data){
-      const row = tabela.insertRow();
-      row.innerHTML=`<td>${data[uid].nome||"-"}</td><td>${data[uid].nivel}</td><td><button onclick="deletarMilitar('${uid}')">Excluir</button></td>`;
+    if(dados.nivel === "MASTER" || dados.nivel === "admin") {
+        document.querySelectorAll(".category").forEach(c => c.style.display = "block");
+        if(dados.nivel === "MASTER") {
+            document.getElementById("painelDev").style.display = "block";
+            listarMilitares();
+        }
+    } else {
+        const alvo = document.getElementById("cat-" + dados.secao);
+        if(alvo) alvo.style.display = "block";
     }
-  });
 }
-function addMilitar() {
-  const nome = document.getElementById("admNome").value.trim();
-  const nivel = document.getElementById("admNivel").value;
-  if(!nome) return alert("Informe o nome!");
-  const uid = prompt("Informe UID do usuário:");
-  if(!uid) return alert("UID obrigatório!");
-  database.ref('militares/'+uid).set({nome:nome,nivel:nivel}).then(()=>{alert("Militar adicionado!"); renderUsuarios();});
+
+function listarMilitares() {
+    const tabela = document.getElementById("corpoTabelaMilitares");
+    firebase.database().ref('militares').on('value', (snapshot) => {
+        tabela.innerHTML = "";
+        snapshot.forEach((item) => {
+            const m = item.val();
+            const uid = item.key;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${m.nome}</td>
+                <td style="text-align:center">${m.secao || '-'}</td>
+                <td style="text-align:center"><strong>${m.nivel}</strong></td>
+                <td style="text-align:center">
+                    <button onclick="removerMilitar('${uid}')" style="background:#dc3545; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                </td>
+            `;
+            tabela.appendChild(tr);
+        });
+    });
 }
-function deletarMilitar(uid){if(!confirm("Deseja excluir este usuário?"))return; database.ref('militares/'+uid).remove().then(()=>renderUsuarios());}
 
-// Clock
-function clock(){const d=new Date();document.getElementById('txtDataHora').innerHTML=d.toLocaleDateString('pt-BR',{day:'numeric',month:'long'})+"<br>"+d.toLocaleTimeString('pt-BR');}
-setInterval(clock,1000);
+async function cadastrarMilitar() {
+    const nome = document.getElementById("novoNome").value;
+    const email = document.getElementById("novoEmail").value;
+    const senha = document.getElementById("novaSenha").value;
+    const secao = document.getElementById("novaSecao").value;
+    const nivel = document.getElementById("novoNivel").value;
 
-// Scroll topo
-window.onscroll=function(){document.getElementById("btnTopo").style.display=window.scrollY>300?"block":"none";}
-function voltarAoTopo(){window.scrollTo({top:0,behavior:'smooth'});}
+    if(!nome || !email || !senha) { alert("Preencha tudo!"); return; }
 
-// Mostrar seções de acordo com nível
-function mostrarSecoes(nivel){
-  const secoes = {PUBLICO:["ACERVO"],B1:["ACERVO","B1"],B2:["ACERVO","B2"],B3:["ACERVO","B3"],B4:["ACERVO","B4"],SCOR:["ACERVO","SCOR"],CHEFE:["ACERVO","B1","B2","B3","B4","SCOR"],MASTER:["ACERVO","B1","B2","B3","B4","SCOR"]};
-  const ids = secoes[nivel]||[];
-  ids.forEach(id=>{document.getElementById("secao-"+id).style.display="block";});
+    try {
+        // Criação no Auth e Database
+        const tempApp = firebase.initializeApp(firebaseConfig, "Secondary");
+        const userCredential = await tempApp.auth().createUserWithEmailAndPassword(email, senha);
+        const novoUid = userCredential.user.uid;
+        
+        await firebase.database().ref('militares/' + novoUid).set({
+            nome: nome, secao: secao, nivel: nivel
+        });
+
+        alert("Militar cadastrado!");
+        tempApp.delete();
+    } catch (e) { alert("Erro: " + e.message); }
 }
+
+async function removerMilitar(uid) {
+    if(confirm("Remover este acesso?")) {
+        await firebase.database().ref('militares/' + uid).remove();
+    }
+}
+
+function atualizarDataHora() {
+    const now = new Date();
+    document.getElementById("dataAtual").innerText = now.toLocaleDateString('pt-BR');
+    document.getElementById("relogio").innerText = now.toLocaleTimeString('pt-BR');
+}
+setInterval(atualizarDataHora, 1000);
+atualizarDataHora();
 </script>
-
 </body>
 </html>
