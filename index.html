@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="robots" content="noindex, nofollow">
 <title>Portal de Intranet | SAdmC - 6º BBM</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -27,12 +27,11 @@ body {
     display: flex; flex-direction: column; min-height: 100vh; color: #334155;
 }
 
-/* --- LOGIN --- */
+/* --- LOGIN RESPONSIVO --- */
 #loginScreen { 
     flex: 1; 
     background: radial-gradient(circle at center, var(--azul-fundo-light) 0%, var(--azul-fundo-dark) 100%);
-    display: flex; justify-content: center; align-items: center; padding: 20px; 
-    position: relative; overflow: hidden;
+    display: flex; justify-content: center; align-items: center; padding: 15px; 
 }
 .login-container {
     display: flex; max-width: 850px; width: 100%; min-height: 480px;
@@ -48,62 +47,110 @@ body {
     border-right: 1px solid rgba(255,255,255,0.1);
 }
 .cbmrs-logo-text {
-    font-size: 82px; font-weight: 800; margin: 0; line-height: 1;
+    font-size: clamp(40px, 10vw, 82px); font-weight: 800; margin: 0; line-height: 1;
     background: linear-gradient(to right, #FFEB3B 0%, #FF9800 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px;
 }
-.cbmrs-sub-text {
-    font-size: 14px; font-weight: 700; margin-top: 5px; color: #FF9800;
-    text-transform: uppercase; letter-spacing: 0.5px;
-}
 .login-right-side {
-    background: #FFFFFF; flex: 1.2; padding: 50px 40px;
+    background: #FFFFFF; flex: 1.2; padding: 40px;
     display: flex; flex-direction: column; justify-content: center;
 }
-/* 2. Textos alterados para parecer portal administrativo interno */
 .login-right-side h2 { color: var(--azul-texto); margin: 0; font-weight: 800; font-size: 24px; }
 .login-right-side p.subtitle { color: #666; font-size: 12px; margin-bottom: 25px; font-weight: 600; text-transform: uppercase; }
 .login-right-side input, .login-right-side select { 
     width: 100%; padding: 12px; margin-top: 8px; border-radius: 6px; 
-    border: 1px solid #ddd; font-size: 15px; background: #fafafa;
+    border: 1px solid #ddd; font-size: 16px; background: #fafafa;
 }
-.password-wrapper { position: relative; width: 100%; }
-.password-wrapper i { position: absolute; right: 15px; top: 22px; cursor: pointer; color: #999; }
 .btn-entrar { 
     width: 100%; padding: 15px; background: var(--vermelho-cbm); color: #fff; border: none; 
     border-radius: 6px; cursor: pointer; font-weight: 700; margin-top: 25px;
     font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
 }
-.btn-entrar:hover { background: var(--vermelho-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(196, 0, 0, 0.3); }
+
+/* --- MENU LATERAL --- */
+#menuLateral {
+    position: fixed; left: -280px; top: 0; width: 280px; height: 100%;
+    background: var(--azul-fundo-dark); z-index: 1000; transition: 0.3s;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.3); padding-top: 20px;
+}
+#menuLateral.ativo { left: 0; }
+.menu-item {
+    padding: 15px 25px; color: white; text-decoration: none;
+    display: flex; align-items: center; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer; font-weight: 600;
+}
+.menu-item:hover { background: var(--azul-fundo-light); color: var(--laranja-cbm); }
+#overlay {
+    position: fixed; display: none; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); z-index: 999;
+}
+.btn-menu {
+    background: none; border: none; color: white; font-size: 22px;
+    cursor: pointer; display: none; margin-right: 15px;
+}
 
 /* --- SISTEMA --- */
 #sistema { display: none; flex: 1; background: var(--cinza-fundo); }
-.header-top { background: var(--azul-texto); color: #fff; text-align: center; padding: 15px; font-weight: 800; font-size: 20px; }
+.header-top { 
+    background: var(--azul-texto); color: #fff; text-align: center; 
+    padding: 15px; font-weight: 800; font-size: clamp(14px, 4vw, 20px);
+    display: flex; align-items: center; justify-content: center;
+}
 .header-sub { background: var(--vermelho-cbm); height: 5px; }
 .container { max-width: 1100px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-.user-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
 
-/* --- PAINEL GESTÃO --- */
+.user-bar { 
+    display: flex; justify-content: space-between; align-items: center; 
+    margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; flex-wrap: wrap; gap: 10px;
+}
+
+/* --- GRID E TABELAS --- */
+.link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.link-card { border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; }
+.link-card i { font-size: 35px; color: var(--azul-texto); margin-bottom: 15px; }
+
 #painelDev { background: #f8fafc; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 2px solid var(--azul-texto); display:none; }
 table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; }
 th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; border-right: 1px solid #eee; }
 th { background: var(--azul-texto); color: white; }
 
+/* --- RODAPÉ INSTITUCIONAL --- */
+.footer-oficial { background: #000E1F; color: #fff; margin-top: auto; border-top: 5px solid var(--vermelho-cbm); }
+.footer-main { max-width: 1100px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 40px 20px; }
+.footer-section h4 { color: var(--laranja-cbm); font-size: 14px; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+.footer-section span { font-size: 13px; line-height: 2; color: #cbd5e1; display: block; }
+.footer-section a { color: #cbd5e1; text-decoration: none; }
+.footer-section a:hover { color: var(--laranja-cbm); }
+.footer-section i { width: 20px; color: var(--laranja-cbm); }
+.acesso-restrito { text-align: center; padding: 15px; background: rgba(0, 0, 0, 0.4); color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+@media (max-width: 768px) {
+    .login-container { flex-direction: column; }
+    .login-left-side { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .btn-menu { display: block; }
+    .container { margin: 15px; padding: 15px; }
+    .user-bar { flex-direction: column; text-align: center; }
+    .footer-main { grid-template-columns: 1fr; text-align: center; }
+}
+
 .category { margin-bottom: 30px; display: none; animation: fadeIn 0.5s ease; }
 .category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 19px; margin-bottom: 20px; }
-.link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-.link-card { border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; height: 100%; }
-.link-card:hover { transform: translateY(-5px); border-top: 4px solid var(--vermelho-cbm); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.link-card i { font-size: 35px; color: var(--azul-texto); margin-bottom: 15px; }
-
-.logout-btn { background: var(--azul-texto); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
-.footer-oficial { background: #000E1F; color: #fff; font-size: 14px; margin-top: auto; border-top: 5px solid var(--vermelho-cbm); }
-.footer-main { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 40px 20px; }
-.acesso-restrito { text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.05); color: #FF9E3D; font-weight: 700; font-size: 12px; text-transform: uppercase; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 </style>
 </head>
 <body>
+
+<div id="overlay" onclick="toggleMenu()"></div>
+<div id="menuLateral">
+    <div style="text-align: center; padding: 20px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Brasao_cbmrs.png" style="width: 70px;">
+        <p style="color: white; font-weight: 800; margin-top: 10px;">INTRANET 6º BBM</p>
+    </div>
+    <div id="itensMenuDinamico"></div>
+    <a class="menu-item" onclick="firebase.auth().signOut().then(()=>location.reload())" style="color: #ff6b6b; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px;">
+        <i class="fas fa-sign-out-alt"></i> SAIR
+    </a>
+</div>
 
 <div id="loginScreen">
     <div class="login-container">
@@ -118,9 +165,9 @@ th { background: var(--azul-texto); color: white; }
             <label>ID de Militar (E-mail)</label>
             <input type="email" id="email" placeholder="nome.sobrenome@cbm.rs.gov.br">
             <label>Credencial de Acesso</label>
-            <div class="password-wrapper">
+            <div style="position: relative;">
                 <input type="password" id="senha" placeholder="Digite sua credencial">
-                <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
+                <i class="fas fa-eye" id="toggleIcon" onclick="togglePassword()" style="position: absolute; right: 15px; top: 22px; cursor: pointer; color: #999;"></i>
             </div>
             <button class="btn-entrar" onclick="login()">AUTENTICAR NO SISTEMA</button>
         </div>
@@ -128,7 +175,10 @@ th { background: var(--azul-texto); color: white; }
 </div>
 
 <div id="sistema">
-    <div class="header-top">CORPO DE BOMBEIROS MILITAR DO RS</div>
+    <div class="header-top">
+        <button class="btn-menu" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+        CORPO DE BOMBEIROS MILITAR DO RS
+    </div>
     <div class="header-sub"></div>
     <div class="container">
         <div class="user-bar">
@@ -136,14 +186,13 @@ th { background: var(--azul-texto); color: white; }
             <div style="font-size: 14px; font-weight: 600; color: #666;">
                 <span id="dataAtual"></span> | <span id="relogio"></span>
             </div>
-            <button class="logout-btn" onclick="firebase.auth().signOut().then(()=>location.reload())">Sair</button>
+            <button onclick="firebase.auth().signOut().then(()=>location.reload())" style="background: var(--azul-texto); color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Sair</button>
         </div>
 
         <div id="painelDev">
             <h3 style="margin:0; color: var(--azul-texto);"><i class="fas fa-user-shield"></i> Gestão de Acessos (MASTER)</h3>
             <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-top: 15px; margin-bottom: 20px;">
-                <h4 style="margin-top:0;">Cadastrar Novo Militar</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
                     <input type="text" id="novoNome" placeholder="Nome (Ex: Sd Lagemann)">
                     <input type="email" id="novoEmail" placeholder="E-mail Institucional">
                     <input type="password" id="novaSenha" placeholder="Senha Provisória">
@@ -162,17 +211,9 @@ th { background: var(--azul-texto); color: white; }
                     <button onclick="cadastrarMilitar()" style="background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">CADASTRAR</button>
                 </div>
             </div>
-            <h4>Militares Cadastrados</h4>
             <div style="overflow-x: auto;">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Seção</th>
-                            <th>Nível</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Nome</th><th>Seção</th><th>Nível</th><th>Ações</th></tr></thead>
                     <tbody id="corpoTabelaMilitares"></tbody>
                 </table>
             </div>
@@ -188,30 +229,22 @@ th { background: var(--azul-texto); color: white; }
 
         <div class="category" id="cat-B2">
             <div class="category-title">ALI - AGÊNCIA LOCAL DE INTELIGÊNCIA</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Dados de Inteligência</strong></a>
-            </div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-user-secret"></i><strong>Dados de Inteligência</strong></a></div>
         </div>
 
         <div class="category" id="cat-B3">
             <div class="category-title">B3 - OPERAÇÕES</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-person-shelter"></i><strong>Planilha Operacional</strong></a>
-            </div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-person-shelter"></i><strong>Planilha Operacional</strong></a></div>
         </div>
 
         <div class="category" id="cat-B4">
             <div class="category-title">B4 - LOGÍSTICA</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></a>
-            </div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-truck-pickup"></i><strong>Frota e VTRs</strong></a></div>
         </div>
 
         <div class="category" id="cat-SCor">
             <div class="category-title">SCOR - CORREIÇÃO</div>
-            <div class="link-grid">
-                <a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>Processos e Legislação</strong></a>
-            </div>
+            <div class="link-grid"><a href="#" class="link-card"><i class="fas fa-gavel"></i><strong>Processos e Legislação</strong></a></div>
         </div>
     </div>
 </div>
@@ -219,12 +252,32 @@ th { background: var(--azul-texto); color: white; }
 <footer class="footer-oficial">
     <div class="footer-main">
         <div class="footer-section">
-            <h4>6º BATALHÃO DE BOMBEIRO MILITAR</h4>
-            <p>Seção Administrativa e Correição - SAdmC</p>
+            <h4><i class="fas fa-map-marker-alt"></i> Sede do 6º BBM</h4>
+            <span><strong>Corpo de Bombeiros Militar do RS</strong></span>
+            <span>Rua Tenente Coronel Brito, 03</span>
+            <span>Centro - Santa Cruz do Sul - RS</span>
+            <span>CEP: 96810-202</span>
+            <span style="margin-top: 10px;">
+                <a href="https://www.google.com/maps/search/?api=1&query=Rua+Tenente+Coronel+Brito+03+Santa+Cruz+do+Sul" target="_blank" style="color: var(--laranja-cbm); font-weight: 700; font-size: 11px;">
+                    <i class="fas fa-directions"></i> VER NO GOOGLE MAPS
+                </a>
+            </span>
+        </div>
+        <div class="footer-section">
+            <h4><i class="fas fa-envelope-open-text"></i> Contato Administrativo</h4>
+            <span><i class="fas fa-envelope"></i> <a href="mailto:sadm@cbm.rs.gov.br">sadm@cbm.rs.gov.br</a></span>
+            <span><i class="fas fa-phone"></i> (51) 3711-2323</span>
+            <span><i class="fas fa-clock"></i> Expediente: 08:00 às 17:30</span>
+        </div>
+        <div class="footer-section">
+            <h4><i class="fas fa-shield-alt"></i> Links Rápidos</h4>
+            <span><i class="fas fa-chevron-right"></i> <a href="https://www.cbm.rs.gov.br" target="_blank">Portal CBMRS</a></span>
+            <span><i class="fas fa-chevron-right"></i> <a href="https://sec.cbm.rs.gov.br" target="_blank">Portal de Sistemas</a></span>
+            <span><i class="fas fa-chevron-right"></i> <a href="https://mail.google.com/a/cbm.rs.gov.br" target="_blank">Webmail Institucional</a></span>
         </div>
     </div>
     <div class="acesso-restrito">
-        <i class="fas fa-lock"></i> Uso Administrativo Interno
+        <i class="fas fa-user-secret"></i> Acesso Restrito: Intranet 6º BBM - Ambiente de Uso Exclusivo Administrativo
     </div>
 </footer>
 
@@ -233,23 +286,27 @@ th { background: var(--azul-texto); color: white; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-// 3. Verifique se as chaves abaixo são as do seu Firebase Console
 const firebaseConfig = {
-  apiKey: "AIzaSyDE0OQwFJ2tDu-Ws2W9ZCalrBQetWoFjwk",
-  authDomain: "sadmc-6bbm-4411d.firebaseapp.com",
-  databaseURL: "https://sadmc-6bbm-4411d-default-rtdb.firebaseio.com",
-  projectId: "sadmc-6bbm-4411d",
-  storageBucket: "sadmc-6bbm-4411d.firebasestorage.app",
-  messagingSenderId: "566392365968",
-  appId: "1:566392365968:web:f18185da477e65ea368915"
+    apiKey: "AIzaSyDE0OQwFJ2tDu-Ws2W9ZCalrBQetWoFjwk",
+    authDomain: "sadmc-6bbm-4411d.firebaseapp.com",
+    databaseURL: "https://sadmc-6bbm-4411d-default-rtdb.firebaseio.com",
+    projectId: "sadmc-6bbm-4411d",
+    storageBucket: "sadmc-6bbm-4411d.firebasestorage.app",
+    messagingSenderId: "566392365968",
+    appId: "1:566392365968:web:f18185da477e65ea368915"
 };
 firebase.initializeApp(firebaseConfig);
 
+function toggleMenu() {
+    const menu = document.getElementById("menuLateral");
+    const overlay = document.getElementById("overlay");
+    menu.classList.toggle("ativo");
+    overlay.style.display = menu.classList.contains("ativo") ? "block" : "none";
+}
+
 function togglePassword() {
     const input = document.getElementById("senha");
-    const icon = document.getElementById("toggleIcon");
     input.type = input.type === "password" ? "text" : "password";
-    icon.classList.toggle("fa-eye-slash");
 }
 
 async function login() {
@@ -257,11 +314,10 @@ async function login() {
     const senha = document.getElementById("senha").value;
     try {
         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, senha);
-        const user = userCredential.user;
-        const snapshot = await firebase.database().ref('militares/' + user.uid).get();
-        if(!snapshot.exists()) { alert("Usuário não autorizado no banco de dados!"); return; }
-        mostrarSistema(user, snapshot.val());
-    } catch(e) { alert("Erro de autenticação. Verifique os dados."); }
+        const snapshot = await firebase.database().ref('militares/' + userCredential.user.uid).get();
+        if(!snapshot.exists()) { alert("Não autorizado!"); return; }
+        mostrarSistema(userCredential.user, snapshot.val());
+    } catch(e) { alert("Erro de autenticação."); }
 }
 
 function mostrarSistema(user, dados) {
@@ -269,36 +325,38 @@ function mostrarSistema(user, dados) {
     document.getElementById("sistema").style.display = "block";
     document.getElementById("usuarioLogado").innerText = "Militar: " + dados.nome;
     
+    const menuCont = document.getElementById("itensMenuDinamico");
+    menuCont.innerHTML = "";
     document.querySelectorAll(".category").forEach(c => c.style.display = "none");
 
-    if(dados.nivel === "MASTER" || dados.nivel === "admin") {
-        document.querySelectorAll(".category").forEach(c => c.style.display = "block");
-        if(dados.nivel === "MASTER") {
-            document.getElementById("painelDev").style.display = "block";
-            listarMilitares();
+    const secoes = ["B1", "B2", "B3", "B4", "SCor"];
+    secoes.forEach(s => {
+        if(dados.nivel === "MASTER" || dados.nivel === "admin" || dados.secao === s) {
+            const catEl = document.getElementById("cat-"+s);
+            if(catEl) catEl.style.display = "block";
+            const item = document.createElement("a");
+            item.className = "menu-item";
+            item.innerHTML = `<i class="fas fa-chevron-right"></i> Seção ${s}`;
+            item.onclick = () => { document.getElementById("cat-"+s).scrollIntoView(); toggleMenu(); };
+            menuCont.appendChild(item);
         }
-    } else {
-        const alvo = document.getElementById("cat-" + dados.secao);
-        if(alvo) alvo.style.display = "block";
+    });
+
+    if(dados.nivel === "MASTER") {
+        document.getElementById("painelDev").style.display = "block";
+        listarMilitares();
     }
 }
 
 function listarMilitares() {
     const tabela = document.getElementById("corpoTabelaMilitares");
-    firebase.database().ref('militares').on('value', (snapshot) => {
+    firebase.database().ref('militares').on('value', (snap) => {
         tabela.innerHTML = "";
-        snapshot.forEach((item) => {
+        snap.forEach((item) => {
             const m = item.val();
-            const uid = item.key;
             const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td>${m.nome}</td>
-                <td style="text-align:center">${m.secao || '-'}</td>
-                <td style="text-align:center"><strong>${m.nivel}</strong></td>
-                <td style="text-align:center">
-                    <button onclick="removerMilitar('${uid}')" style="background:#dc3545; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;"><i class="fas fa-trash"></i></button>
-                </td>
-            `;
+            tr.innerHTML = `<td>${m.nome}</td><td>${m.secao}</td><td>${m.nivel}</td>
+            <td><button onclick="removerMilitar('${item.key}')" style="background:#dc3545; color:white; border:none; padding:5px; border-radius:4px; cursor:pointer;"><i class="fas fa-trash"></i></button></td>`;
             tabela.appendChild(tr);
         });
     });
@@ -310,36 +368,26 @@ async function cadastrarMilitar() {
     const senha = document.getElementById("novaSenha").value;
     const secao = document.getElementById("novaSecao").value;
     const nivel = document.getElementById("novoNivel").value;
-
-    if(!nome || !email || !senha) { alert("Preencha todos os campos."); return; }
-
+    if(!nome || !email || !senha) return alert("Dados incompletos");
     try {
-        const tempApp = firebase.initializeApp(firebaseConfig, "Secondary");
-        const userCredential = await tempApp.auth().createUserWithEmailAndPassword(email, senha);
-        const novoUid = userCredential.user.uid;
-        
-        await firebase.database().ref('militares/' + novoUid).set({
-            nome: nome, secao: secao, nivel: nivel
-        });
-
-        alert("Novo militar cadastrado com sucesso!");
+        const tempApp = firebase.initializeApp(firebaseConfig, "Temp");
+        const res = await tempApp.auth().createUserWithEmailAndPassword(email, senha);
+        await firebase.database().ref('militares/' + res.user.uid).set({nome, secao, nivel});
+        alert("Cadastrado!");
         tempApp.delete();
-    } catch (e) { alert("Erro ao cadastrar militar."); }
+    } catch(e) { alert("Erro no cadastro."); }
 }
 
 async function removerMilitar(uid) {
-    if(confirm("Deseja remover este acesso permanentemente?")) {
-        await firebase.database().ref('militares/' + uid).remove();
-    }
+    if(confirm("Remover acesso?")) await firebase.database().ref('militares/'+uid).remove();
 }
 
-function atualizarDataHora() {
-    const now = new Date();
-    document.getElementById("dataAtual").innerText = now.toLocaleDateString('pt-BR');
-    document.getElementById("relogio").innerText = now.toLocaleTimeString('pt-BR');
+function clock() {
+    const n = new Date();
+    document.getElementById("dataAtual").innerText = n.toLocaleDateString('pt-BR');
+    document.getElementById("relogio").innerText = n.toLocaleTimeString('pt-BR');
 }
-setInterval(atualizarDataHora, 1000);
-atualizarDataHora();
+setInterval(clock, 1000); clock();
 </script>
 </body>
 </html>
