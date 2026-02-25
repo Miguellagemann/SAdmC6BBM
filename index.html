@@ -56,7 +56,7 @@
         .login-container { display: flex; max-width: 950px; width: 100%; min-height: 550px; border-radius: 20px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); background: #fff; animation: entradaPainel 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
         
         .login-left { 
-            background: #778899; 
+            background: #4A5568; 
             flex: 1; 
             padding: 40px; 
             display: flex; 
@@ -133,19 +133,13 @@
             .login-left { padding: 40px 20px; }
             .login-left h1 { font-size: 60px; }
             .login-right { padding: 40px 20px; }
-            
             .militar-bar { flex-direction: column; text-align: center; gap: 20px; padding: 20px; }
             .txt-data-hora { text-align: center; border-right: none; border-bottom: 4px solid var(--laranja-cbm); padding-right: 0; padding-bottom: 10px; }
-            
             .secao-header { font-size: 18px; text-align: center; border-left: none; border-bottom: 4px solid var(--vermelho-cbm); padding-left: 0; padding-bottom: 10px; }
             .card-grid { grid-template-columns: 1fr; }
-            
             .footer-grid { grid-template-columns: 1fr; text-align: center; }
             .footer-col h4::after { left: 50%; transform: translateX(-50%); }
             .footer-col p { justify-content: center; }
-
-            #painelAdmin div { flex-direction: column; }
-            #painelAdmin input, #painelAdmin select, #painelAdmin button { width: 100% !important; flex: none !important; }
         }
     </style>
 </head>
@@ -213,7 +207,7 @@
             </div>
             <div class="admin-table-wrapper">
                 <table class="admin-table">
-                    <thead><tr><th>Militar</th><th>Nível</th><th>Ações</th></tr></thead>
+                    <thead><tr><th>Militar</th><th>Nível</th><th style="text-align:center;">Ações</th></tr></thead>
                     <tbody id="tabelaUsuarios"></tbody>
                 </table>
             </div>
@@ -281,6 +275,7 @@
             <p><i class="fas fa-city"></i> Santa Cruz do Sul - RS</p>
             <p><i class="fas fa-phone"></i> (51) 3711-2323</p>
         </div>
+    </div>
     <div class="footer-bottom">&copy; 2026 <span>6° BATALHÃO DE BOMBEIRO MILITAR</span> - RS | USO RESTRITO</div>
 </footer>
 
@@ -341,6 +336,7 @@
             }, 1000);
         } else {
             document.getElementById("erroSenha").style.display = "block";
+            document.getElementById("inputSenha").value = "";
             setTimeout(() => document.getElementById("erroSenha").style.display = "none", 3000);
         }
     }
@@ -349,7 +345,11 @@
         const n = document.getElementById("admNome").value.toUpperCase().trim();
         const s = document.getElementById("admSenha").value;
         const l = document.getElementById("admNivel").value;
-        if(n && s) database.ref('militares/' + n).set({ senha: s, nivel: l });
+        if(n && s) {
+            database.ref('militares/' + n).set({ senha: s, nivel: l });
+            document.getElementById("admNome").value = "";
+            document.getElementById("admSenha").value = "";
+        }
     }
 
     function deletarMilitar(n) { if(confirm(`Remover ${n}?`)) database.ref('militares/' + n).remove(); }
