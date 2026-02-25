@@ -67,6 +67,24 @@ body {
     font-size: 16px; text-transform: uppercase; letter-spacing: 1px;
 }
 
+/* --- BOAS-VINDAS E DASHBOARD --- */
+.welcome-box {
+    background: linear-gradient(to right, var(--azul-texto), var(--azul-fundo-light));
+    padding: 25px; border-radius: 12px; color: white; margin-bottom: 25px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.welcome-text h2 { margin: 0; font-size: 22px; font-weight: 800; }
+.welcome-text p { margin: 5px 0 0; opacity: 0.8; font-size: 13px; }
+
+#painelDev { 
+    background: #fff; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05); margin-bottom: 30px; display: none;
+}
+.painel-header { background: #f8fafc; padding: 15px 25px; border-bottom: 1px solid #eee; color: var(--azul-texto); display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.form-cadastro { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; padding: 20px; background: #fbfbfb; }
+.form-cadastro input, .form-cadastro select { padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+
 /* --- MENU LATERAL --- */
 #menuLateral {
     position: fixed; left: -280px; top: 0; width: 280px; height: 100%;
@@ -84,10 +102,7 @@ body {
     position: fixed; display: none; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.5); z-index: 999;
 }
-.btn-menu {
-    background: none; border: none; color: white; font-size: 22px;
-    cursor: pointer; display: none; margin-right: 15px;
-}
+.btn-menu { background: none; border: none; color: white; font-size: 22px; cursor: pointer; display: none; margin-right: 15px; }
 
 /* --- SISTEMA --- */
 #sistema { display: none; flex: 1; background: var(--cinza-fundo); }
@@ -97,45 +112,38 @@ body {
     display: flex; align-items: center; justify-content: center;
 }
 .header-sub { background: var(--vermelho-cbm); height: 5px; }
-.container { max-width: 1100px; margin: 30px auto; padding: 30px; background: #fff; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-
-.user-bar { 
-    display: flex; justify-content: space-between; align-items: center; 
-    margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; flex-wrap: wrap; gap: 10px;
-}
+.container { max-width: 1100px; margin: 30px auto; padding: 20px; }
 
 /* --- GRID E TABELAS --- */
 .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-.link-card { border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; }
+.link-card { background: white; border: 1px solid #ddd; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: inherit; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
 .link-card i { font-size: 35px; color: var(--azul-texto); margin-bottom: 15px; }
 
-#painelDev { background: #f8fafc; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 2px solid var(--azul-texto); display:none; }
-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; }
-th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; border-right: 1px solid #eee; }
-th { background: var(--azul-texto); color: white; }
+table { width: 100%; border-collapse: collapse; background: white; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+th { background: #f8fafc; color: #64748b; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
 
-/* --- RODAPÉ INSTITUCIONAL --- */
+.badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.badge-secao { background: #e0f2fe; color: #0369a1; }
+.badge-master { background: #fef3c7; color: #92400e; }
+
+/* --- RODAPÉ --- */
 .footer-oficial { background: #000E1F; color: #fff; margin-top: auto; border-top: 5px solid var(--vermelho-cbm); }
 .footer-main { max-width: 1100px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 40px 20px; }
 .footer-section h4 { color: var(--laranja-cbm); font-size: 14px; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
 .footer-section span { font-size: 13px; line-height: 2; color: #cbd5e1; display: block; }
 .footer-section a { color: #cbd5e1; text-decoration: none; }
-.footer-section a:hover { color: var(--laranja-cbm); }
-.footer-section i { width: 20px; color: var(--laranja-cbm); }
-.acesso-restrito { text-align: center; padding: 15px; background: rgba(0, 0, 0, 0.4); color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.acesso-restrito { text-align: center; padding: 15px; background: rgba(0, 0, 0, 0.4); color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; }
 
 @media (max-width: 768px) {
     .login-container { flex-direction: column; }
-    .login-left-side { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .btn-menu { display: block; }
-    .container { margin: 15px; padding: 15px; }
-    .user-bar { flex-direction: column; text-align: center; }
+    .welcome-box { flex-direction: column; text-align: center; gap: 15px; }
     .footer-main { grid-template-columns: 1fr; text-align: center; }
 }
 
-.category { margin-bottom: 30px; display: none; animation: fadeIn 0.5s ease; }
+.category { margin-bottom: 30px; display: none; }
 .category-title { border-left: 6px solid var(--vermelho-cbm); padding-left: 15px; color: var(--azul-texto); font-weight: 800; font-size: 19px; margin-bottom: 20px; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 </style>
 </head>
 <body>
@@ -181,39 +189,41 @@ th { background: var(--azul-texto); color: white; }
     </div>
     <div class="header-sub"></div>
     <div class="container">
-        <div class="user-bar">
-            <span id="usuarioLogado" style="font-weight: 800; color: var(--azul-texto); font-size: 18px;"></span>
-            <div style="font-size: 14px; font-weight: 600; color: #666;">
-                <span id="dataAtual"></span> | <span id="relogio"></span>
+        
+        <div class="welcome-box">
+            <div class="welcome-text">
+                <h2 id="msgBoasVindas">Bem-vindo, Carregando...</h2>
+                <p><i class="far fa-calendar-alt"></i> <span id="dataExtenso"></span></p>
             </div>
-            <button onclick="firebase.auth().signOut().then(()=>location.reload())" style="background: var(--azul-texto); color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer;">Sair</button>
+            <div style="text-align: right;">
+                <span id="relogioGrande" style="font-size: 24px; font-weight: 800; display: block;">00:00:00</span>
+                <small style="opacity: 0.7; cursor: pointer;" onclick="firebase.auth().signOut().then(()=>location.reload())">Encerrar Sessão</small>
+            </div>
         </div>
 
         <div id="painelDev">
-            <h3 style="margin:0; color: var(--azul-texto);"><i class="fas fa-user-shield"></i> Gestão de Acessos (MASTER)</h3>
-            <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-top: 15px; margin-bottom: 20px;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-                    <input type="text" id="novoNome" placeholder="Nome (Ex: Sd Lagemann)">
-                    <input type="email" id="novoEmail" placeholder="E-mail Institucional">
-                    <input type="password" id="novaSenha" placeholder="Senha Provisória">
-                    <select id="novaSecao">
-                        <option value="B1">B1 - Pessoal</option>
-                        <option value="B2">B2 - Inteligência</option>
-                        <option value="B3">B3 - Operações</option>
-                        <option value="B4">B4 - Logística</option>
-                        <option value="SCor">SCor - Correição</option>
-                    </select>
-                    <select id="novoNivel">
-                        <option value="user">Usuário Comum</option>
-                        <option value="admin">Administrador</option>
-                        <option value="MASTER">Master</option>
-                    </select>
-                    <button onclick="cadastrarMilitar()" style="background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">CADASTRAR</button>
-                </div>
+            <div class="painel-header"><i class="fas fa-user-shield"></i> GESTÃO DE ACESSOS E MILITARES</div>
+            <div class="form-cadastro">
+                <input type="text" id="novoNome" placeholder="Nome do Militar">
+                <input type="email" id="novoEmail" placeholder="E-mail Institucional">
+                <input type="password" id="novaSenha" placeholder="Senha Provisória">
+                <select id="novaSecao">
+                    <option value="B1">B1 - Pessoal</option>
+                    <option value="B2">B2 - Inteligência</option>
+                    <option value="B3">B3 - Operações</option>
+                    <option value="B4">B4 - Logística</option>
+                    <option value="SCor">SCor - Correição</option>
+                </select>
+                <select id="novoNivel">
+                    <option value="user">Usuário Comum</option>
+                    <option value="admin">Administrador</option>
+                    <option value="MASTER">Master</option>
+                </select>
+                <button onclick="cadastrarMilitar()" style="background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">CADASTRAR</button>
             </div>
-            <div style="overflow-x: auto;">
+            <div style="overflow-x: auto; padding: 0 20px 20px;">
                 <table>
-                    <thead><tr><th>Nome</th><th>Seção</th><th>Nível</th><th>Ações</th></tr></thead>
+                    <thead><tr><th>Militar</th><th>Seção</th><th>Nível</th><th style="text-align:center">Ações</th></tr></thead>
                     <tbody id="corpoTabelaMilitares"></tbody>
                 </table>
             </div>
@@ -253,32 +263,22 @@ th { background: var(--azul-texto); color: white; }
     <div class="footer-main">
         <div class="footer-section">
             <h4><i class="fas fa-map-marker-alt"></i> Sede do 6º BBM</h4>
-            <span><strong>Corpo de Bombeiros Militar do RS</strong></span>
             <span>Rua Tenente Coronel Brito, 03</span>
             <span>Centro - Santa Cruz do Sul - RS</span>
             <span>CEP: 96810-202</span>
-            <span style="margin-top: 10px;">
-                <a href="https://www.google.com/maps/search/?api=1&query=Rua+Tenente+Coronel+Brito+03+Santa+Cruz+do+Sul" target="_blank" style="color: var(--laranja-cbm); font-weight: 700; font-size: 11px;">
-                    <i class="fas fa-directions"></i> VER NO GOOGLE MAPS
-                </a>
-            </span>
         </div>
         <div class="footer-section">
-            <h4><i class="fas fa-envelope-open-text"></i> Contato Administrativo</h4>
+            <h4><i class="fas fa-envelope-open-text"></i> Contato SAdmC</h4>
             <span><i class="fas fa-envelope"></i> <a href="mailto:sadm@cbm.rs.gov.br">sadm@cbm.rs.gov.br</a></span>
             <span><i class="fas fa-phone"></i> (51) 3711-2323</span>
-            <span><i class="fas fa-clock"></i> Expediente: 08:00 às 17:30</span>
         </div>
         <div class="footer-section">
-            <h4><i class="fas fa-shield-alt"></i> Links Rápidos</h4>
-            <span><i class="fas fa-chevron-right"></i> <a href="https://www.cbm.rs.gov.br" target="_blank">Portal CBMRS</a></span>
+            <h4><i class="fas fa-shield-alt"></i> Links Oficiais</h4>
             <span><i class="fas fa-chevron-right"></i> <a href="https://sec.cbm.rs.gov.br" target="_blank">Portal de Sistemas</a></span>
             <span><i class="fas fa-chevron-right"></i> <a href="https://mail.google.com/a/cbm.rs.gov.br" target="_blank">Webmail Institucional</a></span>
         </div>
     </div>
-    <div class="acesso-restrito">
-        <i class="fas fa-user-secret"></i> Acesso Restrito: Intranet 6º BBM - Ambiente de Uso Exclusivo Administrativo
-    </div>
+    <div class="acesso-restrito"><i class="fas fa-user-secret"></i> Uso Administrativo Exclusivo - 6º BBM</div>
 </footer>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -323,7 +323,11 @@ async function login() {
 function mostrarSistema(user, dados) {
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("sistema").style.display = "block";
-    document.getElementById("usuarioLogado").innerText = "Militar: " + dados.nome;
+    
+    // Atualização do Nome e Data
+    document.getElementById("msgBoasVindas").innerText = "Bem-vindo, " + dados.nome;
+    const opcoes = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("dataExtenso").innerText = new Date().toLocaleDateString('pt-BR', opcoes);
     
     const menuCont = document.getElementById("itensMenuDinamico");
     menuCont.innerHTML = "";
@@ -332,8 +336,8 @@ function mostrarSistema(user, dados) {
     const secoes = ["B1", "B2", "B3", "B4", "SCor"];
     secoes.forEach(s => {
         if(dados.nivel === "MASTER" || dados.nivel === "admin" || dados.secao === s) {
-            const catEl = document.getElementById("cat-"+s);
-            if(catEl) catEl.style.display = "block";
+            const el = document.getElementById("cat-"+s);
+            if(el) el.style.display = "block";
             const item = document.createElement("a");
             item.className = "menu-item";
             item.innerHTML = `<i class="fas fa-chevron-right"></i> Seção ${s}`;
@@ -354,9 +358,16 @@ function listarMilitares() {
         tabela.innerHTML = "";
         snap.forEach((item) => {
             const m = item.val();
+            const secaoText = m.secao || "N/A";
+            const badgeClass = m.nivel === "MASTER" ? "badge-master" : "badge-secao";
             const tr = document.createElement("tr");
-            tr.innerHTML = `<td>${m.nome}</td><td>${m.secao}</td><td>${m.nivel}</td>
-            <td><button onclick="removerMilitar('${item.key}')" style="background:#dc3545; color:white; border:none; padding:5px; border-radius:4px; cursor:pointer;"><i class="fas fa-trash"></i></button></td>`;
+            tr.innerHTML = `
+                <td><strong>${m.nome}</strong></td>
+                <td><span class="badge badge-secao">${secaoText}</span></td>
+                <td><span class="badge ${badgeClass}">${m.nivel}</span></td>
+                <td style="text-align:center">
+                    <button onclick="removerMilitar('${item.key}')" style="background:none; border:none; color:#e11d48; cursor:pointer;"><i class="fas fa-trash-alt"></i></button>
+                </td>`;
             tabela.appendChild(tr);
         });
     });
@@ -368,24 +379,23 @@ async function cadastrarMilitar() {
     const senha = document.getElementById("novaSenha").value;
     const secao = document.getElementById("novaSecao").value;
     const nivel = document.getElementById("novoNivel").value;
-    if(!nome || !email || !senha) return alert("Dados incompletos");
+    if(!nome || !email || !senha) return alert("Preencha todos os campos!");
     try {
         const tempApp = firebase.initializeApp(firebaseConfig, "Temp");
         const res = await tempApp.auth().createUserWithEmailAndPassword(email, senha);
         await firebase.database().ref('militares/' + res.user.uid).set({nome, secao, nivel});
-        alert("Cadastrado!");
+        alert("Militar cadastrado com sucesso!");
         tempApp.delete();
-    } catch(e) { alert("Erro no cadastro."); }
+    } catch(e) { alert("Erro ao cadastrar: " + e.message); }
 }
 
 async function removerMilitar(uid) {
-    if(confirm("Remover acesso?")) await firebase.database().ref('militares/'+uid).remove();
+    if(confirm("Deseja remover este acesso permanentemente?")) await firebase.database().ref('militares/'+uid).remove();
 }
 
 function clock() {
     const n = new Date();
-    document.getElementById("dataAtual").innerText = n.toLocaleDateString('pt-BR');
-    document.getElementById("relogio").innerText = n.toLocaleTimeString('pt-BR');
+    document.getElementById("relogioGrande").innerText = n.toLocaleTimeString('pt-BR');
 }
 setInterval(clock, 1000); clock();
 </script>
